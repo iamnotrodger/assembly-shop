@@ -1,7 +1,8 @@
 import React from 'react';
+import Project from '../Project/Project';
 
-const TeamSection = ({ team }) => {
-    const { teamID, name, administratorID, numMembers, projects } = team;
+const TeamSection = ({ value }) => {
+    const { teamID, name, administratorID, numMembers, projects } = value;
 
     return (
         <div>
@@ -11,7 +12,15 @@ const TeamSection = ({ team }) => {
                 <div>Team ID: {teamID}</div>
                 <div>administrator ID: {administratorID} </div>
             </div>
-            <div>{JSON.stringify(projects)}</div>
+            {projects && projects.length > 0 ? (
+                <div>
+                    {projects.map((project) => (
+                        <Project value={project} />
+                    ))}
+                </div>
+            ) : (
+                <div>No Projects Available</div>
+            )}
         </div>
     );
 };

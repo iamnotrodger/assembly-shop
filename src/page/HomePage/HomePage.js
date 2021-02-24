@@ -30,12 +30,15 @@ const HomePage = () => {
 
     return (
         <div>
-            <h1>Home Page</h1>
-            <div>
-                {teams.map(({ team }) => (
-                    <TeamSection team={team} key={team.teamID} />
-                ))}
-            </div>
+            {teams.length > 0 ? (
+                <div>
+                    {teams.map(({ team }) => (
+                        <TeamSection value={team} key={team.teamID} />
+                    ))}
+                </div>
+            ) : (
+                <div>No Teams Available</div>
+            )}
         </div>
     );
 };
