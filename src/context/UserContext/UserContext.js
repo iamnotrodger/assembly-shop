@@ -12,11 +12,11 @@ import { useGlobalActionSpinner } from '../GlobalSpinnerContext';
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-    const { authDispatch } = useAuth();
     const [user, setUser] = useState(null);
     const [isAuthorized, setIsAuthorized] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
+    const { authDispatch } = useAuth();
     const setGlobalSpinner = useGlobalActionSpinner();
 
     //Gets the user on mount and very time user is logged in
