@@ -7,7 +7,7 @@ const AuthRoute = () => {
     console.log(redirectUrl);
 
     useEffect(() => {
-        window.localStorage.removeItem('redirectUrl');
+        return window.localStorage.removeItem('redirectUrl');
     }, []);
 
     return <Redirect to={redirectUrl} />;

@@ -8,7 +8,6 @@ import { getToken, logout } from './actions';
 
 const AuthContext = createContext();
 
-//custom react hook
 const useAuth = () => {
     const context = useContext(AuthContext);
     if (context === undefined) {

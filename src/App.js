@@ -12,6 +12,8 @@ import LoginPage from './page/LoginPage/LoginPage';
 
 //Routes
 import NotFoundRoute from './route/NotFoundRoute';
+import AuthRoute from './route/AuthRoute';
+import PrivateRoute from './route/PrivateRoute';
 
 const App = () => {
     return (
@@ -20,7 +22,8 @@ const App = () => {
                 <UserProvider>
                     <Router>
                         <Switch>
-                            <Route exact path='/' component={HomePage} />
+                            <PrivateRoute exact path='/' component={HomePage} />
+                            <AuthRoute exact path='/auth' />
                             <Route exact path='/login' component={LoginPage} />
                             <Route component={NotFoundRoute} />
                         </Switch>

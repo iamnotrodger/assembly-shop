@@ -10,7 +10,6 @@ import useAuth, { AUTH_ACTIONS } from '../AuthContext/AuthContext';
 
 const UserContext = createContext();
 
-//custom react hooks
 const useUser = () => {
     const context = useContext(UserContext);
     if (context === undefined) {
@@ -31,13 +30,8 @@ export const UserProvider = ({ children }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    //checks if the user should be authorized in
     useEffect(() => {
-        if (user) {
-            setIsAuthorized(true);
-        } else {
-            setIsAuthorized(false);
-        }
+        setIsAuthorized(user == null);
     }, [user]);
 
     const Login = useCallback(async () => {
@@ -54,14 +48,13 @@ export const UserProvider = ({ children }) => {
     }, []);
 
     const Logout = useCallback(async () => {
-        //clear the access and refresh token
         await authDispatch({ type: AUTH_ACTIONS.LOG_OUT });
         setUser(null);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, isAuthorized, Login, Logout }}>
+        <UserContext.Provider value={{ user, isAuthorized, Logout }}>
             {children}
         </UserContext.Provider>
     );
