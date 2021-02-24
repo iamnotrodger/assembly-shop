@@ -6,23 +6,18 @@ import React, {
     useContext,
 } from 'react';
 import { getProfile } from '../../api/UserAPI';
-import useAuth, { AUTH_ACTIONS } from '../AuthContext/AuthContext';
+import useAuth, { AUTH_ACTIONS } from '../AuthContext';
+import { useGlobalActionSpinner } from '../GlobalSpinnerContext';
 
 const UserContext = createContext();
-
-const useUser = () => {
-    const context = useContext(UserContext);
-    if (context === undefined) {
-        throw new Error('useUser must be used within a UserProvider');
-    }
-
-    return context;
-};
 
 export const UserProvider = ({ children }) => {
     const { authDispatch } = useAuth();
     const [user, setUser] = useState(null);
     const [isAuthorized, setIsAuthorized] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    const setGlobalSpinner = useGlobalActionSpinner();
 
     //Gets the user on mount and very time user is logged in
     useEffect(() => {
@@ -31,10 +26,12 @@ export const UserProvider = ({ children }) => {
     }, []);
 
     useEffect(() => {
-        setIsAuthorized(user == null);
+        setIsAuthorized(user != null);
     }, [user]);
 
     const Login = useCallback(async () => {
+        setGlobalSpinner(true);
+        setIsLoaded(false);
         try {
             const accessToken = await authDispatch({
                 type: AUTH_ACTIONS.GET_TOKEN,
@@ -44,6 +41,8 @@ export const UserProvider = ({ children }) => {
         } catch (error) {
             console.log(error);
         }
+        setGlobalSpinner(false);
+        setIsLoaded(true);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -54,10 +53,19 @@ export const UserProvider = ({ children }) => {
     }, []);
 
     return (
-        <UserContext.Provider value={{ user, isAuthorized, Logout }}>
+        <UserContext.Provider value={{ user, isAuthorized, isLoaded, Logout }}>
             {children}
         </UserContext.Provider>
     );
+};
+
+const useUser = () => {
+    const context = useContext(UserContext);
+    if (context === undefined) {
+        throw new Error('useUser must be used within a UserProvider');
+    }
+
+    return context;
 };
 
 export default useUser;

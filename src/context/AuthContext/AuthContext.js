@@ -4,18 +4,9 @@ import React, {
     useContext,
     useReducer,
 } from 'react';
-import { getToken, logout } from './actions';
+import { AUTH_ACTIONS, tokenReducer, getToken, logout } from './actions';
 
 const AuthContext = createContext();
-
-const useAuth = () => {
-    const context = useContext(AuthContext);
-    if (context === undefined) {
-        throw new Error('useAuth must be used within a AuthProvider');
-    }
-
-    return context;
-};
 
 export const AuthProvider = ({ children }) => {
     const [token, tokenDispatch] = useReducer(tokenReducer, null);
@@ -54,20 +45,13 @@ export const AuthProvider = ({ children }) => {
     );
 };
 
-//Available actions for token reducer
-export const AUTH_ACTIONS = {
-    GET_TOKEN: 'get_token',
-    SET_TOKEN: 'set_token',
-    LOG_OUT: 'log_out',
-};
-
-const tokenReducer = (state, action) => {
-    switch (action.type) {
-        case AUTH_ACTIONS.SET_TOKEN:
-            return action.payload;
-        default:
-            throw new Error(`Unhandled action type: ${action.type}`);
+const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+        throw new Error('useAuth must be used within a AuthProvider');
     }
+
+    return context;
 };
 
 export default useAuth;

@@ -1,1 +1,2 @@
-export { default, AUTH_ACTIONS, AuthProvider } from './AuthContext';
+export { default, AuthProvider } from './AuthContext';
+export { AUTH_ACTIONS } from './actions';

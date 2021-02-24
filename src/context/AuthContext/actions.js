@@ -1,5 +1,21 @@
 const API_URL = process.env.REACT_APP_API_URL;
 
+//Available actions for token reducer
+export const AUTH_ACTIONS = {
+    GET_TOKEN: 'get_token',
+    SET_TOKEN: 'set_token',
+    LOG_OUT: 'log_out',
+};
+
+export const tokenReducer = (state, action) => {
+    switch (action.type) {
+        case AUTH_ACTIONS.SET_TOKEN:
+            return action.payload;
+        default:
+            throw new Error(`Unhandled action type: ${action.type}`);
+    }
+};
+
 //gets the token if it exist, else it grabs a new one
 export const getToken = async (token) => {
     const expired = isTokenExpired(getTokenExpiration(token));

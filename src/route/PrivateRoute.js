@@ -3,9 +3,12 @@ import { Redirect, Route } from 'react-router-dom';
 import useUser from '../context/UserContext';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    const { isAuthorized } = useUser();
+    const { isAuthorized, isLoaded } = useUser();
 
-    if (isAuthorized) {
+    if (!isLoaded) return null;
+
+    //Store Redirect value for login
+    if (!isAuthorized) {
         const { pathname } = window.location;
         window.localStorage.setItem('redirectUrl', pathname);
     }
