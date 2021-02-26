@@ -1,28 +1,31 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { getTeamAndProjects } from '../../api/ProjectAPI';
 import TeamSection from '../../component/TeamSection';
 import { useLoadingAction } from '../../context/LoadingContext';
+import useTeams from '../../context/TeamsContext/TeamsContext';
 
 const HomePage = () => {
-    const [teams, setTeams] = useState([]);
+    const { teams, setTeams } = useTeams();
 
     const setLoading = useLoadingAction();
 
     useEffect(() => {
-        (async () => {
-            setLoading(true);
-            try {
-                const teams = await getTeamAndProjects();
-                setTeams(teams);
-            } catch (error) {
-                console.error(error);
-            }
-            setLoading(false);
-        })();
+        if (!teams) {
+            (async () => {
+                setLoading(true);
+                try {
+                    const teams = await getTeamAndProjects();
+                    setTeams(teams);
+                } catch (error) {
+                    console.error(error);
+                }
+                setLoading(false);
+            })();
+        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const teamMaps =
+    const teamMaps = teams ? (
         teams.length > 0 ? (
             <div>
                 {teams.map((team) => (
@@ -31,7 +34,8 @@ const HomePage = () => {
             </div>
         ) : (
             <div>No Teams Available</div>
-        );
+        )
+    ) : null;
 
     return <div>{teamMaps}</div>;
 };

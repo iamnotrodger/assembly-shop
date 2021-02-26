@@ -10,6 +10,7 @@ import './App.scss';
 //Contexts
 import { UserProvider } from './context/UserContext';
 import { LoadingContextProvider } from './context/LoadingContext';
+import { TeamsProvider } from './context/TeamsContext';
 
 //Pages
 import HomePage from './page/HomePage';
@@ -29,10 +30,12 @@ const App = () => {
         <div className='App'>
             <LoadingContextProvider>
                 <UserProvider>
-                    <LoadingScreen />
-                    <Router>
-                        <Routes />
-                    </Router>
+                    <TeamsProvider>
+                        <LoadingScreen />
+                        <Router>
+                            <Routes />
+                        </Router>
+                    </TeamsProvider>
                 </UserProvider>
             </LoadingContextProvider>
         </div>
