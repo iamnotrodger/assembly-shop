@@ -4,7 +4,7 @@ import './App.scss';
 
 //Contexts
 import { UserProvider } from './context/UserContext';
-import { GlobalSpinnerContextProvider } from './context/GlobalSpinnerContext';
+import { LoadingContextProvider } from './context/LoadingContext';
 
 //Pages
 import HomePage from './page/HomePage';
@@ -16,14 +16,14 @@ import AuthRoute from './route/AuthRoute';
 import PrivateRoute from './route/PrivateRoute';
 
 //Components
-import GlobalSpinner from './component/GlobalSpinner';
+import LoadingScreen from './component/LoadingScreen';
 
 const App = () => {
     return (
         <div className='App'>
-            <GlobalSpinnerContextProvider>
+            <LoadingContextProvider>
                 <UserProvider>
-                    <GlobalSpinner />
+                    <LoadingScreen />
                     <Router>
                         <Switch>
                             <PrivateRoute exact path='/' component={HomePage} />
@@ -33,7 +33,7 @@ const App = () => {
                         </Switch>
                     </Router>
                 </UserProvider>
-            </GlobalSpinnerContextProvider>
+            </LoadingContextProvider>
         </div>
     );
 };

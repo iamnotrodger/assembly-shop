@@ -1,25 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { getTeamAndProjects } from '../../api/ProjectAPI';
 import TeamSection from '../../component/TeamSection';
-import { useGlobalActionSpinner } from '../../context/GlobalSpinnerContext';
+import { useLoadingAction } from '../../context/LoadingContext';
 import useUser from '../../context/UserContext';
 
 const HomePage = () => {
     const [teams, setTeams] = useState([]);
 
     const { Logout } = useUser();
-    const setGlobalSpinner = useGlobalActionSpinner();
+    const setLoading = useLoadingAction();
 
     useEffect(() => {
         (async () => {
-            setGlobalSpinner(true);
+            setLoading(true);
             try {
                 const teams = await getTeamAndProjects();
                 setTeams(teams);
             } catch (error) {
                 console.error(error);
             }
-            setGlobalSpinner(false);
+            setLoading(false);
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
