@@ -1,5 +1,10 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import {
+    BrowserRouter as Router,
+    Route,
+    Switch,
+    withRouter,
+} from 'react-router-dom';
 import './App.scss';
 
 //Contexts
@@ -17,6 +22,7 @@ import PrivateRoute from './route/PrivateRoute';
 
 //Components
 import LoadingScreen from './component/LoadingScreen';
+import NavBar from './component/NavBar';
 
 const App = () => {
     return (
@@ -25,17 +31,24 @@ const App = () => {
                 <UserProvider>
                     <LoadingScreen />
                     <Router>
-                        <Switch>
-                            <PrivateRoute exact path='/' component={HomePage} />
-                            <AuthRoute exact path='/auth' />
-                            <Route exact path='/login' component={LoginPage} />
-                            <Route component={NotFoundRoute} />
-                        </Switch>
+                        <Routes />
                     </Router>
                 </UserProvider>
             </LoadingContextProvider>
         </div>
     );
 };
+
+const Routes = withRouter(({ location: { pathname } }) => (
+    <>
+        {pathname !== '/login' && <NavBar />}
+        <Switch>
+            <Route path='/login' component={LoginPage} />
+            <AuthRoute path='/auth' />
+            <PrivateRoute exact path='/' component={HomePage} />
+            <Route component={NotFoundRoute} />
+        </Switch>
+    </>
+));
 
 export default App;

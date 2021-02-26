@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { getTeamAndProjects } from '../../api/ProjectAPI';
 import TeamSection from '../../component/TeamSection';
 import { useLoadingAction } from '../../context/LoadingContext';
-import useUser from '../../context/UserContext';
 
 const HomePage = () => {
     const [teams, setTeams] = useState([]);
 
-    const { Logout } = useUser();
     const setLoading = useLoadingAction();
 
     useEffect(() => {
@@ -35,15 +33,7 @@ const HomePage = () => {
             <div>No Teams Available</div>
         );
 
-    return (
-        <div>
-            {teamMaps}
-            <div>
-                For testing purposes
-                <button onClick={async () => Logout()}>Logout</button>
-            </div>
-        </div>
-    );
+    return <div>{teamMaps}</div>;
 };
 
 export default HomePage;

@@ -2,7 +2,7 @@ import React from 'react';
 import useLoading from '../../context/LoadingContext';
 import './LoadingScreen.scss';
 
-const LoadingScreen = (props) => {
+const LoadingScreen = () => {
     const isLoading = useLoading();
 
     return isLoading ? (
