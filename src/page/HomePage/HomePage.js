@@ -1,24 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { getTeamAndProjects } from '../../api/ProjectAPI';
 import TeamSection from '../../component/TeamSection';
-import useAuth, { AUTH_ACTIONS } from '../../context/AuthContext';
 import { useGlobalActionSpinner } from '../../context/GlobalSpinnerContext';
+import useUser from '../../context/UserContext';
 
 const HomePage = () => {
     const [teams, setTeams] = useState([]);
 
-    const { authDispatch } = useAuth();
+    const { Logout } = useUser();
     const setGlobalSpinner = useGlobalActionSpinner();
 
     useEffect(() => {
         (async () => {
             setGlobalSpinner(true);
             try {
-                const accessToken = await authDispatch({
-                    type: AUTH_ACTIONS.GET_TOKEN,
-                });
-
-                const teams = await getTeamAndProjects(accessToken);
+                const teams = await getTeamAndProjects();
                 setTeams(teams);
             } catch (error) {
                 console.error(error);
@@ -31,7 +27,7 @@ const HomePage = () => {
     const teamMaps =
         teams.length > 0 ? (
             <div>
-                {teams.map(({ team }) => (
+                {teams.map((team) => (
                     <TeamSection value={team} key={team.teamID} />
                 ))}
             </div>
@@ -39,7 +35,15 @@ const HomePage = () => {
             <div>No Teams Available</div>
         );
 
-    return <div>{teamMaps}</div>;
+    return (
+        <div>
+            {teamMaps}
+            <div>
+                For testing purposes
+                <button onClick={async () => Logout()}>Logout</button>
+            </div>
+        </div>
+    );
 };
 
 export default HomePage;

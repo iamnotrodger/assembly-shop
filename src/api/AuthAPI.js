@@ -1,36 +1,22 @@
 const API_URL = process.env.REACT_APP_API_URL;
 
-//Available actions for token reducer
-export const AUTH_ACTIONS = {
-    GET_TOKEN: 'get_token',
-    SET_TOKEN: 'set_token',
-    LOG_OUT: 'log_out',
-};
-
-export const tokenReducer = (state, action) => {
-    switch (action.type) {
-        case AUTH_ACTIONS.SET_TOKEN:
-            return action.payload;
-        default:
-            throw new Error(`Unhandled action type: ${action.type}`);
-    }
-};
+let accessToken = null;
 
 //gets the token if it exist, else it grabs a new one
-export const getToken = async (token) => {
-    const expired = isTokenExpired(getTokenExpiration(token));
+export const getToken = async () => {
+    const expired = isTokenExpired(getTokenExpiration(accessToken));
     //checks if the accessToken exist
     if (expired) {
-        token = await refreshToken();
+        accessToken = await refreshToken();
     }
 
-    return token;
+    return accessToken;
 };
 
 //Clears the Refresh-token from cookie
 export const logout = async () => {
     try {
-        const response = await fetch(API_URL + '/api/auth/token/logout', {
+        const response = await fetch(API_URL + '/api/auth/logout', {
             method: 'post',
             credentials: 'include',
         });
@@ -42,7 +28,7 @@ export const logout = async () => {
         console.log(error);
     }
 
-    return null;
+    accessToken = null;
 };
 
 export const refreshToken = async () => {

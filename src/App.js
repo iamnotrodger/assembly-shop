@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.scss';
 
 //Contexts
-import { AuthProvider } from './context/AuthContext';
 import { UserProvider } from './context/UserContext';
 import { GlobalSpinnerContextProvider } from './context/GlobalSpinnerContext';
 
@@ -23,27 +22,17 @@ const App = () => {
     return (
         <div className='App'>
             <GlobalSpinnerContextProvider>
-                <AuthProvider>
-                    <UserProvider>
-                        <GlobalSpinner />
-                        <Router>
-                            <Switch>
-                                <PrivateRoute
-                                    exact
-                                    path='/'
-                                    component={HomePage}
-                                />
-                                <AuthRoute exact path='/auth' />
-                                <Route
-                                    exact
-                                    path='/login'
-                                    component={LoginPage}
-                                />
-                                <Route component={NotFoundRoute} />
-                            </Switch>
-                        </Router>
-                    </UserProvider>
-                </AuthProvider>
+                <UserProvider>
+                    <GlobalSpinner />
+                    <Router>
+                        <Switch>
+                            <PrivateRoute exact path='/' component={HomePage} />
+                            <AuthRoute exact path='/auth' />
+                            <Route exact path='/login' component={LoginPage} />
+                            <Route component={NotFoundRoute} />
+                        </Switch>
+                    </Router>
+                </UserProvider>
             </GlobalSpinnerContextProvider>
         </div>
     );

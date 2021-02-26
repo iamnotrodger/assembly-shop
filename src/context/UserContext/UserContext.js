@@ -5,8 +5,8 @@ import React, {
     useEffect,
     useContext,
 } from 'react';
+import { logout } from '../../api/AuthAPI';
 import { getProfile } from '../../api/UserAPI';
-import useAuth, { AUTH_ACTIONS } from '../AuthContext';
 import { useGlobalActionSpinner } from '../GlobalSpinnerContext';
 
 const UserContext = createContext();
@@ -16,7 +16,6 @@ export const UserProvider = ({ children }) => {
     const [isAuthorized, setIsAuthorized] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    const { authDispatch } = useAuth();
     const setGlobalSpinner = useGlobalActionSpinner();
 
     //Gets the user on mount and very time user is logged in
@@ -33,10 +32,7 @@ export const UserProvider = ({ children }) => {
         setGlobalSpinner(true);
         setIsLoaded(false);
         try {
-            const accessToken = await authDispatch({
-                type: AUTH_ACTIONS.GET_TOKEN,
-            });
-            const user = await getProfile(accessToken);
+            const user = await getProfile();
             setUser(user);
         } catch (error) {
             console.log(error);
@@ -47,9 +43,8 @@ export const UserProvider = ({ children }) => {
     }, []);
 
     const Logout = useCallback(async () => {
-        await authDispatch({ type: AUTH_ACTIONS.LOG_OUT });
+        await logout();
         setUser(null);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
