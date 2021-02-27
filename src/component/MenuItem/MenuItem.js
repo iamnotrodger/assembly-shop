@@ -4,7 +4,7 @@ const MenuItem = ({ icon, title, onClick }) => {
     return (
         <button onClick={onClick}>
             <span>{icon}</span>
-            <span>{title}</span>
+            <h3>{title}</h3>
         </button>
     );
 };
