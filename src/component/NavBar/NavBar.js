@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import useUser from '../../context/UserContext';
+import CreateTeam from '../CreateTeam';
 import DropdownMenu from '../DropdownMenu';
 import MenuItem from '../MenuItem';
 import Popup from '../Popup';
@@ -18,7 +19,7 @@ const NavBar = () => {
 
             <DropdownMenu header='Create'>
                 <Popup trigger={<MenuItem title='Create Team' />}>
-                    <div>Create Team Pop Up</div>
+                    <CreateTeam />
                 </Popup>
 
                 <Popup trigger={<MenuItem title='Create Project' />}>

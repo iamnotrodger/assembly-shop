@@ -20,10 +20,10 @@ const Popup = ({ children, trigger }) => {
                 ref={popupRef}
                 style={{
                     display: isActive ? 'block' : 'none',
-                    background: 'red',
+                    background: '#2699FB',
                 }}>
                 <button onClick={closePopup}>Close</button>
-                {children}
+                <div style={{ paddingBottom: '500px' }}>{children}</div>
             </div>
         </>
     );
