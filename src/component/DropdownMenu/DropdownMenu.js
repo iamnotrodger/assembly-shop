@@ -12,6 +12,7 @@ const DropdownMenu = ({ children, header }) => {
             <button onClick={toggleMenu}>{header}</button>
             <nav
                 ref={dropdownRef}
+                onClick={toggleMenu}
                 style={{ display: isActive ? 'block' : 'none' }}>
                 {children}
             </nav>

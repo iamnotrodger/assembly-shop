@@ -1,13 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import useUser from '../../context/UserContext';
 import CreateTeam from '../CreateTeam';
 import DropdownMenu from '../DropdownMenu';
 import MenuItem from '../MenuItem';
-import Popup from '../Popup';
+import Modal from '../Modal/Modal';
 
 const NavBar = () => {
     const { Logout } = useUser();
+    const [isTeamOpen, setIsTeamOpen] = useState(false);
+    const [isProjectOpen, setIsProjectOpen] = useState(false);
+
+    const handleTeamToggle = () => {
+        setIsTeamOpen(!isTeamOpen);
+    };
+
+    const handleProjectToggle = () => {
+        setIsProjectOpen(!isProjectOpen);
+    };
 
     return (
         <div>
@@ -18,18 +28,24 @@ const NavBar = () => {
             <h2>Assembly Shop</h2>
 
             <DropdownMenu header='Create'>
-                <Popup trigger={<MenuItem title='Create Team' />}>
-                    <CreateTeam />
-                </Popup>
-
-                <Popup trigger={<MenuItem title='Create Project' />}>
-                    <div>Create Project Pop Up</div>
-                </Popup>
+                <MenuItem title='Create Team' onClick={handleTeamToggle} />
+                <MenuItem
+                    title='Create Project'
+                    onClick={handleProjectToggle}
+                />
             </DropdownMenu>
 
             <DropdownMenu header='Profile'>
                 <MenuItem title='Logout' onClick={Logout} />
             </DropdownMenu>
+
+            <Modal isOpen={isTeamOpen} onClose={handleTeamToggle}>
+                <CreateTeam onClose={handleTeamToggle} />
+            </Modal>
+
+            <Modal isOpen={isProjectOpen} onClose={handleProjectToggle}>
+                <div>Build Project</div>
+            </Modal>
         </div>
     );
 };

@@ -7,7 +7,7 @@ import { useLoadingAction } from '../../context/LoadingContext';
 import useDebounce from '../../hook/useDebounce';
 import InputValidate from '../InputValidate/InputValidate';
 
-const CreateTeam = () => {
+const CreateTeam = ({ onClose }) => {
     const [name, setName] = useState('');
     const [isValid, setIsValid] = useState(false);
     const [search, setSearch] = useState('');
@@ -48,6 +48,10 @@ const CreateTeam = () => {
         try {
             const team = await createTeam({ name, members });
             handleRedirect(team);
+
+            if (onClose) {
+                onClose();
+            }
         } catch (error) {
             console.log(error);
         }
