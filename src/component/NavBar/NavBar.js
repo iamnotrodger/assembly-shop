@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import useUser from '../../context/UserContext';
+import CreateProject from '../CreateProject';
 import CreateTeam from '../CreateTeam';
 import DropdownMenu from '../DropdownMenu';
 import MenuItem from '../MenuItem';
@@ -44,7 +45,7 @@ const NavBar = () => {
             </Modal>
 
             <Modal isOpen={isProjectOpen} onClose={handleProjectToggle}>
-                <div>Build Project</div>
+                <CreateProject onClose={handleProjectToggle} />
             </Modal>
         </div>
     );

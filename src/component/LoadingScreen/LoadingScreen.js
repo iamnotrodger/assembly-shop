@@ -5,11 +5,13 @@ import './LoadingScreen.scss';
 const LoadingScreen = () => {
     const isLoading = useLoading();
 
-    return isLoading ? (
+    if (!isLoading) return null;
+
+    return (
         <div className='global-spinner-overlay'>
             <p>Loading...</p>
         </div>
-    ) : null;
+    );
 };
 
 export default LoadingScreen;

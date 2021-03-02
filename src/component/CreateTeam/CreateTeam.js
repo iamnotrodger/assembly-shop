@@ -48,10 +48,7 @@ const CreateTeam = ({ onClose }) => {
         try {
             const team = await createTeam({ name, members });
             handleRedirect(team);
-
-            if (onClose) {
-                onClose();
-            }
+            if (onClose) onClose();
         } catch (error) {
             console.log(error);
         }
@@ -65,7 +62,7 @@ const CreateTeam = ({ onClose }) => {
     };
 
     return (
-        <div>
+        <div style={{ width: '50vw' }}>
             <h3>Build Team</h3>
             <label>
                 Team Name

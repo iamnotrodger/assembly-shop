@@ -20,6 +20,24 @@ export const getTeams = async () => {
     return teams;
 };
 
+export const getTeamsByAdmin = async () => {
+    const accessToken = await getToken();
+    if (!accessToken) throw new Error('Unauthorized');
+
+    const response = await fetch(API_URL + '/api/team/admin', {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw new Error('Unable to get Teams.');
+    }
+
+    const teams = await response.json();
+    return teams;
+};
+
 export const createTeam = async (newTeam) => {
     const accessToken = await getToken();
     if (!accessToken) throw new Error('Unauthorized');
