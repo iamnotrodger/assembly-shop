@@ -1,6 +1,28 @@
 import { getToken } from './AuthAPI';
+import RequestError from './RequestError';
 
 const API_URL = process.env.REACT_APP_API_URL;
+
+export const getProject = async (teamID, projectID) => {
+    const accessToken = await getToken();
+    if (!accessToken) throw new Error('Unauthorized');
+
+    const response = await fetch(
+        API_URL + `/api/team/${teamID}/project/${projectID}`,
+        {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        },
+    );
+
+    if (!response.ok) {
+        throw new RequestError('Unable to get project', response.status);
+    }
+
+    const project = await response.json();
+    return project;
+};
 
 export const getTeamAndProjects = async () => {
     const accessToken = await getToken();
@@ -13,7 +35,7 @@ export const getTeamAndProjects = async () => {
     });
 
     if (!response.ok) {
-        throw new Error('Unable to get Projects.');
+        throw RequestError('Unable to get Projects.', response.status);
     }
 
     const projects = await response.json();
@@ -36,7 +58,7 @@ export const createProject = async (name, teamID) => {
     });
 
     if (!response.ok) {
-        throw new Error('Unable to create Project.');
+        throw RequestError('Unable to create Project.', response.status);
     }
 
     const { project } = await response.json();

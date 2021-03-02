@@ -14,7 +14,8 @@ import { TeamsProvider } from './context/TeamsContext';
 
 //Pages
 import HomePage from './page/HomePage';
-import LoginPage from './page/LoginPage/LoginPage';
+import LoginPage from './page/LoginPage';
+import ProjectPage from './page/ProjectPage';
 
 //Routes
 import NotFoundRoute from './route/NotFoundRoute';
@@ -49,6 +50,10 @@ const Routes = withRouter(({ location: { pathname } }) => (
             <Route path='/login' component={LoginPage} />
             <AuthRoute path='/auth' />
             <PrivateRoute exact path='/' component={HomePage} />
+            <PrivateRoute
+                path='/team/:teamID/project/:projectID/'
+                component={ProjectPage}
+            />
             <Route component={NotFoundRoute} />
         </Switch>
     </>

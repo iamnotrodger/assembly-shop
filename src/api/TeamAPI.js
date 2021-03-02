@@ -1,4 +1,5 @@
 import { getToken } from './AuthAPI';
+import RequestError from './RequestError';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -13,7 +14,7 @@ export const getTeams = async () => {
     });
 
     if (!response.ok) {
-        throw new Error('Unable to get Teams.');
+        throw new RequestError('Unable to get Teams.', response.status);
     }
 
     const teams = await response.json();
@@ -31,7 +32,7 @@ export const getTeamsByAdmin = async () => {
     });
 
     if (!response.ok) {
-        throw new Error('Unable to get Teams.');
+        throw new RequestError('Unable to get Teams.', response.status);
     }
 
     const teams = await response.json();
@@ -53,7 +54,7 @@ export const createTeam = async (newTeam) => {
     });
 
     if (!response.ok) {
-        throw new Error('Unable to create Teams.');
+        throw new RequestError('Unable to create Team.', response.status);
     }
 
     const { team } = await response.json();

@@ -1,4 +1,5 @@
 import { getToken } from './AuthAPI';
+import RequestError from './RequestError';
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -13,7 +14,7 @@ export const getProfile = async () => {
     });
 
     if (!response.ok) {
-        throw new Error('Unable to get user profile.');
+        throw new RequestError('Unable to get user Profile', response.status);
     }
 
     const profile = await response.json();
@@ -31,7 +32,7 @@ export const getUsers = async (email) => {
     });
 
     if (!response.ok) {
-        throw new Error('Unable to get Users.');
+        throw new RequestError('Unable to get Users', response.status);
     }
 
     const users = await response.json();
