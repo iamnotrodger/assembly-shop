@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useErrorHandler } from 'react-error-boundary';
 import { useHistory } from 'react-router-dom';
 import Select from 'react-select';
 import { createTeam } from '../../api/TeamAPI';
 import { getUsers } from '../../api/UserAPI';
 import { useLoadingAction } from '../../context/LoadingContext';
 import useDebounce from '../../hook/useDebounce';
-import useError from '../../hook/useError';
 import InputValidate from '../InputValidate/InputValidate';
 
 const CreateTeam = ({ onClose }) => {
@@ -17,7 +17,7 @@ const CreateTeam = ({ onClose }) => {
     const [members, setMembers] = useState([]);
 
     const setLoading = useLoadingAction();
-    const throwError = useError();
+    const handleError = useErrorHandler();
     const history = useHistory();
     const loadMembers = useDebounce(async (input) => {
         setSearchLoading(true);
@@ -25,7 +25,7 @@ const CreateTeam = ({ onClose }) => {
             const users = await getUsers(input);
             setMemberOptions(users);
         } catch (error) {
-            throwError(error);
+            console.log(error);
         }
         setSearchLoading(false);
     }, 250);
@@ -52,7 +52,7 @@ const CreateTeam = ({ onClose }) => {
             handleRedirect(team);
             if (onClose) onClose();
         } catch (error) {
-            console.log(error);
+            handleError(error);
         }
         setLoading(false);
     };

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import { useErrorHandler } from 'react-error-boundary';
 import { useHistory } from 'react-router-dom';
 import Select from 'react-select';
 import { createProject } from '../../api/ProjectAPI';
 import { getTeamsByAdmin } from '../../api/TeamAPI';
 import { useLoadingAction } from '../../context/LoadingContext/LoadingContext';
 import { useUsersTeams } from '../../context/TeamsContext/TeamsContext';
-import useError from '../../hook/useError';
 import InputValidate from '../InputValidate/InputValidate';
 
 const CreateProject = ({ onClose }) => {
@@ -15,7 +15,7 @@ const CreateProject = ({ onClose }) => {
 
     const { usersTeams, setUsersTeams } = useUsersTeams();
     const setLoading = useLoadingAction();
-    const throwError = useError();
+    const handleError = useErrorHandler();
     const history = useHistory();
 
     useEffect(() => {
@@ -46,7 +46,7 @@ const CreateProject = ({ onClose }) => {
             handleRedirect(project);
             if (onClose) onClose();
         } catch (error) {
-            throwError(error);
+            handleError(error);
         }
         setLoading(false);
     };

@@ -1,15 +1,15 @@
 import React, { useEffect } from 'react';
+import { useErrorHandler } from 'react-error-boundary';
 import { getTeamAndProjects } from '../../api/ProjectAPI';
 import TeamSection from '../../component/TeamSection';
 import { useLoadingAction } from '../../context/LoadingContext';
 import useTeams from '../../context/TeamsContext/TeamsContext';
-import useError from '../../hook/useError';
 
 const HomePage = () => {
     const { teams, setTeams } = useTeams();
 
     const setLoading = useLoadingAction();
-    const throwError = useError();
+    const handleError = useErrorHandler();
 
     useEffect(() => {
         if (!teams) {
@@ -19,7 +19,7 @@ const HomePage = () => {
                     const teams = await getTeamAndProjects();
                     setTeams(teams);
                 } catch (error) {
-                    throwError(error);
+                    handleError(error);
                 }
                 setLoading(false);
             })();
