@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import { getMembers } from '../../api/MemberAPI';
 
 const MembersContext = createContext();
@@ -6,17 +6,19 @@ const MembersContext = createContext();
 export const MembersProvider = ({ children, teamID }) => {
     const [members, setMembers] = useState(null);
 
-    const loadMembers = useCallback(async () => {
-        try {
-            const members = await getMembers(teamID);
-            setMembers(members);
-        } catch (error) {
-            console.log(error);
-        }
+    useEffect(() => {
+        (async () => {
+            try {
+                const members = await getMembers(teamID);
+                setMembers(members);
+            } catch (error) {
+                console.log(error);
+            }
+        })();
     }, [teamID]);
 
     return (
-        <MembersContext.Provider value={{ members, loadMembers }}>
+        <MembersContext.Provider value={{ members }}>
             {children}
         </MembersContext.Provider>
     );

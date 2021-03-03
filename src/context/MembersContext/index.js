@@ -1,1 +1,1 @@
-export { default } from './MembersContext';
+export { default, MembersProvider } from './MembersContext';
