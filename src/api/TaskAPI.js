@@ -17,7 +17,7 @@ export const getTasks = async (teamID, projectID) => {
     );
 
     if (!response.ok) {
-        throw new RequestError('Unable to get tasks', response.status);
+        throw await RequestError.parseResponse(response);
     }
 
     const tasks = await response.json();

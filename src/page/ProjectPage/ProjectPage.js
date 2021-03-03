@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { getProject } from '../../api/ProjectAPI';
 import { getTasks } from '../../api/TaskAPI';
 import { useLoadingAction } from '../../context/LoadingContext';
+import useError from '../../hook/useError';
 
 const ProjectPage = () => {
     const [project, setProject] = useState(null);
     const [tasks, setTasks] = useState(null);
 
     const { teamID, projectID } = useParams();
-    const history = useHistory();
     const setLoading = useLoadingAction();
+    const throwError = useError();
 
     useEffect(() => {
         (async () => {
@@ -22,22 +23,12 @@ const ProjectPage = () => {
                 setProject(project);
                 setTasks(tasks);
             } catch (error) {
-                handleError(error.code);
-                console.log(error);
+                throwError(error);
             }
             setLoading(false);
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [teamID, projectID]);
-
-    const handleError = (code) => {
-        if (code === 403) {
-            //TODO: handle unauthorized error: error.code = 403
-            alert('Unauthorized');
-        } else if (code === 422) {
-            history.push('/not-found');
-        }
-    };
 
     return (
         <div>

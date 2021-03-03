@@ -17,7 +17,7 @@ export const getProject = async (teamID, projectID) => {
     );
 
     if (!response.ok) {
-        throw new RequestError('Unable to get project', response.status);
+        throw await RequestError.parseResponse(response);
     }
 
     const project = await response.json();
@@ -35,7 +35,7 @@ export const getTeamAndProjects = async () => {
     });
 
     if (!response.ok) {
-        throw RequestError('Unable to get Projects.', response.status);
+        throw await RequestError.parseResponse(response);
     }
 
     const projects = await response.json();
@@ -58,7 +58,7 @@ export const createProject = async (name, teamID) => {
     });
 
     if (!response.ok) {
-        throw RequestError('Unable to create Project.', response.status);
+        throw await RequestError.parseResponse(response);
     }
 
     const { project } = await response.json();

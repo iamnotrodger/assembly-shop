@@ -5,6 +5,7 @@ import { createProject } from '../../api/ProjectAPI';
 import { getTeamsByAdmin } from '../../api/TeamAPI';
 import { useLoadingAction } from '../../context/LoadingContext/LoadingContext';
 import { useUsersTeams } from '../../context/TeamsContext/TeamsContext';
+import useError from '../../hook/useError';
 import InputValidate from '../InputValidate/InputValidate';
 
 const CreateProject = ({ onClose }) => {
@@ -14,6 +15,7 @@ const CreateProject = ({ onClose }) => {
 
     const { usersTeams, setUsersTeams } = useUsersTeams();
     const setLoading = useLoadingAction();
+    const throwError = useError();
     const history = useHistory();
 
     useEffect(() => {
@@ -44,7 +46,7 @@ const CreateProject = ({ onClose }) => {
             handleRedirect(project);
             if (onClose) onClose();
         } catch (error) {
-            console.log(error);
+            throwError(error);
         }
         setLoading(false);
     };

@@ -3,11 +3,13 @@ import { getTeamAndProjects } from '../../api/ProjectAPI';
 import TeamSection from '../../component/TeamSection';
 import { useLoadingAction } from '../../context/LoadingContext';
 import useTeams from '../../context/TeamsContext/TeamsContext';
+import useError from '../../hook/useError';
 
 const HomePage = () => {
     const { teams, setTeams } = useTeams();
 
     const setLoading = useLoadingAction();
+    const throwError = useError();
 
     useEffect(() => {
         if (!teams) {
@@ -17,7 +19,7 @@ const HomePage = () => {
                     const teams = await getTeamAndProjects();
                     setTeams(teams);
                 } catch (error) {
-                    console.error(error);
+                    throwError(error);
                 }
                 setLoading(false);
             })();

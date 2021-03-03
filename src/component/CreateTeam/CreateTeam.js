@@ -5,6 +5,7 @@ import { createTeam } from '../../api/TeamAPI';
 import { getUsers } from '../../api/UserAPI';
 import { useLoadingAction } from '../../context/LoadingContext';
 import useDebounce from '../../hook/useDebounce';
+import useError from '../../hook/useError';
 import InputValidate from '../InputValidate/InputValidate';
 
 const CreateTeam = ({ onClose }) => {
@@ -16,6 +17,7 @@ const CreateTeam = ({ onClose }) => {
     const [members, setMembers] = useState([]);
 
     const setLoading = useLoadingAction();
+    const throwError = useError();
     const history = useHistory();
     const loadMembers = useDebounce(async (input) => {
         setSearchLoading(true);
@@ -23,7 +25,7 @@ const CreateTeam = ({ onClose }) => {
             const users = await getUsers(input);
             setMemberOptions(users);
         } catch (error) {
-            console.log(error);
+            throwError(error);
         }
         setSearchLoading(false);
     }, 250);

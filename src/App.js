@@ -1,4 +1,5 @@
 import React from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import {
     BrowserRouter as Router,
     Route,
@@ -18,27 +19,30 @@ import LoginPage from './page/LoginPage';
 import ProjectPage from './page/ProjectPage';
 
 //Routes
-import NotFoundRoute from './route/NotFoundRoute';
 import AuthRoute from './route/AuthRoute';
 import PrivateRoute from './route/PrivateRoute';
 
 //Components
+import ErrorFallback from './component/ErrorFallback';
 import LoadingScreen from './component/LoadingScreen';
 import NavBar from './component/NavBar';
+import NotFound from './component/NotFound';
 
 const App = () => {
     return (
         <div className='App'>
-            <LoadingContextProvider>
-                <UserProvider>
-                    <TeamsProvider>
-                        <LoadingScreen />
-                        <Router>
-                            <Routes />
-                        </Router>
-                    </TeamsProvider>
-                </UserProvider>
-            </LoadingContextProvider>
+            <ErrorBoundary FallbackComponent={ErrorFallback}>
+                <LoadingContextProvider>
+                    <UserProvider>
+                        <TeamsProvider>
+                            <LoadingScreen />
+                            <Router>
+                                <Routes />
+                            </Router>
+                        </TeamsProvider>
+                    </UserProvider>
+                </LoadingContextProvider>
+            </ErrorBoundary>
         </div>
     );
 };
@@ -54,7 +58,7 @@ const Routes = withRouter(({ location: { pathname } }) => (
                 path='/team/:teamID/project/:projectID/'
                 component={ProjectPage}
             />
-            <Route component={NotFoundRoute} />
+            <Route component={NotFound} />
         </Switch>
     </>
 ));

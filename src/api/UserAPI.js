@@ -14,7 +14,7 @@ export const getProfile = async () => {
     });
 
     if (!response.ok) {
-        throw new RequestError('Unable to get user Profile', response.status);
+        throw await RequestError.parseResponse(response);
     }
 
     const profile = await response.json();
@@ -32,7 +32,7 @@ export const getUsers = async (email) => {
     });
 
     if (!response.ok) {
-        throw new RequestError('Unable to get Users', response.status);
+        throw await RequestError.parseResponse(response);
     }
 
     const users = await response.json();

@@ -1,3 +1,5 @@
+import RequestError from './RequestError';
+
 const API_URL = process.env.REACT_APP_API_URL;
 
 let accessToken = null;
@@ -22,7 +24,7 @@ export const logout = async () => {
         });
 
         if (!response.ok) {
-            throw new Error(response.statusText);
+            throw await RequestError.parseResponse(response);
         }
     } catch (error) {
         console.log(error);
@@ -42,7 +44,7 @@ export const refreshToken = async () => {
         );
 
         if (!response.ok) {
-            throw new Error(response.statusText);
+            throw await RequestError.parseResponse(response);
         }
 
         const { accessToken } = await response.json();
