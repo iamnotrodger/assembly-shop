@@ -4,6 +4,7 @@ import { getProject } from '../../api/ProjectAPI';
 import { getTasks } from '../../api/TaskAPI';
 import TaskBoard from '../../component/TaskBoard/TaskBoard';
 import { useLoadingAction } from '../../context/LoadingContext';
+import { MembersProvider } from '../../context/MembersContext/MembersContext';
 import useError from '../../hook/useError';
 
 const ProjectPage = () => {
@@ -58,11 +59,11 @@ const ProjectPage = () => {
         <div>
             <h2>Project Page</h2>
             <div>{JSON.stringify(project)}</div>
-            <div>
+            <MembersProvider teamID={teamID}>
                 <TaskBoard title='Todo' value={todoTasks} />
                 <TaskBoard title='Doing' value={doingTasks} />
                 <TaskBoard title='Done' value={doneTasks} />
-            </div>
+            </MembersProvider>
         </div>
     );
 };
