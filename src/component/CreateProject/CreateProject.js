@@ -4,29 +4,33 @@ import Select from 'react-select';
 import { createProject } from '../../api/ProjectAPI';
 import { getTeamsByAdmin } from '../../api/TeamAPI';
 import { useLoadingAction } from '../../context/LoadingContext/LoadingContext';
+import { useUsersTeams } from '../../context/TeamsContext/TeamsContext';
 import InputValidate from '../InputValidate/InputValidate';
 
 const CreateProject = ({ onClose }) => {
     const [name, setName] = useState('');
     const [team, setTeam] = useState(null);
-    const [teamOptions, setTeamOptions] = useState([]);
     const [isValid, setIsValid] = useState(false);
 
+    const { usersTeams, setUsersTeams } = useUsersTeams();
     const setLoading = useLoadingAction();
     const history = useHistory();
 
     useEffect(() => {
-        (async () => {
-            setLoading(true);
-            try {
-                const teams = await getTeamsByAdmin();
-                setTeamOptions(teams);
-            } catch (error) {
-                console.log(error);
-            }
-            setLoading(false);
-        })();
-    }, [setLoading]);
+        if (!usersTeams) {
+            (async () => {
+                setLoading(true);
+                try {
+                    const teams = await getTeamsByAdmin();
+                    setUsersTeams(teams);
+                } catch (error) {
+                    console.log(error);
+                }
+                setLoading(false);
+            })();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const handleNameChange = (value, valid) => {
         setName(value);
@@ -72,7 +76,7 @@ const CreateProject = ({ onClose }) => {
                 Team
                 <Select
                     placeholder='Team'
-                    options={teamOptions}
+                    options={usersTeams}
                     getOptionLabel={({ name }) => name}
                     getOptionValue={({ teamID }) => teamID}
                     onChange={setTeam}
