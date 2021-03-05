@@ -1,64 +1,52 @@
 import React, { useEffect, useState } from 'react';
-import { useLoadingAction } from '../../context/LoadingContext';
-import { getTasks } from '../../api/TaskAPI';
+import useTasks from '../../context/TasksContext';
+import TaskList from '../TaskList';
 
-const TaskBoard = ({ teamID, projectID }) => {
-    const [todoTasks, setTodoTasks] = useState([]);
-    const [doingTasks, setDoingTasks] = useState([]);
-    const [doneTasks, setDoneTasks] = useState([]);
+const TaskBoard = () => {
+    const [todo, setTodo] = useState([]);
+    const [doing, setDoing] = useState([]);
+    const [done, setDone] = useState([]);
 
-    const setLoading = useLoadingAction();
+    const { tasks } = useTasks();
 
     useEffect(() => {
-        (async () => {
-            setLoading(true);
-            try {
-                const tasks = await getTasks(teamID, projectID);
-                filterTask(tasks);
-            } catch (error) {
-                console.log(error);
-            }
-            setLoading(false);
-        })();
-    }, [teamID, projectID, setLoading]);
+        filterAndSet(tasks);
+    }, [tasks]);
 
-    const filterTask = (tasks) => {
-        const todoTasks = [];
-        const doingTasks = [];
-        const doneTasks = [];
-
-        tasks.forEach((task) => {
-            const { completed, activeLog, totalTime } = task;
-            if (completed) {
-                doneTasks.push(task);
-            } else if (activeLog || totalTime > 0) {
-                doingTasks.push(task);
-            } else {
-                todoTasks.push(task);
-            }
-        });
-
-        setTodoTasks(todoTasks);
-        setDoingTasks(doingTasks);
-        setDoneTasks(doneTasks);
+    const filterAndSet = (tasks) => {
+        const { todo, doing, done } = filterTask(tasks);
+        setTodo(todo);
+        setDoing(doing);
+        setDone(done);
     };
-
     return (
         <div>
-            <div>
-                TODO
-                <div>{JSON.stringify(todoTasks)}</div>
-            </div>
-            <div>
-                DOING
-                <div>{JSON.stringify(doingTasks)}</div>
-            </div>
-            <div>
-                DONE
-                <div>{JSON.stringify(doneTasks)}</div>
-            </div>
+            <TaskList title='Todo' value={todo} />
+            <TaskList title='Doing' value={doing} />
+            <TaskList title='Done' value={done} />
         </div>
     );
+};
+
+const filterTask = (tasks) => {
+    const todo = [];
+    const doing = [];
+    const done = [];
+
+    tasks.forEach((task, index) => {
+        const { completed, activeLog, totalTime } = task;
+        task.index = index;
+
+        if (completed) {
+            done.push(task);
+        } else if (activeLog || totalTime > 0) {
+            doing.push(task);
+        } else {
+            todo.push(task);
+        }
+    });
+
+    return { todo, doing, done };
 };
 
 export default TaskBoard;

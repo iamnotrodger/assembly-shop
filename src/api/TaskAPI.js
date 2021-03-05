@@ -23,3 +23,43 @@ export const getTasks = async (teamID, projectID) => {
     const tasks = await response.json();
     return tasks;
 };
+
+export const startTask = async (taskID) => {
+    const accessToken = await getToken();
+    if (!accessToken) throw new Error('Unauthorized');
+
+    const response = await fetch(API_URL + `/api/task/${taskID}/start`, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw await RequestError.parseResponse(response);
+    }
+
+    const log = await response.json();
+    return log;
+};
+
+export const stopTask = async (taskID) => {
+    const accessToken = await getToken();
+    if (!accessToken) throw new Error('Unauthorized');
+
+    const response = await fetch(API_URL + `/api/task/${taskID}/stop`, {
+        method: 'PUT',
+        mode: 'cors',
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw await RequestError.parseResponse(response);
+    }
+
+    const log = await response.json();
+    return log;
+};
