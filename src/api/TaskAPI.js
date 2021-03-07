@@ -25,6 +25,8 @@ export const getTasks = async (teamID, projectID) => {
 };
 
 export const startTask = async (taskID) => {
+    const time = new Date();
+
     const accessToken = await getToken();
     if (!accessToken) throw new Error('Unauthorized');
 
@@ -32,19 +34,20 @@ export const startTask = async (taskID) => {
         method: 'POST',
         mode: 'cors',
         headers: {
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`,
         },
+        body: JSON.stringify({ time }),
     });
 
-    if (!response.ok) {
-        throw await RequestError.parseResponse(response);
-    }
+    if (!response.ok) throw await RequestError.parseResponse(response);
 
-    const log = await response.json();
-    return log;
+    return time.toISOString();
 };
 
 export const stopTask = async (taskID) => {
+    const time = new Date();
+
     const accessToken = await getToken();
     if (!accessToken) throw new Error('Unauthorized');
 
@@ -52,14 +55,14 @@ export const stopTask = async (taskID) => {
         method: 'PUT',
         mode: 'cors',
         headers: {
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`,
         },
+        body: JSON.stringify({ time }),
     });
 
-    if (!response.ok) {
-        throw await RequestError.parseResponse(response);
-    }
+    if (!response.ok) throw await RequestError.parseResponse(response);
 
-    const log = await response.json();
-    return log;
+    const { total } = await response.json();
+    return total;
 };

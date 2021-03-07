@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import useTasks from '../../context/TasksContext';
-import TaskList from '../TaskList';
+import TaskList from './TaskList';
 
 const TaskBoard = () => {
     const [todo, setTodo] = useState([]);
