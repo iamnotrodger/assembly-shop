@@ -1,9 +1,9 @@
 import React from 'react';
 import { startTask, stopTask } from '../../api/TaskAPI';
 import useTasks, { TASK_ACTIONS } from '../../context/TasksContext';
+import TaskTime from '../TaskTime';
 import Assignee from './Assignee';
 import LogButton from './LogButton';
-import Timer from './Timer';
 
 const Task = ({ value }) => {
     const { taskID, title, totalTime, assignee, activeLog } = value;
@@ -41,7 +41,7 @@ const Task = ({ value }) => {
                 />
             </Assignee>
             <div>
-                <Timer total={totalTime} log={activeLog} />
+                <TaskTime total={totalTime} log={activeLog} />
             </div>
         </div>
     );
