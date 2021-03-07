@@ -1,6 +1,5 @@
 import RequestError from './RequestError';
-
-const API_URL = process.env.REACT_APP_API_URL;
+import { API_URL } from './utils';
 
 let accessToken = null;
 

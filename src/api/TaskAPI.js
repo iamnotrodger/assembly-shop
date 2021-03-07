@@ -1,7 +1,6 @@
 import { getToken } from './AuthAPI';
 import RequestError from './RequestError';
-
-const API_URL = process.env.REACT_APP_API_URL;
+import { API_URL } from './utils';
 
 export const getTasks = async (teamID, projectID) => {
     const accessToken = await getToken();
