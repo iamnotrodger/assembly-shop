@@ -9,7 +9,9 @@ const DropdownMenu = ({ children, header }) => {
 
     return (
         <div>
-            <button onClick={toggleMenu}>{header}</button>
+            <div style={{ cursor: 'pointer' }} onClick={toggleMenu}>
+                {header}
+            </div>
             <nav
                 ref={dropdownRef}
                 onClick={toggleMenu}

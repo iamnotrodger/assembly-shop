@@ -1,4 +1,5 @@
 import React from 'react';
+import UserIcon from '../UserIcon';
 import useUser from '../../context/UserContext';
 
 const Assignee = ({ value, children }) => {
@@ -10,6 +11,7 @@ const Assignee = ({ value, children }) => {
 
     return (
         <div>
+            <UserIcon value={value} />
             <div>{user.userID === value.userID ? children : null}</div>
         </div>
     );

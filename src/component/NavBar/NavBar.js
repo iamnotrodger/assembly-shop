@@ -6,11 +6,14 @@ import CreateTeam from '../CreateTeam';
 import DropdownMenu from '../DropdownMenu';
 import MenuItem from '../MenuItem';
 import Modal from '../Modal/Modal';
+import UserIcon from '../UserIcon/UserIcon';
 
 const NavBar = () => {
     const { Logout } = useUser();
     const [isTeamOpen, setIsTeamOpen] = useState(false);
     const [isProjectOpen, setIsProjectOpen] = useState(false);
+
+    const { user } = useUser();
 
     const handleTeamToggle = () => {
         setIsTeamOpen(!isTeamOpen);
@@ -28,7 +31,7 @@ const NavBar = () => {
 
             <h2>Assembly Shop</h2>
 
-            <DropdownMenu header='Create'>
+            <DropdownMenu header={<button>Create</button>}>
                 <MenuItem title='Create Team' onClick={handleTeamToggle} />
                 <MenuItem
                     title='Create Project'
@@ -36,7 +39,7 @@ const NavBar = () => {
                 />
             </DropdownMenu>
 
-            <DropdownMenu header='Profile'>
+            <DropdownMenu header={<UserIcon value={user} />}>
                 <MenuItem title='Logout' onClick={Logout} />
             </DropdownMenu>
 

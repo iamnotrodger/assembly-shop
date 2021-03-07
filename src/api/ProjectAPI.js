@@ -43,7 +43,6 @@ export const getTeamAndProjects = async () => {
 };
 
 export const createProject = async (name, teamID) => {
-    console.log(name);
     const accessToken = await getToken();
     if (!accessToken) throw new Error('Unauthorized');
 
