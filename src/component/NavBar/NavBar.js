@@ -5,7 +5,7 @@ import CreateProject from '../CreateProject';
 import CreateTeam from '../CreateTeam';
 import DropdownMenu from '../DropdownMenu';
 import MenuItem from '../MenuItem';
-import Modal from '../Modal/Modal';
+import Modal from '../Modal';
 import UserIcon from '../UserIcon/UserIcon';
 
 const NavBar = () => {

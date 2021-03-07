@@ -18,7 +18,7 @@ export const MembersProvider = ({ children, teamID }) => {
     }, [teamID]);
 
     return (
-        <MembersContext.Provider value={{ members }}>
+        <MembersContext.Provider value={members}>
             {children}
         </MembersContext.Provider>
     );
