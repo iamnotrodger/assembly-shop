@@ -16,6 +16,7 @@ const TaskInfo = ({ value }) => {
         assignee,
         totalTime,
         activeLog,
+        isLogLoaded,
         completed,
         logs,
     } = value;
@@ -26,10 +27,14 @@ const TaskInfo = ({ value }) => {
     const setLoading = useLoadingAction();
 
     useEffect(() => {
-        if (!logs) {
+        if (!isLogLoaded) {
             (async () => {
                 try {
-                    value.logs = await getLogs(taskID);
+                    const logs = await getLogs(taskID);
+
+                    value.logs = [...(value.logs || []), ...logs];
+                    value.isLogLoaded = true;
+
                     tasksDispatch({
                         type: TASK_ACTIONS.UPDATE,
                         payload: value,
@@ -39,7 +44,7 @@ const TaskInfo = ({ value }) => {
                 }
             })();
         }
-    }, [logs, setLoading, taskID, tasksDispatch, value]);
+    }, [isLogLoaded, logs, setLoading, taskID, tasksDispatch, value]);
 
     const onChangeMember = async ({ user }) => {
         setLoading(true);
@@ -83,10 +88,10 @@ const TaskInfo = ({ value }) => {
     //TODO: be able to update title + description
     return (
         <div style={{ width: '50vw' }}>
-            <di>
+            <div>
                 <h2>Task</h2>
                 <button onClick={onDelete}>delete</button>
-            </di>
+            </div>
             <div>
                 <div>Task Name</div>
                 <h2>{title}</h2>

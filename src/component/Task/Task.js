@@ -17,7 +17,9 @@ const Task = ({ value }) => {
     const onStart = async () => {
         try {
             const startTime = await startTask(taskID);
+
             value.activeLog = { startTime };
+
             tasksDispatch({ type: TASK_ACTIONS.UPDATE, payload: value });
         } catch (error) {
             console.log(error);
@@ -26,8 +28,13 @@ const Task = ({ value }) => {
 
     const onStop = async () => {
         try {
-            value.totalTime = await stopTask(taskID);
+            const { total, log } = await stopTask(taskID);
+
+            value.totalTime = total;
             value.activeLog = null;
+            value.logs = value.logs || [];
+            value.logs.push(log);
+
             tasksDispatch({ type: TASK_ACTIONS.UPDATE, payload: value });
         } catch (error) {
             console.log(error);
@@ -45,6 +52,7 @@ const Task = ({ value }) => {
                 onClick={handleInfoToggle}>
                 <h3>{title}</h3>
             </div>
+
             <Assignee value={assignee}>
                 <LogButton
                     active={activeLog != null}
@@ -52,6 +60,7 @@ const Task = ({ value }) => {
                     onStop={onStop}
                 />
             </Assignee>
+
             <div>
                 <TaskTime total={totalTime} log={activeLog} />
             </div>

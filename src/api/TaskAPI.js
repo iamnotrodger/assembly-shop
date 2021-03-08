@@ -62,8 +62,7 @@ export const stopTask = async (taskID) => {
 
     if (!response.ok) throw await RequestError.parseResponse(response);
 
-    const { total } = await response.json();
-    return total;
+    return await response.json();
 };
 
 export const assignTask = async (taskID, userID) => {
