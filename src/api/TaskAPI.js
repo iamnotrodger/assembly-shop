@@ -124,6 +124,8 @@ export const completeTaskToggle = async (taskID, completed) => {
     );
 
     if (!response.ok) throw await RequestError.parseResponse(response);
+
+    if (completed) return await response.json();
 };
 
 export const deleteTask = async (taskID) => {

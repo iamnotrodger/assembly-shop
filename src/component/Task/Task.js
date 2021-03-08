@@ -10,7 +10,7 @@ import LogButton from './LogButton';
 const Task = ({ value }) => {
     const [isInfoOpen, setIsInfoOpen] = useState(false);
 
-    const { taskID, title, totalTime, assignee, activeLog } = value;
+    const { taskID, title, totalTime, assignee, activeLog, completed } = value;
 
     const { tasksDispatch } = useTasks();
 
@@ -28,9 +28,9 @@ const Task = ({ value }) => {
 
     const onStop = async () => {
         try {
-            const { total, log } = await stopTask(taskID);
+            const { totalTime, log } = await stopTask(taskID);
 
-            value.totalTime = total;
+            value.totalTime = totalTime;
             value.activeLog = null;
             value.logs = value.logs || [];
             value.logs.push(log);
@@ -54,11 +54,13 @@ const Task = ({ value }) => {
             </div>
 
             <Assignee value={assignee}>
-                <LogButton
-                    active={activeLog != null}
-                    onStart={onStart}
-                    onStop={onStop}
-                />
+                {!completed ? (
+                    <LogButton
+                        active={activeLog != null}
+                        onStart={onStart}
+                        onStop={onStop}
+                    />
+                ) : null}
             </Assignee>
 
             <div>

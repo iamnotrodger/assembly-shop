@@ -73,7 +73,12 @@ const TaskInfo = ({ value }) => {
 
     const onCompleteToggle = async () => {
         try {
-            await completeTaskToggle(taskID, !completed);
+            const result = await completeTaskToggle(taskID, !completed);
+
+            if (!completed) {
+                value.activeLog = null;
+                value.totalTime = result.totalTime;
+            }
 
             value.completed = !completed;
             tasksDispatch({
