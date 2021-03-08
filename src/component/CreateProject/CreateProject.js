@@ -7,6 +7,7 @@ import { getTeamsByAdmin } from '../../api/TeamAPI';
 import { useLoadingAction } from '../../context/LoadingContext/LoadingContext';
 import { useUsersTeams } from '../../context/TeamsContext/TeamsContext';
 import InputValidate from '../InputValidate/InputValidate';
+import { validateProjectName } from './utils';
 
 const CreateProject = ({ onClose }) => {
     const [name, setName] = useState('');
@@ -67,7 +68,6 @@ const CreateProject = ({ onClose }) => {
             <label>
                 Project Name
                 <InputValidate
-                    required
                     placeholder='Name'
                     value={name}
                     onChange={handleNameChange}
@@ -89,24 +89,6 @@ const CreateProject = ({ onClose }) => {
             </button>
         </div>
     );
-};
-
-const validateProjectName = (name) => {
-    let valid = true;
-    let error = '';
-
-    if (!name) {
-        valid = false;
-        error = 'Team name is required';
-    } else if (name.length > 100) {
-        valid = false;
-        error = "Team name can't be longer than 100 characters";
-    } else if (name.match(/[!@#$%^&*()+=[\]{};:"\\|,.<>/?]/)) {
-        valid = false;
-        error = 'Special characters are not allowed';
-    }
-
-    return { valid, error };
 };
 
 export default CreateProject;

@@ -7,6 +7,7 @@ import { getUsers } from '../../api/UserAPI';
 import { useLoadingAction } from '../../context/LoadingContext';
 import useDebounce from '../../hook/useDebounce';
 import InputValidate from '../InputValidate/InputValidate';
+import { validateTeamName } from './utils';
 
 const CreateTeam = ({ onClose }) => {
     const [name, setName] = useState('');
@@ -98,24 +99,6 @@ const CreateTeam = ({ onClose }) => {
             </button>
         </div>
     );
-};
-
-const validateTeamName = (name) => {
-    let valid = true;
-    let error = '';
-
-    if (!name) {
-        valid = false;
-        error = 'Team name is required';
-    } else if (name.length > 100) {
-        valid = false;
-        error = "Team name can't be longer than 100 characters";
-    } else if (name.match(/[!@#$%^&*()+=[\]{};:"\\|,.<>/?]/)) {
-        valid = false;
-        error = 'Special characters are not allowed';
-    }
-
-    return { valid, error };
 };
 
 export default CreateTeam;
