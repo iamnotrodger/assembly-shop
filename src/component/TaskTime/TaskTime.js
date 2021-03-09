@@ -1,6 +1,6 @@
 import React from 'react';
-import Time from './Time';
-import { calculateTime, formatTime } from './utils';
+import Time from '../Time';
+import { calculateTime, formatTime } from '../../utils/time';
 
 const TaskTime = ({ total, log }) => {
     if (!total && !log) {

@@ -66,7 +66,7 @@ export const startTask = async (taskID) => {
 
     if (!response.ok) throw await RequestError.parseResponse(response);
 
-    return time.toISOString();
+    return await response.json();
 };
 
 export const stopTask = async (taskID) => {

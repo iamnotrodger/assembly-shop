@@ -19,3 +19,20 @@ export const getLogs = async (taskID) => {
     const logs = await response.json();
     return logs;
 };
+
+export const deleteLog = async (taskID, logID) => {
+    const accessToken = await getToken();
+    if (!accessToken) throw new Error('Unauthorized');
+
+    const response = await fetch(API_URL + `/api/task/${taskID}/log/${logID}`, {
+        method: 'DELETE',
+        mode: 'cors',
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
+
+    if (!response.ok) throw await RequestError.parseResponse(response);
+
+    return await response.json();
+};

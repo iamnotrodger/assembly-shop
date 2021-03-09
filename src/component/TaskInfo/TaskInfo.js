@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getLogs } from '../../api/LogAPI';
 import { useLoadingAction } from '../../context/LoadingContext';
 import useTasks, { TASK_ACTIONS } from '../../context/TasksContext';
@@ -7,6 +7,8 @@ import Select from 'react-select';
 import useMembers from '../../context/MembersContext';
 import { assignTask, completeTaskToggle, deleteTask } from '../../api/TaskAPI';
 import useUser from '../../context/UserContext';
+import LogList from './LogList';
+import { addLog, uniqueLogs } from '../../utils/log';
 
 const TaskInfo = ({ value }) => {
     const {
@@ -26,13 +28,16 @@ const TaskInfo = ({ value }) => {
     const { user } = useUser();
     const setLoading = useLoadingAction();
 
+    const [owned] = useState(assignee && assignee.userID === user.userID);
+
     useEffect(() => {
         if (!isLogLoaded) {
             (async () => {
                 try {
-                    const logs = await getLogs(taskID);
+                    const logs = await getLogs(value.taskID);
 
-                    value.logs = [...(value.logs || []), ...logs];
+                    if (logs.length !== 0) value.started = true;
+                    value.logs = uniqueLogs(value.logs || [], logs);
                     value.isLogLoaded = true;
 
                     tasksDispatch({
@@ -44,7 +49,7 @@ const TaskInfo = ({ value }) => {
                 }
             })();
         }
-    }, [isLogLoaded, logs, setLoading, taskID, tasksDispatch, value]);
+    }, [isLogLoaded, setLoading, tasksDispatch, value]);
 
     const onChangeMember = async ({ user }) => {
         setLoading(true);
@@ -76,8 +81,10 @@ const TaskInfo = ({ value }) => {
             const result = await completeTaskToggle(taskID, !completed);
 
             if (!completed) {
+                const { totalTime, log } = result;
                 value.activeLog = null;
-                value.totalTime = result.totalTime;
+                value.totalTime = totalTime;
+                value.logs = addLog(logs, log);
             }
 
             value.completed = !completed;
@@ -90,7 +97,21 @@ const TaskInfo = ({ value }) => {
         }
     };
 
-    //TODO: be able to update title + description
+    const onDeleteLog = (logID, totalTime) => {
+        if (totalTime != null) {
+            value.totalTime = totalTime;
+        }
+
+        value.logs = logs.filter((log) => log.logID !== logID);
+
+        console.log(value);
+
+        tasksDispatch({
+            type: TASK_ACTIONS.UPDATE,
+            payload: value,
+        });
+    };
+
     return (
         <div style={{ width: '50vw' }}>
             <div>
@@ -128,11 +149,17 @@ const TaskInfo = ({ value }) => {
 
             <div>
                 <h3>Logs</h3>
-                <div>{JSON.stringify(value.logs)}</div>
+                <div>
+                    <LogList
+                        value={logs}
+                        onDelete={onDeleteLog}
+                        owned={owned}
+                    />
+                </div>
             </div>
 
             <div>
-                {assignee && assignee.userID === user.userID ? (
+                {owned ? (
                     <button onClick={onCompleteToggle}>
                         {completed ? 'Incomplete' : 'Completed'}
                     </button>

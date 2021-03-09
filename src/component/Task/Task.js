@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { startTask, stopTask } from '../../api/TaskAPI';
 import useTasks, { TASK_ACTIONS } from '../../context/TasksContext';
+import { addLog } from '../../utils/log';
 import Modal from '../Modal';
 import TaskInfo from '../TaskInfo/TaskInfo';
 import TaskTime from '../TaskTime';
@@ -16,9 +17,10 @@ const Task = ({ value }) => {
 
     const onStart = async () => {
         try {
-            const startTime = await startTask(taskID);
+            const { log } = await startTask(taskID);
 
-            value.activeLog = { startTime };
+            value.activeLog = log;
+            value.logs = addLog(value.logs || [], log);
 
             tasksDispatch({ type: TASK_ACTIONS.UPDATE, payload: value });
         } catch (error) {
@@ -32,8 +34,7 @@ const Task = ({ value }) => {
 
             value.totalTime = totalTime;
             value.activeLog = null;
-            value.logs = value.logs || [];
-            value.logs.push(log);
+            value.logs = addLog(value.logs || [], log);
 
             tasksDispatch({ type: TASK_ACTIONS.UPDATE, payload: value });
         } catch (error) {

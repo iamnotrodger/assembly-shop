@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { formatTime } from './utils';
+import { formatTime } from '../../utils/time';
 
 const Time = ({ total }) => {
     const [time, setTime] = useState(total);
@@ -11,6 +11,10 @@ const Time = ({ total }) => {
 
         return () => clearTimeout(timer);
     }, [time]);
+
+    useEffect(() => {
+        setTime(total);
+    }, [total]);
 
     return <div>{formatTime(time)}</div>;
 };
