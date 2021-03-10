@@ -21,6 +21,7 @@ const Task = ({ value }) => {
 
             value.activeLog = log;
             value.logs = addLog(value.logs || [], log);
+            value.started = true;
 
             tasksDispatch({ type: TASK_ACTIONS.UPDATE, payload: value });
         } catch (error) {

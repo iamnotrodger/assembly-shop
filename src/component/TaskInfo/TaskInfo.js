@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { getLogs } from '../../api/LogAPI';
+import { completeTaskToggle, deleteTask } from '../../api/TaskAPI';
 import { useLoadingAction } from '../../context/LoadingContext';
 import useTasks, { TASK_ACTIONS } from '../../context/TasksContext';
-import TaskTime from '../TaskTime';
-import Select from 'react-select';
-import useMembers from '../../context/MembersContext';
-import {
-    assignTask,
-    completeTaskToggle,
-    deleteTask,
-    updateTask,
-} from '../../api/TaskAPI';
 import useUser from '../../context/UserContext';
-import LogList from './LogList';
 import { addLog, uniqueLogs } from '../../utils/log';
-import InputEditable from '../InputEditable/InputEditable';
+import TaskTime from '../TaskTime';
+import Assignee from './Assignee';
+import Title from './Title';
+import Description from './Description';
+import Logs from './Logs';
 
 const TaskInfo = ({ value }) => {
     const {
@@ -30,7 +25,6 @@ const TaskInfo = ({ value }) => {
     } = value;
 
     const { tasksDispatch } = useTasks();
-    const members = useMembers();
     const { user } = useUser();
     const setLoading = useLoadingAction();
 
@@ -59,49 +53,12 @@ const TaskInfo = ({ value }) => {
         }
     }, [isLogLoaded, setLoading, tasksDispatch, value]);
 
-    const handleTitleSave = async (title) => {
-        try {
-            if (!title) return;
-
-            await updateTask(taskID, title, 'title');
-            value.title = title;
-
-            tasksDispatch({
-                type: TASK_ACTIONS.UPDATE,
-                payload: value,
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const handleDescriptionSave = async (description) => {
-        try {
-            await updateTask(taskID, description, 'description');
-            value.description = description;
-            tasksDispatch({
-                type: TASK_ACTIONS.UPDATE,
-                payload: value,
-            });
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
-    const handleMemberChange = async ({ user }) => {
-        setLoading(true);
-        try {
-            await assignTask(taskID, user.userID);
-
-            value.assignee = user;
-            tasksDispatch({
-                type: TASK_ACTIONS.UPDATE,
-                payload: value,
-            });
-        } catch (error) {
-            console.log(error);
-        }
-        setLoading(false);
+    const updateTask = (task) => {
+        value = { ...value, ...task };
+        tasksDispatch({
+            type: TASK_ACTIONS.UPDATE,
+            payload: value,
+        });
     };
 
     const handleDelete = async () => {
@@ -134,81 +91,29 @@ const TaskInfo = ({ value }) => {
         }
     };
 
-    const handleDeleteLog = (logID, totalTime) => {
-        if (totalTime != null) {
-            value.totalTime = totalTime;
-        }
-
-        value.logs = logs.filter((log) => log.logID !== logID);
-
-        console.log(value);
-
-        tasksDispatch({
-            type: TASK_ACTIONS.UPDATE,
-            payload: value,
-        });
-    };
-
     return (
         <div style={{ width: '50vw' }}>
             <div>
                 <h2>Task</h2>
                 <button onClick={handleDelete}>delete</button>
             </div>
-            <div>
-                <label>
-                    Task Title
-                    <InputEditable
-                        text={title}
-                        type='text'
-                        onSave={handleTitleSave}>
-                        <h2>{title}</h2>
-                    </InputEditable>
-                </label>
-            </div>
 
-            <div>
-                <div>Team Member</div>
-                <Select
-                    placeholder='Assigned To'
-                    isClearable={false}
-                    isSearchable={false}
-                    value={assignee ? { user: assignee } : null}
-                    options={members}
-                    getOptionLabel={({ user: { email } }) => email}
-                    getOptionValue={({ user: { userID } }) => userID}
-                    onChange={handleMemberChange}
-                />
-            </div>
+            <Title id={taskID} value={title} onUpdate={updateTask} />
 
-            <div>
-                <label>
-                    Task Description
-                    <InputEditable
-                        text={description}
-                        type='text'
-                        onSave={handleDescriptionSave}
-                        hasButton>
-                        <p>{description || 'Description'}</p>
-                    </InputEditable>
-                </label>
-            </div>
+            <Assignee id={taskID} value={assignee} onUpdate={updateTask} />
+
+            <Description
+                id={taskID}
+                value={description}
+                onUpdate={updateTask}
+            />
 
             <div>
                 <div>Total Duration</div>
                 <TaskTime total={totalTime} log={activeLog} />
             </div>
 
-            <div>
-                <h3>Logs</h3>
-                <div>
-                    <LogList
-                        value={logs}
-                        onDelete={handleDeleteLog}
-                        owned={owned}
-                    />
-                </div>
-            </div>
+            <Logs value={logs} onUpdate={updateTask} owned={owned} />
 
             <div>
                 {owned ? (
