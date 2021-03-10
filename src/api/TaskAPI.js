@@ -142,3 +142,24 @@ export const deleteTask = async (taskID) => {
 
     if (!response.ok) throw await RequestError.parseResponse(response);
 };
+
+export const updateTask = async (taskID, value, field) => {
+    console.log('updating-task');
+    const accessToken = await getToken();
+    if (!accessToken) throw new Error('Unauthorized');
+
+    const response = await fetch(
+        API_URL + `/api/task/${taskID}?field=${field}`,
+        {
+            method: 'PUT',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json',
+                Authorization: `Bearer ${accessToken}`,
+            },
+            body: JSON.stringify({ value }),
+        },
+    );
+
+    if (!response.ok) throw await RequestError.parseResponse(response);
+};
