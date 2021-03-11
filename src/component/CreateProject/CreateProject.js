@@ -5,7 +5,10 @@ import Select from 'react-select';
 import { createProject } from '../../api/ProjectAPI';
 import { getTeamsByAdmin } from '../../api/TeamAPI';
 import { useLoadingAction } from '../../context/LoadingContext/LoadingContext';
-import { useUsersTeams } from '../../context/TeamsContext/TeamsContext';
+import useTeams, {
+    useUsersTeams,
+} from '../../context/TeamsContext/TeamsContext';
+import { addProject } from '../../utils/project';
 import InputValidate from '../InputValidate/InputValidate';
 import { validateProjectName } from './utils';
 
@@ -15,6 +18,7 @@ const CreateProject = ({ onClose }) => {
     const [isValid, setIsValid] = useState(false);
 
     const { usersTeams, setUsersTeams } = useUsersTeams();
+    const { teams, setTeams } = useTeams();
     const setLoading = useLoadingAction();
     const handleError = useErrorHandler();
     const history = useHistory();
@@ -44,12 +48,22 @@ const CreateProject = ({ onClose }) => {
         setLoading(true);
         try {
             const project = await createProject(name, team.teamID);
+
+            addProjectToTeamsContext(project);
             handleRedirect(project);
+
             if (onClose) onClose();
         } catch (error) {
             handleError(error);
         }
         setLoading(false);
+    };
+
+    const addProjectToTeamsContext = (project) => {
+        if (!teams) return;
+
+        const newTeamsState = addProject(teams, project);
+        setTeams(newTeamsState);
     };
 
     const handleRedirect = (project) => {
