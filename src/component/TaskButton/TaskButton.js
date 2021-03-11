@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import CreateTask from '../CreateTask/CreateTask';
+import CreateTask from '../CreateTask';
 import Modal from '../Modal';
 
 const TaskButton = ({ teamID, projectID }) => {

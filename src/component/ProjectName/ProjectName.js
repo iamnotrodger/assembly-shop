@@ -1,7 +1,7 @@
 import React from 'react';
 import { updateProjectName } from '../../api/ProjectAPI';
-import { validateProjectName } from '../CreateProject/utils';
-import InputEditable from '../InputEditable/InputEditable';
+import { validateProjectName } from '../../utils/validate';
+import InputEditable from '../InputEditable';
 
 const ProjectName = ({
     name,

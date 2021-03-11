@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import useProject from '../../context/ProjectContext';
 import Modal from '../Modal';
-import ProjectName from '../ProjectName/ProjectName';
-import ProjectSettings from '../ProjectSettings/ProjectSettings';
+import ProjectName from '../ProjectName';
+import ProjectSettings from '../ProjectSettings';
 
 const ProjectHeader = () => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);

@@ -1,1 +1,1 @@
-export { default, TeamsProvider } from './TeamsContext';
+export { default, TeamsProvider, useUsersTeams } from './TeamsContext';

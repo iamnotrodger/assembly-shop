@@ -1,5 +1,5 @@
 import React from 'react';
-import Log from '../Log/Log';
+import Log from '../Log';
 
 const LogList = ({ value, owned, onDelete }) => {
     if (!value) return null;

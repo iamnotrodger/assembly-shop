@@ -2,13 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
 import { useHistory } from 'react-router-dom';
 import Select from 'react-select';
-import useTeams from '../../context/TeamsContext/TeamsContext';
+import useTeams from '../../context/TeamsContext';
 import { createTeam } from '../../api/TeamAPI';
 import { getUsers } from '../../api/UserAPI';
 import { useLoadingAction } from '../../context/LoadingContext';
 import useDebounce from '../../hook/useDebounce';
 import InputValidate from '../InputValidate/InputValidate';
-import { validateTeamName } from './utils';
+import { validateTeamName } from '../../utils/validate';
 
 const CreateTeam = ({ onClose }) => {
     const [name, setName] = useState('');

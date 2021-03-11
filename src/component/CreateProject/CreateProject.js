@@ -4,13 +4,11 @@ import { useHistory } from 'react-router-dom';
 import Select from 'react-select';
 import { createProject } from '../../api/ProjectAPI';
 import { getTeamsByAdmin } from '../../api/TeamAPI';
-import { useLoadingAction } from '../../context/LoadingContext/LoadingContext';
-import useTeams, {
-    useUsersTeams,
-} from '../../context/TeamsContext/TeamsContext';
+import { useLoadingAction } from '../../context/LoadingContext';
+import useTeams, { useUsersTeams } from '../../context/TeamsContext';
 import { addProject } from '../../utils/project';
 import InputValidate from '../InputValidate/InputValidate';
-import { validateProjectName } from './utils';
+import { validateProjectName } from '../../utils/validate';
 
 const CreateProject = ({ onClose }) => {
     const [name, setName] = useState('');

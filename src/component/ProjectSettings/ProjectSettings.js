@@ -3,9 +3,9 @@ import { useErrorHandler } from 'react-error-boundary';
 import { useHistory } from 'react-router';
 import { deleteProject } from '../../api/ProjectAPI';
 import useProject from '../../context/ProjectContext';
-import useTeams from '../../context/TeamsContext/TeamsContext';
+import useTeams from '../../context/TeamsContext';
 import { removeProject } from '../../utils/project';
-import ProjectName from '../ProjectName/ProjectName';
+import ProjectName from '../ProjectName';
 
 const ProjectSettings = () => {
     const { project, isAdmin, setProject } = useProject();

@@ -3,7 +3,7 @@ import { useErrorHandler } from 'react-error-boundary';
 import { getTeamAndProjects } from '../../api/ProjectAPI';
 import TeamSection from '../../component/TeamSection';
 import { useLoadingAction } from '../../context/LoadingContext';
-import useTeams from '../../context/TeamsContext/TeamsContext';
+import useTeams from '../../context/TeamsContext';
 
 const HomePage = () => {
     const { teams, setTeams } = useTeams();

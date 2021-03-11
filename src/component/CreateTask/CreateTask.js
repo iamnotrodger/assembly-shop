@@ -5,7 +5,7 @@ import { useLoadingAction } from '../../context/LoadingContext';
 import useMembers from '../../context/MembersContext';
 import useTasks, { TASK_ACTIONS } from '../../context/TasksContext';
 import InputValidate from '../InputValidate/InputValidate';
-import { validateTitle } from './utils';
+import { validateTaskTitle } from '../../utils/validate';
 
 const CreateTask = ({ teamID, projectID, onClose }) => {
     const [title, setTitle] = useState('');
@@ -57,7 +57,7 @@ const CreateTask = ({ teamID, projectID, onClose }) => {
                     placeholder='Title'
                     value={title}
                     onChange={handleTitleChange}
-                    validate={validateTitle}
+                    validate={validateTaskTitle}
                 />
             </label>
 

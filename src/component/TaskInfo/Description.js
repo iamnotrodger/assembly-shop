@@ -1,6 +1,6 @@
 import React from 'react';
 import { updateTask } from '../../api/TaskAPI';
-import InputEditable from '../InputEditable/InputEditable';
+import InputEditable from '../InputEditable';
 
 const Description = ({ id, value, onUpdate }) => {
     const handleDescriptionSave = async (description) => {

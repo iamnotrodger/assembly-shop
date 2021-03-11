@@ -6,7 +6,7 @@ import CreateTeam from '../CreateTeam';
 import DropdownMenu from '../DropdownMenu';
 import MenuItem from '../MenuItem';
 import Modal from '../Modal';
-import UserIcon from '../UserIcon/UserIcon';
+import UserIcon from '../UserIcon';
 
 const NavBar = () => {
     const { Logout } = useUser();
