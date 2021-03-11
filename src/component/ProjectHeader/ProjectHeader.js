@@ -1,39 +1,48 @@
-import React, { useEffect, useState } from 'react';
-import { useErrorHandler } from 'react-error-boundary';
-import { getProject } from '../../api/ProjectAPI';
-import { useLoadingAction } from '../../context/LoadingContext';
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { updateProjectName } from '../../api/ProjectAPI';
+import useProject from '../../context/ProjectContext';
+import { validateProjectName } from '../CreateProject/utils';
+import InputEditable from '../InputEditable/InputEditable';
 
-const ProjectHeader = ({ teamID, projectID }) => {
-    const [project, setProject] = useState({ team: {} });
-    const { name, team } = project;
+const ProjectHeader = () => {
+    const { project, team, isAdmin, setProject } = useProject();
+    const teamLink = `/team/${team.teamID}/${team.name
+        .replace(/\s+/g, '-')
+        .toLowerCase()}`;
 
-    const handleError = useErrorHandler();
-    const setLoading = useLoadingAction();
+    const handleProjectNameSave = async (name) => {
+        try {
+            const { valid } = validateProjectName(name);
+            if (!valid) return;
 
-    useEffect(() => {
-        (async () => {
-            setLoading(true);
-            try {
-                const project = await getProject(teamID, projectID);
-                setProject(project);
-            } catch (error) {
-                handleError(error);
-            }
-            setLoading(false);
-        })();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [teamID, projectID]);
+            const { teamID, projectID } = project;
+            await updateProjectName(teamID, projectID, name);
+
+            setProject({ ...project, ...{ name } });
+        } catch (error) {
+            console.log(error);
+        }
+    };
 
     return (
-        <div
-            style={{
-                display: 'flex',
-                flexFlow: 'row',
-                justifyContent: 'space-evenly',
-            }}>
-            <h3>{name}</h3>
-            <h3>{team.name}</h3>
-            <h3>settings</h3>
+        <div>
+            <InputEditable
+                text={project.name}
+                onSave={handleProjectNameSave}
+                editable={isAdmin}>
+                <div style={{ backgroundColor: '#cce6ff' }}>
+                    <h3>{project.name}</h3>
+                </div>
+            </InputEditable>
+
+            <Link to={teamLink}>
+                <div style={{ backgroundColor: '#cce6ff' }}>
+                    <h3>{team.name}</h3>
+                </div>
+            </Link>
+
+            {isAdmin ? <div>settings</div> : null}
         </div>
     );
 };
