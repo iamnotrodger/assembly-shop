@@ -76,3 +76,21 @@ export const updateProjectName = async (teamID, projectID, name) => {
 
     if (!response.ok) throw await RequestError.parseResponse(response);
 };
+
+export const deleteProject = async (teamID, projectID) => {
+    const accessToken = await getToken();
+    if (!accessToken) throw new Error('Unauthorized');
+
+    const response = await fetch(
+        API_URL + `/api/team/${teamID}/project/${projectID}`,
+        {
+            method: 'DELETE',
+            mode: 'cors',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        },
+    );
+
+    if (!response.ok) throw await RequestError.parseResponse(response);
+};

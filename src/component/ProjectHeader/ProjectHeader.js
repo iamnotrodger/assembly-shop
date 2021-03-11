@@ -1,40 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { updateProjectName } from '../../api/ProjectAPI';
 import useProject from '../../context/ProjectContext';
-import { validateProjectName } from '../CreateProject/utils';
-import InputEditable from '../InputEditable/InputEditable';
+import Modal from '../Modal';
+import ProjectName from '../ProjectName/ProjectName';
+import ProjectSettings from '../ProjectSettings/ProjectSettings';
 
 const ProjectHeader = () => {
+    const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const { project, team, isAdmin, setProject } = useProject();
     const teamLink = `/team/${team.teamID}/${team.name
         .replace(/\s+/g, '-')
         .toLowerCase()}`;
 
     const handleProjectNameSave = async (name) => {
-        try {
-            const { valid } = validateProjectName(name);
-            if (!valid) return;
+        setProject({ ...project, ...{ name } });
+    };
 
-            const { teamID, projectID } = project;
-            await updateProjectName(teamID, projectID, name);
-
-            setProject({ ...project, ...{ name } });
-        } catch (error) {
-            console.log(error);
-        }
+    const handleSettingsToggle = () => {
+        setIsSettingsOpen(!isSettingsOpen);
     };
 
     return (
         <div>
-            <InputEditable
-                text={project.name}
-                onSave={handleProjectNameSave}
-                editable={isAdmin}>
+            <ProjectName
+                name={project.name}
+                projectID={project.projectID}
+                teamID={project.teamID}
+                editable={isAdmin}
+                onSave={handleProjectNameSave}>
                 <div style={{ backgroundColor: '#cce6ff' }}>
                     <h3>{project.name}</h3>
                 </div>
-            </InputEditable>
+            </ProjectName>
 
             <Link to={teamLink}>
                 <div style={{ backgroundColor: '#cce6ff' }}>
@@ -42,7 +39,11 @@ const ProjectHeader = () => {
                 </div>
             </Link>
 
-            {isAdmin ? <div>settings</div> : null}
+            <div onClick={handleSettingsToggle}>settings</div>
+
+            <Modal isOpen={isSettingsOpen} onClose={handleSettingsToggle}>
+                <ProjectSettings />
+            </Modal>
         </div>
     );
 };

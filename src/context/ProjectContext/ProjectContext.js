@@ -1,9 +1,8 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import useUser from '../UserContext';
-import { getMembers } from '../../api/MemberAPI';
 import { useErrorHandler } from 'react-error-boundary';
-import { useLoadingAction } from '../LoadingContext';
 import { getProject } from '../../api/ProjectAPI';
+import { useLoadingAction } from '../LoadingContext';
+import useUser from '../UserContext';
 
 const ProjectContext = createContext();
 
@@ -24,7 +23,6 @@ export const ProjectProvider = ({ teamID, projectID, children }) => {
         (async () => {
             setLoading(true);
             try {
-                console.log(teamID, projectID);
                 const { team, ...project } = await getProject(
                     teamID,
                     projectID,
