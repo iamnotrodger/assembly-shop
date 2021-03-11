@@ -17,10 +17,7 @@ const Title = ({ id, value, onUpdate }) => {
         <div>
             <label>
                 Task Title
-                <InputEditable
-                    text={value}
-                    type='text'
-                    onSave={handleTitleSave}>
+                <InputEditable text={value} onSave={handleTitleSave}>
                     <h2>{value}</h2>
                 </InputEditable>
             </label>

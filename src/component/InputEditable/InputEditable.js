@@ -33,10 +33,6 @@ const InputEditable = ({
         setNewText(event.target.value);
     };
 
-    const handleEditToggle = () => {
-        setIsEditing(!isEditing);
-    };
-
     const handleKeyDown = (event) => {
         const { keyCode } = event;
 
@@ -58,8 +54,8 @@ const InputEditable = ({
         setIsEditing(false);
     };
 
-    if (!isEditing && !editable) {
-        return <div onClick={handleEditToggle}>{children}</div>;
+    if (!isEditing) {
+        return <div onClick={() => setIsEditing(editable)}>{children}</div>;
     }
 
     return (
@@ -82,7 +78,7 @@ const InputEditable = ({
 };
 
 InputEditable.defaultProps = {
-    editable: false,
+    editable: true,
 };
 
 export default InputEditable;
