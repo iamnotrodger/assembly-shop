@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
 import { useHistory } from 'react-router-dom';
 import Select from 'react-select';
+import useTeams from '../../context/TeamsContext/TeamsContext';
 import { createTeam } from '../../api/TeamAPI';
 import { getUsers } from '../../api/UserAPI';
 import { useLoadingAction } from '../../context/LoadingContext';
@@ -17,6 +18,7 @@ const CreateTeam = ({ onClose }) => {
     const [memberOptions, setMemberOptions] = useState([]);
     const [members, setMembers] = useState([]);
 
+    const { teams, setTeams } = useTeams();
     const setLoading = useLoadingAction();
     const handleError = useErrorHandler();
     const history = useHistory();
@@ -50,12 +52,21 @@ const CreateTeam = ({ onClose }) => {
         setLoading(true);
         try {
             const team = await createTeam({ name, members });
+
+            addTeamToTeamsContext();
             handleRedirect(team);
+
             if (onClose) onClose();
         } catch (error) {
             handleError(error);
         }
         setLoading(false);
+    };
+
+    const addTeamToTeamsContext = (team) => {
+        if (!teams) return;
+        teams.unshift(team);
+        setTeams(team);
     };
 
     const handleRedirect = (team) => {
