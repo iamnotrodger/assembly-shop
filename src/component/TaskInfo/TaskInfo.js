@@ -10,7 +10,8 @@ import Assignee from './Assignee';
 import Title from './Title';
 import Description from './Description';
 import Logs from './Logs';
-import AlertPanel from '../AlertPanel/AlertPanel';
+import AlertPanel from '../AlertPanel';
+import Menu from '../Menu';
 
 const TaskInfo = ({ value }) => {
     const {
@@ -102,7 +103,11 @@ const TaskInfo = ({ value }) => {
         <div style={{ width: '50vw' }}>
             <div>
                 <h2>Task</h2>
-                <button onClick={handleAlertToggle}>delete</button>
+                <div style={{ backgroundColor: 'aqua' }}>
+                    <Menu header=':'>
+                        <button onClick={handleAlertToggle}>delete</button>
+                    </Menu>
+                </div>
             </div>
 
             <Title id={taskID} value={title} onUpdate={updateTask} />

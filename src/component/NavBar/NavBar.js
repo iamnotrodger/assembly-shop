@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import useUser from '../../context/UserContext';
 import CreateProject from '../CreateProject';
 import CreateTeam from '../CreateTeam';
-import DropdownMenu from '../DropdownMenu';
+import Menu from '../Menu';
 import MenuItem from '../MenuItem';
 import Modal from '../Modal';
 import UserIcon from '../UserIcon';
@@ -31,17 +31,17 @@ const NavBar = () => {
 
             <h2>Assembly Shop</h2>
 
-            <DropdownMenu header={<button>Create</button>}>
+            <Menu header={<button>Create</button>}>
                 <MenuItem title='Create Team' onClick={handleTeamToggle} />
                 <MenuItem
                     title='Create Project'
                     onClick={handleProjectToggle}
                 />
-            </DropdownMenu>
+            </Menu>
 
-            <DropdownMenu header={<UserIcon value={user} />}>
+            <Menu header={<UserIcon value={user} />}>
                 <MenuItem title='Logout' onClick={Logout} />
-            </DropdownMenu>
+            </Menu>
 
             <Modal isOpen={isTeamOpen} onClose={handleTeamToggle}>
                 <CreateTeam onClose={handleTeamToggle} />
