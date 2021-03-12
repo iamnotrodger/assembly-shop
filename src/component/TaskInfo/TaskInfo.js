@@ -12,6 +12,11 @@ import Description from './Description';
 import Logs from './Logs';
 import AlertPanel from '../AlertPanel';
 import Menu from '../Menu';
+import useToast, {
+    TOAST_ACTIONS,
+    TOAST_STATE,
+} from '../../context/ToastContext';
+import { createErrorToast } from '../../utils/toast';
 
 const TaskInfo = ({ value }) => {
     const {
@@ -31,6 +36,7 @@ const TaskInfo = ({ value }) => {
     const { tasksDispatch } = useTasks();
     const { user } = useUser();
     const setLoading = useLoadingAction();
+    const { toastDispatch } = useToast();
 
     const [owned] = useState(assignee && assignee.userID === user.userID);
 
@@ -70,7 +76,10 @@ const TaskInfo = ({ value }) => {
             await deleteTask(taskID);
             tasksDispatch({ type: TASK_ACTIONS.DELETE, payload: value });
         } catch (error) {
-            console.log(error);
+            toastDispatch({
+                type: TOAST_ACTIONS.ADD,
+                payload: createErrorToast(error.message),
+            });
         }
     };
 
@@ -86,12 +95,23 @@ const TaskInfo = ({ value }) => {
             }
 
             value.completed = !completed;
+
+            toastDispatch({
+                type: TOAST_ACTIONS.ADD,
+                payload: {
+                    state: TOAST_STATE.SUCCESS,
+                    title: `Task ${!completed ? 'Complete' : 'Incomplete'}`,
+                },
+            });
             tasksDispatch({
                 type: TASK_ACTIONS.UPDATE,
                 payload: value,
             });
         } catch (error) {
-            console.log(error);
+            toastDispatch({
+                type: TOAST_ACTIONS.ADD,
+                payload: createErrorToast(error.message),
+            });
         }
     };
 

@@ -6,6 +6,11 @@ import useMembers from '../../context/MembersContext';
 import useTasks, { TASK_ACTIONS } from '../../context/TasksContext';
 import InputValidate from '../InputValidate/InputValidate';
 import { validateTaskTitle } from '../../utils/validate';
+import useToast, {
+    TOAST_ACTIONS,
+    TOAST_STATE,
+} from '../../context/ToastContext';
+import { createErrorToast } from '../../utils/toast';
 
 const CreateTask = ({ projectID, onClose }) => {
     const [title, setTitle] = useState('');
@@ -15,6 +20,7 @@ const CreateTask = ({ projectID, onClose }) => {
 
     const members = useMembers();
     const { tasksDispatch } = useTasks();
+    const { toastDispatch } = useToast();
     const setLoading = useLoadingAction();
 
     const handleTitleChange = (value, valid) => {
@@ -41,10 +47,22 @@ const CreateTask = ({ projectID, onClose }) => {
                 assignee: assignee ? assignee.user : null,
             };
             const task = await createTask(newTask);
+
             tasksDispatch({ type: TASK_ACTIONS.ADD, payload: task });
+            toastDispatch({
+                type: TOAST_ACTIONS.ADD,
+                payload: {
+                    state: TOAST_STATE.SUCCESS,
+                    title: 'Task Created',
+                },
+            });
+
             onClose();
         } catch (error) {
-            console.log(error);
+            toastDispatch({
+                type: TOAST_ACTIONS.ADD,
+                payload: createErrorToast(error.message),
+            });
         }
         setLoading(false);
     };

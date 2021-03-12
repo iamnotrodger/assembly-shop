@@ -9,9 +9,10 @@ import {
 import './App.scss';
 
 //Contexts
-import { UserProvider } from './context/UserContext';
 import { LoadingContextProvider } from './context/LoadingContext';
+import { UserProvider } from './context/UserContext';
 import { TeamsProvider } from './context/TeamsContext';
+import { ToastProvider } from './context/ToastContext';
 
 //Pages
 import HomePage from './page/HomePage';
@@ -27,20 +28,24 @@ import ErrorFallback from './component/ErrorFallback';
 import LoadingScreen from './component/LoadingScreen';
 import NavBar from './component/NavBar';
 import NotFound from './component/NotFound';
+import Toast from './component/Toast';
 
 const App = () => {
     return (
         <div className='App'>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
                 <LoadingContextProvider>
-                    <UserProvider>
-                        <TeamsProvider>
-                            <LoadingScreen />
-                            <Router>
-                                <Routes />
-                            </Router>
-                        </TeamsProvider>
-                    </UserProvider>
+                    <ToastProvider autoDelete dismissTime={2500}>
+                        <UserProvider>
+                            <TeamsProvider>
+                                <LoadingScreen />
+                                <Toast position='top-right' />
+                                <Router>
+                                    <Routes />
+                                </Router>
+                            </TeamsProvider>
+                        </UserProvider>
+                    </ToastProvider>
                 </LoadingContextProvider>
             </ErrorBoundary>
         </div>
