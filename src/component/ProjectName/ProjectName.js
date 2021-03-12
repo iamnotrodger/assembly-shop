@@ -6,7 +6,6 @@ import InputEditable from '../InputEditable';
 const ProjectName = ({
     name,
     projectID,
-    teamID,
     editable,
     onSave,
     hasButton,
@@ -17,7 +16,7 @@ const ProjectName = ({
             const { valid } = validateProjectName(name);
             if (!valid) return;
 
-            await updateProjectName(teamID, projectID, name);
+            await updateProjectName(projectID, name);
             onSave(name);
         } catch (error) {}
     };

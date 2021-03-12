@@ -9,11 +9,11 @@ import {
 import Time from '../Time';
 
 const Log = ({ value, removable, onDelete }) => {
-    const { logID, taskID, startTime, endTime } = value;
+    const { logID, startTime, endTime } = value;
 
     const handleDelete = async () => {
         try {
-            const { totalTime } = await deleteLog(taskID, logID);
+            const { totalTime } = await deleteLog(logID);
             onDelete(logID, totalTime);
         } catch (error) {
             console.log(error);

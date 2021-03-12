@@ -7,7 +7,7 @@ import useTasks, { TASK_ACTIONS } from '../../context/TasksContext';
 import InputValidate from '../InputValidate/InputValidate';
 import { validateTaskTitle } from '../../utils/validate';
 
-const CreateTask = ({ teamID, projectID, onClose }) => {
+const CreateTask = ({ projectID, onClose }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [assignee, setAssignee] = useState(null);
@@ -35,11 +35,12 @@ const CreateTask = ({ teamID, projectID, onClose }) => {
         setLoading(true);
         try {
             const newTask = {
+                projectID,
                 title,
                 description,
                 assignee: assignee ? assignee.user : null,
             };
-            const task = await createTask(teamID, projectID, newTask);
+            const task = await createTask(newTask);
             tasksDispatch({ type: TASK_ACTIONS.ADD, payload: task });
             onClose();
         } catch (error) {

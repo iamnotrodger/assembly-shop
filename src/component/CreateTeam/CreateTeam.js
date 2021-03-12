@@ -53,7 +53,7 @@ const CreateTeam = ({ onClose }) => {
         try {
             const team = await createTeam({ name, members });
 
-            addTeamToTeamsContext();
+            addTeamToTeamsContext(team);
             handleRedirect(team);
 
             if (onClose) onClose();
@@ -66,7 +66,7 @@ const CreateTeam = ({ onClose }) => {
     const addTeamToTeamsContext = (team) => {
         if (!teams) return;
         teams.unshift(team);
-        setTeams(team);
+        setTeams(teams);
     };
 
     const handleRedirect = (team) => {

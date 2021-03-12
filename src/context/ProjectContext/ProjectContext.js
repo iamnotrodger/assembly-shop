@@ -6,13 +6,12 @@ import useUser from '../UserContext';
 
 const ProjectContext = createContext();
 
-export const ProjectProvider = ({ teamID, projectID, children }) => {
+export const ProjectProvider = ({ projectID, children }) => {
     const [project, setProject] = useState({
         projectID,
-        teamID,
         name: '',
     });
-    const [team, setTeam] = useState({ teamID, name: '' });
+    const [team, setTeam] = useState({ name: '' });
     const [isAdmin, setIsAdmin] = useState(false);
 
     const { user } = useUser();
@@ -23,10 +22,7 @@ export const ProjectProvider = ({ teamID, projectID, children }) => {
         (async () => {
             setLoading(true);
             try {
-                const { team, ...project } = await getProject(
-                    teamID,
-                    projectID,
-                );
+                const { team, ...project } = await getProject(projectID);
                 setProject(project);
                 setTeam(team);
                 setIsAdmin(team.administratorID === user.userID);
@@ -36,7 +32,7 @@ export const ProjectProvider = ({ teamID, projectID, children }) => {
             setLoading(false);
         })();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [teamID, projectID]);
+    }, [projectID]);
 
     return (
         <ProjectContext.Provider value={{ project, team, isAdmin, setProject }}>

@@ -5,7 +5,7 @@ import { reducer, TASK_ACTIONS } from './utils';
 
 const TasksContext = createContext();
 
-export const TasksProvider = ({ children, teamID, projectID }) => {
+export const TasksProvider = ({ children, projectID }) => {
     const [tasks, tasksDispatch] = useReducer(reducer, []);
 
     const setLoading = useLoadingAction();
@@ -14,14 +14,14 @@ export const TasksProvider = ({ children, teamID, projectID }) => {
         (async () => {
             setLoading(true);
             try {
-                const tasks = await getTasks(teamID, projectID);
+                const tasks = await getTasks(projectID);
                 tasksDispatch({ type: TASK_ACTIONS.LOAD, payload: tasks });
             } catch (error) {
                 console.log(error);
             }
             setLoading(false);
         })();
-    }, [teamID, projectID, setLoading]);
+    }, [projectID, setLoading]);
 
     return (
         <TasksContext.Provider value={{ tasks, tasksDispatch }}>

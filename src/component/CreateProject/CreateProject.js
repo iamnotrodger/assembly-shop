@@ -45,7 +45,8 @@ const CreateProject = ({ onClose }) => {
     const handleSubmit = async () => {
         setLoading(true);
         try {
-            const project = await createProject(name, team.teamID);
+            const { teamID } = team;
+            const project = await createProject({ name, teamID });
 
             addProjectToTeamsContext(project);
             handleRedirect(project);
@@ -65,13 +66,9 @@ const CreateProject = ({ onClose }) => {
     };
 
     const handleRedirect = (project) => {
-        const {
-            projectID,
-            name,
-            team: { teamID },
-        } = project;
+        const { projectID, name } = project;
         const linkName = name.replace(/\s+/g, '-').toLowerCase();
-        history.push(`team/${teamID}/project/${projectID}/${linkName}`);
+        history.push(`/project/${projectID}/${linkName}`);
     };
 
     return (

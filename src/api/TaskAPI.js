@@ -2,18 +2,15 @@ import { getToken } from './AuthAPI';
 import RequestError from './RequestError';
 import { API_URL } from './utils';
 
-export const getTasks = async (teamID, projectID) => {
+export const getTasks = async (projectID) => {
     const accessToken = await getToken();
     if (!accessToken) throw new Error('Unauthorized');
 
-    const response = await fetch(
-        API_URL + `/api/team/${teamID}/project/${projectID}/task`,
-        {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
+    const response = await fetch(API_URL + `/api/project/${projectID}/task`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
         },
-    );
+    });
 
     if (!response.ok) {
         throw await RequestError.parseResponse(response);
@@ -23,22 +20,19 @@ export const getTasks = async (teamID, projectID) => {
     return tasks;
 };
 
-export const createTask = async (teamID, projectID, newTask) => {
+export const createTask = async (newTask) => {
     const accessToken = await getToken();
     if (!accessToken) throw new Error('Unauthorized');
 
-    const response = await fetch(
-        API_URL + `/api/team/${teamID}/project/${projectID}/task`,
-        {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${accessToken}`,
-            },
-            body: JSON.stringify(newTask),
+    const response = await fetch(API_URL + `/api/task`, {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
         },
-    );
+        body: JSON.stringify(newTask),
+    });
 
     if (!response.ok) {
         throw await RequestError.parseResponse(response);
@@ -144,7 +138,6 @@ export const deleteTask = async (taskID) => {
 };
 
 export const updateTask = async (taskID, value, field) => {
-    console.log('updating-task');
     const accessToken = await getToken();
     if (!accessToken) throw new Error('Unauthorized');
 

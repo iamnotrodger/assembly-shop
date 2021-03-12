@@ -19,8 +19,8 @@ const ProjectSettings = () => {
 
     const handleDeleteProject = async () => {
         try {
-            const { teamID, projectID } = project;
-            await deleteProject(teamID, projectID);
+            const { projectID } = project;
+            await deleteProject(projectID);
             deleteProjectOnTeamsContext();
             handleRedirect();
         } catch (error) {

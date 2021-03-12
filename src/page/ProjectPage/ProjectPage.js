@@ -8,15 +8,15 @@ import { ProjectProvider } from '../../context/ProjectContext';
 import { TasksProvider } from '../../context/TasksContext';
 
 const ProjectPage = () => {
-    const { teamID, projectID } = useParams();
+    const { projectID } = useParams();
     return (
         <div>
-            <ProjectProvider teamID={teamID} projectID={projectID}>
+            <ProjectProvider projectID={projectID}>
                 <ProjectHeader />
-                <MembersProvider teamID={teamID}>
-                    <TasksProvider teamID={teamID} projectID={projectID}>
+                <MembersProvider projectID={projectID}>
+                    <TasksProvider projectID={projectID}>
                         <TaskBoard />
-                        <TaskButton teamID={teamID} projectID={projectID} />
+                        <TaskButton projectID={projectID} />
                     </TasksProvider>
                 </MembersProvider>
             </ProjectProvider>

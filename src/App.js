@@ -51,13 +51,10 @@ const Routes = withRouter(({ location: { pathname } }) => (
     <>
         {pathname !== '/login' && <NavBar />}
         <Switch>
+            <PrivateRoute exact path='/' component={HomePage} />
+            <PrivateRoute path='/project/:projectID/' component={ProjectPage} />
             <Route path='/login' component={LoginPage} />
             <AuthRoute path='/auth' />
-            <PrivateRoute exact path='/' component={HomePage} />
-            <PrivateRoute
-                path='/team/:teamID/project/:projectID/'
-                component={ProjectPage}
-            />
             <Route component={NotFound} />
         </Switch>
     </>
