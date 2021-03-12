@@ -1,19 +1,37 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
-const Modal = ({ isOpen, onClose, fixed, children }) => {
+const Modal = ({
+    isOpen,
+    onClose,
+    fixed,
+    hasButton,
+    overlayClass,
+    modalClass,
+    children,
+}) => {
     if (!isOpen) return null;
 
     return ReactDom.createPortal(
         <>
-            <div style={OVERLAY_STYLES} onClick={!fixed && onClose} />
-            <div style={MODAL_STYLES}>
-                <button onClick={onClose}>Close Modal</button>
+            <div
+                className={overlayClass}
+                style={OVERLAY_STYLES}
+                onClick={!fixed ? onClose : null}
+            />
+            <div className={modalClass} style={MODAL_STYLES}>
+                {hasButton ? (
+                    <button onClick={onClose}>Close Modal</button>
+                ) : null}
                 {children}
             </div>
         </>,
         document.getElementById('portal'),
     );
+};
+
+Modal.defaultProps = {
+    hasButton: true,
 };
 
 //FOR DEVELOPMENTAL PURPOSES

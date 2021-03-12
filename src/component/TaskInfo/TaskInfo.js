@@ -10,6 +10,7 @@ import Assignee from './Assignee';
 import Title from './Title';
 import Description from './Description';
 import Logs from './Logs';
+import AlertPanel from '../AlertPanel/AlertPanel';
 
 const TaskInfo = ({ value }) => {
     const {
@@ -23,6 +24,8 @@ const TaskInfo = ({ value }) => {
         completed,
         logs,
     } = value;
+
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
 
     const { tasksDispatch } = useTasks();
     const { user } = useUser();
@@ -91,11 +94,15 @@ const TaskInfo = ({ value }) => {
         }
     };
 
+    const handleAlertToggle = async () => {
+        setIsAlertOpen(!isAlertOpen);
+    };
+
     return (
         <div style={{ width: '50vw' }}>
             <div>
                 <h2>Task</h2>
-                <button onClick={handleDelete}>delete</button>
+                <button onClick={handleAlertToggle}>delete</button>
             </div>
 
             <Title id={taskID} value={title} onUpdate={updateTask} />
@@ -122,6 +129,13 @@ const TaskInfo = ({ value }) => {
                     </button>
                 ) : null}
             </div>
+
+            <AlertPanel
+                isOpen={isAlertOpen}
+                message='Deleting the task cannot be undone'
+                onSubmit={handleDelete}
+                onClose={handleAlertToggle}
+            />
         </div>
     );
 };

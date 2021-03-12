@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
 import { useHistory } from 'react-router';
 import { deleteProject } from '../../api/ProjectAPI';
 import useProject from '../../context/ProjectContext';
 import useTeams from '../../context/TeamsContext';
 import { removeProject } from '../../utils/project';
+import AlertPanel from '../AlertPanel';
 import ProjectName from '../ProjectName';
 
 const ProjectSettings = () => {
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
+
     const { project, isAdmin, setProject } = useProject();
     const handleError = useErrorHandler();
     const history = useHistory();
@@ -38,6 +41,10 @@ const ProjectSettings = () => {
         history.push('/');
     };
 
+    const handleAlertToggle = () => {
+        setIsAlertOpen(!isAlertOpen);
+    };
+
     return (
         <div>
             <div>
@@ -58,14 +65,17 @@ const ProjectSettings = () => {
             </label>
 
             <div>
-                <button disabled={!isAdmin} onClick={handleDeleteProject}>
+                <button disabled={!isAdmin} onClick={handleAlertToggle}>
                     Delete Project
                 </button>
-                <p>
-                    <b>Warning: </b> deleting the project cannot be undone. All
-                    the following tasks will also be deleted.
-                </p>
             </div>
+
+            <AlertPanel
+                isOpen={isAlertOpen}
+                message='Deleting the project cannot be undone. All the following tasks withing the project will be deleted.'
+                onSubmit={handleDeleteProject}
+                onClose={handleAlertToggle}
+            />
         </div>
     );
 };
