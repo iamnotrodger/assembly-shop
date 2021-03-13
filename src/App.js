@@ -36,15 +36,15 @@ const App = () => {
             <ErrorBoundary FallbackComponent={ErrorFallback}>
                 <LoadingContextProvider>
                     <ToastProvider autoDelete dismissTime={2500}>
-                        <UserProvider>
-                            <TeamsProvider>
-                                <LoadingScreen />
-                                <Toast position='top-right' />
-                                <Router>
+                        <LoadingScreen />
+                        <Toast position='top-right' />
+                        <Router>
+                            <UserProvider>
+                                <TeamsProvider>
                                     <Routes />
-                                </Router>
-                            </TeamsProvider>
-                        </UserProvider>
+                                </TeamsProvider>
+                            </UserProvider>
+                        </Router>
                     </ToastProvider>
                 </LoadingContextProvider>
             </ErrorBoundary>

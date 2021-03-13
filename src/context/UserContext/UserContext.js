@@ -5,6 +5,7 @@ import React, {
     useEffect,
     useContext,
 } from 'react';
+import { useHistory } from 'react-router';
 import { logout } from '../../api/AuthAPI';
 import { getProfile } from '../../api/UserAPI';
 import { useLoadingAction } from '../LoadingContext';
@@ -17,6 +18,7 @@ export const UserProvider = ({ children }) => {
     const [isLoaded, setIsLoaded] = useState(false);
 
     const setLoading = useLoadingAction();
+    const history = useHistory();
 
     //Gets the user on mount and very time user is logged in
     useEffect(() => {
@@ -44,7 +46,9 @@ export const UserProvider = ({ children }) => {
 
     const Logout = useCallback(async () => {
         await logout();
+        history.push('/');
         setUser(null);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (
