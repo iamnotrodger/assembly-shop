@@ -1,12 +1,13 @@
 import React from 'react';
+import NotAuthorized from '../NotAuthorized';
 import NotFound from '../NotFound';
 
-const ErrorFallback = ({ error }) => {
-    const { message, code } = error;
-
+const ErrorFallback = ({ error: { message, code } }) => {
     switch (code) {
         case 404:
             return <NotFound message={message} />;
+        case 403:
+            return <NotAuthorized message={message} />;
         default:
             return (
                 <div role='alert'>
