@@ -2,6 +2,23 @@ import { getToken } from './AuthAPI';
 import RequestError from './RequestError';
 import { API_URL } from './utils';
 
+export const getTeam = async (teamID) => {
+    const accessToken = await getToken();
+    if (!accessToken) throw new Error('Unauthorized');
+
+    const response = await fetch(API_URL + `/api/team/${teamID}`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
+
+    if (!response.ok) {
+        throw await RequestError.parseResponse(response);
+    }
+
+    return await response.json();
+};
+
 export const getTeams = async () => {
     const accessToken = await getToken();
     if (!accessToken) throw new Error('Unauthorized');

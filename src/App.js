@@ -18,6 +18,7 @@ import { ToastProvider } from './context/ToastContext';
 import HomePage from './page/HomePage';
 import LoginPage from './page/LoginPage';
 import ProjectPage from './page/ProjectPage';
+import TeamPage from './page/TeamPage';
 
 //Routes
 import AuthRoute from './route/AuthRoute';
@@ -58,6 +59,7 @@ const Routes = withRouter(({ location: { pathname } }) => (
         <Switch>
             <PrivateRoute exact path='/' component={HomePage} />
             <PrivateRoute path='/project/:projectID/' component={ProjectPage} />
+            <PrivateRoute path='/team/:teamID' component={TeamPage} />
             <Route path='/login' component={LoginPage} />
             <AuthRoute path='/auth' />
             <Route component={NotFound} />
