@@ -1,17 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Select from 'react-select';
 import { assignTask } from '../../api/TaskAPI';
 import useMembers from '../../context/MembersContext';
+import useToast, { TOAST_ACTIONS } from '../../context/ToastContext';
+import { createErrorToast } from '../../utils/toast';
 
 const Assignee = ({ id, value, onUpdate }) => {
-    const members = useMembers();
+    const { members, loadMembers } = useMembers();
+    const { toastDispatch } = useToast();
+
+    useEffect(() => {
+        if (!members) loadMembers();
+    }, [loadMembers, members]);
 
     const handleMemberChange = async ({ user }) => {
         try {
             await assignTask(id, user.userID);
             onUpdate({ assignee: user });
         } catch (error) {
-            console.log(error);
+            toastDispatch({
+                type: TOAST_ACTIONS.ADD,
+                payload: createErrorToast(error.message),
+            });
         }
     };
 

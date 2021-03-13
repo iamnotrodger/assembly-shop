@@ -1,31 +1,71 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { getProjectMembers, getTeamMembers } from '../../api/MemberAPI';
+import React, { createContext, useCallback, useContext, useState } from 'react';
+import {
+    deleteTeamMember,
+    getProjectMembers,
+    getTeamMembers,
+} from '../../api/MemberAPI';
+import { createErrorToast } from '../../utils/toast';
+import useToast, { TOAST_ACTIONS, TOAST_STATE } from '../ToastContext';
 
 const MembersContext = createContext();
 
 export const MembersProvider = ({ children, teamID, projectID }) => {
     const [members, setMembers] = useState(null);
 
-    useEffect(() => {
-        (async () => {
-            try {
-                let members;
+    const { toastDispatch } = useToast();
 
-                if (teamID) {
-                    members = await getTeamMembers(teamID);
-                } else {
-                    members = await getProjectMembers(projectID);
-                }
+    const loadMembers = useCallback(async () => {
+        try {
+            let members;
 
-                setMembers(members);
-            } catch (error) {
-                console.log(error);
+            if (teamID) {
+                members = await getTeamMembers(teamID);
+            } else {
+                members = await getProjectMembers(projectID);
             }
-        })();
-    }, [teamID, projectID]);
+
+            setMembers(members);
+        } catch (error) {
+            toastDispatch({
+                type: TOAST_ACTIONS.ADD,
+                payload: createErrorToast(error.message),
+            });
+        }
+    }, [teamID, projectID, toastDispatch]);
+
+    const deleteMember = useCallback(
+        async (userID) => {
+            try {
+                if (teamID) {
+                    await deleteTeamMember(userID, teamID);
+                }
+                const index = members.findIndex(
+                    (member) => member.userID === userID,
+                );
+
+                const newMembers = [...members];
+                newMembers.splice(index, 1);
+                setMembers(newMembers);
+
+                toastDispatch({
+                    type: TOAST_ACTIONS.ADD,
+                    payload: {
+                        state: TOAST_STATE.SUCCESS,
+                        title: 'Member Removed',
+                    },
+                });
+            } catch (error) {
+                toastDispatch({
+                    type: TOAST_ACTIONS.ADD,
+                    payload: createErrorToast(error.message),
+                });
+            }
+        },
+        [members, teamID, toastDispatch],
+    );
 
     return (
-        <MembersContext.Provider value={members}>
+        <MembersContext.Provider value={{ members, loadMembers, deleteMember }}>
             {children}
         </MembersContext.Provider>
     );

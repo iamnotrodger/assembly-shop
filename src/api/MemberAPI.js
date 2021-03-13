@@ -33,3 +33,21 @@ export const getProjectMembers = async (projectID) => {
     const members = await response.json();
     return members;
 };
+
+export const deleteTeamMember = async (userID, teamID) => {
+    const accessToken = await getToken();
+    if (!accessToken) throw new Error('Unauthorized');
+
+    const response = await fetch(
+        API_URL + `/api/member/${userID}/team/${teamID}`,
+        {
+            method: 'DELETE',
+            mode: 'cors',
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        },
+    );
+
+    if (!response.ok) throw await RequestError.parseResponse(response);
+};
