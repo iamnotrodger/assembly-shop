@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
 import useMembers from '../../context/MembersContext';
+import useUser from '../../context/UserContext';
 import Member from '../Member';
 
 const TeamMembers = ({ removable }) => {
     const { members, loadMembers, deleteMember } = useMembers();
+    const { user } = useUser();
 
     useEffect(() => {
         if (!members) loadMembers();
@@ -19,7 +21,11 @@ const TeamMembers = ({ removable }) => {
         <Member
             key={member.userID}
             value={member}
-            onDelete={removable ? () => handleDelete(member.userID) : null}
+            onDelete={
+                removable && member.userID !== user.userID
+                    ? () => handleDelete(member.userID)
+                    : null
+            }
         />
     ));
 };

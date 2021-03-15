@@ -6,6 +6,7 @@ const Member = ({ value, onDelete }) => {
         <div style={{ backgroundColor: 'aqua', margin: '5px', padding: '5px' }}>
             <UserIcon value={value.user} />
             <div>{value.user.email}</div>
+            {value.admin ? <div>ADMIN</div> : null}
             {onDelete ? <button onClick={onDelete}>X</button> : null}
         </div>
     );
