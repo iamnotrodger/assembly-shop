@@ -2,7 +2,6 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
 import { getProject } from '../../api/ProjectAPI';
 import { useLoadingAction } from '../LoadingContext';
-import useUser from '../UserContext';
 
 const ProjectContext = createContext();
 
@@ -12,9 +11,7 @@ export const ProjectProvider = ({ projectID, children }) => {
         name: '',
     });
     const [team, setTeam] = useState({ name: '' });
-    const [isAdmin, setIsAdmin] = useState(false);
 
-    const { user } = useUser();
     const handleError = useErrorHandler();
     const setLoading = useLoadingAction();
 
@@ -25,7 +22,6 @@ export const ProjectProvider = ({ projectID, children }) => {
                 const { team, ...project } = await getProject(projectID);
                 setProject(project);
                 setTeam(team);
-                setIsAdmin(team.administratorID === user.userID);
             } catch (error) {
                 handleError(error);
             }
@@ -35,7 +31,7 @@ export const ProjectProvider = ({ projectID, children }) => {
     }, [projectID]);
 
     return (
-        <ProjectContext.Provider value={{ project, team, isAdmin, setProject }}>
+        <ProjectContext.Provider value={{ project, team, setProject }}>
             {children}
         </ProjectContext.Provider>
     );

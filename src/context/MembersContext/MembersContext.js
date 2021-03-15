@@ -1,4 +1,10 @@
-import React, { createContext, useCallback, useContext, useState } from 'react';
+import React, {
+    createContext,
+    useCallback,
+    useContext,
+    useEffect,
+    useState,
+} from 'react';
 import {
     deleteTeamMember,
     getProjectMembers,
@@ -6,12 +12,20 @@ import {
 } from '../../api/MemberAPI';
 import { createErrorToast } from '../../utils/toast';
 import useToast, { TOAST_ACTIONS, TOAST_STATE } from '../ToastContext';
+import useUser from '../UserContext';
 
 const MembersContext = createContext();
 
-export const MembersProvider = ({ children, teamID, projectID }) => {
+export const MembersProvider = ({
+    children,
+    teamID,
+    projectID,
+    loadOnMount,
+}) => {
     const [members, setMembers] = useState(null);
+    const [userIsAdmin, setUserIsAdmin] = useState(false);
 
+    const { user } = useUser();
     const { toastDispatch } = useToast();
 
     const loadMembers = useCallback(async () => {
@@ -24,6 +38,15 @@ export const MembersProvider = ({ children, teamID, projectID }) => {
                 members = await getProjectMembers(projectID);
             }
 
+            console.log('user: ', user);
+
+            const index = members.findIndex(
+                (member) => member.userID === user.userID,
+            );
+
+            // console.log('index: ', index);
+
+            setUserIsAdmin(index > -1);
             setMembers(members);
         } catch (error) {
             toastDispatch({
@@ -31,7 +54,8 @@ export const MembersProvider = ({ children, teamID, projectID }) => {
                 payload: createErrorToast(error.message),
             });
         }
-    }, [teamID, projectID, toastDispatch]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [teamID, projectID, user.userID]);
 
     const deleteMember = useCallback(
         async (userID) => {
@@ -64,8 +88,13 @@ export const MembersProvider = ({ children, teamID, projectID }) => {
         [members, teamID, toastDispatch],
     );
 
+    useEffect(() => {
+        if (loadOnMount) loadMembers();
+    }, [loadMembers, loadOnMount]);
+
     return (
-        <MembersContext.Provider value={{ members, loadMembers, deleteMember }}>
+        <MembersContext.Provider
+            value={{ members, userIsAdmin, loadMembers, deleteMember }}>
             {children}
         </MembersContext.Provider>
     );

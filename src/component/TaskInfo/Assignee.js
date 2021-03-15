@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Select from 'react-select';
 import { assignTask } from '../../api/TaskAPI';
 import useMembers from '../../context/MembersContext';
@@ -6,12 +6,8 @@ import useToast, { TOAST_ACTIONS } from '../../context/ToastContext';
 import { createErrorToast } from '../../utils/toast';
 
 const Assignee = ({ id, value, onUpdate }) => {
-    const { members, loadMembers } = useMembers();
+    const { members } = useMembers();
     const { toastDispatch } = useToast();
-
-    useEffect(() => {
-        if (!members) loadMembers();
-    }, [loadMembers, members]);
 
     const handleMemberChange = async ({ user }) => {
         try {

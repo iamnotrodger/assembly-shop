@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import useMembers from '../../context/MembersContext';
 import useProject from '../../context/ProjectContext';
 import Modal from '../Modal';
 import ProjectName from '../ProjectName';
@@ -7,7 +8,9 @@ import ProjectSettings from '../ProjectSettings';
 
 const ProjectHeader = () => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-    const { project, team, isAdmin, setProject } = useProject();
+    const { project, team, setProject } = useProject();
+    const { userIsAdmin } = useMembers();
+
     const teamLink = `/team/${team.teamID}/${team.name
         .replace(/\s+/g, '-')
         .toLowerCase()}`;
@@ -26,7 +29,7 @@ const ProjectHeader = () => {
                 name={project.name}
                 projectID={project.projectID}
                 teamID={project.teamID}
-                editable={isAdmin}
+                editable={userIsAdmin}
                 onSave={handleProjectNameSave}>
                 <div style={{ backgroundColor: '#cce6ff' }}>
                     <h3>{project.name}</h3>

@@ -12,8 +12,8 @@ const ProjectPage = () => {
     return (
         <div>
             <ProjectProvider projectID={projectID}>
-                <ProjectHeader />
-                <MembersProvider projectID={projectID}>
+                <MembersProvider projectID={projectID} loadOnMount>
+                    <ProjectHeader />
                     <TasksProvider projectID={projectID}>
                         <TaskBoard />
                         <TaskButton projectID={projectID} />

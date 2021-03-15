@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useErrorHandler } from 'react-error-boundary';
 import { useHistory } from 'react-router';
 import { deleteProject } from '../../api/ProjectAPI';
+import useMembers from '../../context/MembersContext';
 import useProject from '../../context/ProjectContext';
 import useTeams from '../../context/TeamsContext';
 import { removeProject } from '../../utils/project';
@@ -11,7 +12,8 @@ import ProjectName from '../ProjectName';
 const ProjectSettings = () => {
     const [isAlertOpen, setIsAlertOpen] = useState(false);
 
-    const { project, isAdmin, setProject } = useProject();
+    const { project, setProject } = useProject();
+    const { userIsAdmin } = useMembers();
     const handleError = useErrorHandler();
     const history = useHistory();
     const { teams, setTeams } = useTeams();
@@ -57,7 +59,7 @@ const ProjectSettings = () => {
                     name={project.name}
                     projectID={project.projectID}
                     teamID={project.teamID}
-                    editable={isAdmin}
+                    editable={userIsAdmin}
                     onSave={handleProjectNameSave}
                     hasButton={true}>
                     <h2>{project.name}</h2>
@@ -65,7 +67,7 @@ const ProjectSettings = () => {
             </label>
 
             <div>
-                <button disabled={!isAdmin} onClick={handleAlertToggle}>
+                <button disabled={!userIsAdmin} onClick={handleAlertToggle}>
                     Delete Project
                 </button>
             </div>
