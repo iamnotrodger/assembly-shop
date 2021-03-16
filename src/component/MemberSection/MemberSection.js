@@ -3,7 +3,7 @@ import useMembers from '../../context/MembersContext';
 import useUser from '../../context/UserContext';
 import Member from '../Member';
 
-const TeamMembers = ({ removable }) => {
+const MemberSection = ({ removable }) => {
     const { members, loadMembers, deleteMember } = useMembers();
     const { user } = useUser();
 
@@ -15,7 +15,7 @@ const TeamMembers = ({ removable }) => {
         await deleteMember(id);
     };
 
-    if (!members) return <div>what the freak</div>;
+    if (!members) return <div>No Available Members</div>;
 
     return members.map((member) => (
         <Member
@@ -30,4 +30,4 @@ const TeamMembers = ({ removable }) => {
     ));
 };
 
-export default TeamMembers;
+export default MemberSection;

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { MembersProvider } from '../../context/MembersContext';
+import MemberSection from '../MemberSection';
 import Modal from '../Modal';
 import Project from '../Project';
-import TeamMembers from '../TeamMembers';
 
 const TeamSection = ({ value: { teamID, name, numMembers, projects } }) => {
     const [showMembers, setShowMembers] = useState(false);
@@ -41,7 +41,7 @@ const TeamSection = ({ value: { teamID, name, numMembers, projects } }) => {
             <MembersProvider teamID={teamID}>
                 <Modal isOpen={showMembers} onClose={handleShowMembersToggle}>
                     <div style={{ width: '50vw' }}>
-                        <TeamMembers />
+                        <MemberSection />
                     </div>
                 </Modal>
             </MembersProvider>
