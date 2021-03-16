@@ -3,6 +3,7 @@ import React, {
     useCallback,
     useContext,
     useEffect,
+    useReducer,
     useState,
 } from 'react';
 import {
@@ -13,6 +14,7 @@ import {
 import { createErrorToast } from '../../utils/toast';
 import useToast, { TOAST_ACTIONS, TOAST_STATE } from '../ToastContext';
 import useUser from '../UserContext';
+import { MEMBER_ACTIONS, reducer } from './utils';
 
 const MembersContext = createContext();
 
@@ -22,62 +24,42 @@ export const MembersProvider = ({
     projectID,
     loadOnMount,
 }) => {
-    const [members, setMembers] = useState(null);
+    const [members, memberDispatch] = useReducer(reducer, null);
     const [userIsAdmin, setUserIsAdmin] = useState(false);
 
     const { user } = useUser();
     const { toastDispatch } = useToast();
 
-    const loadMembers = useCallback(async () => {
-        try {
-            let members;
-
-            if (teamID) {
-                members = await getTeamMembers(teamID);
-            } else {
-                members = await getProjectMembers(projectID);
-            }
-
-            console.log('user: ', user);
-
-            const index = members.findIndex(
-                (member) => member.userID === user.userID,
-            );
-
-            // console.log('index: ', index);
-
-            setUserIsAdmin(index > -1);
-            setMembers(members);
-        } catch (error) {
-            toastDispatch({
-                type: TOAST_ACTIONS.ADD,
-                payload: createErrorToast(error.message),
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [teamID, projectID, user.userID]);
-
-    const deleteMember = useCallback(
-        async (userID) => {
+    const asyncMemberDispatch = useCallback(
+        async (action) => {
             try {
-                if (teamID) {
-                    await deleteTeamMember(userID, teamID);
+                switch (action.type) {
+                    case MEMBER_ACTIONS.ADD:
+                        if (projectID) break;
+                        break;
+                    case MEMBER_ACTIONS.LOAD:
+                        let members;
+                        if (teamID) members = await getTeamMembers(teamID);
+                        else members = await getProjectMembers(projectID);
+
+                        action.payload = members;
+                        memberDispatch(action);
+                        break;
+                    case MEMBER_ACTIONS.DELETE:
+                        if (projectID) break;
+                        await deleteTeamMember(action.payload, teamID);
+                        memberDispatch(action);
+                        toastDispatch({
+                            type: TOAST_ACTIONS.ADD,
+                            payload: {
+                                state: TOAST_STATE.SUCCESS,
+                                title: 'Member Removed',
+                            },
+                        });
+                        break;
+                    default:
+                        memberDispatch(action);
                 }
-                const index = members.findIndex(
-                    (member) => member.userID === userID,
-                );
-
-                const newMembers = [...members];
-                newMembers.splice(index, 1);
-                setMembers(newMembers);
-
-                toastDispatch({
-                    type: TOAST_ACTIONS.ADD,
-                    payload: {
-                        state: TOAST_STATE.SUCCESS,
-                        title: 'Member Removed',
-                    },
-                });
             } catch (error) {
                 toastDispatch({
                     type: TOAST_ACTIONS.ADD,
@@ -85,16 +67,25 @@ export const MembersProvider = ({
                 });
             }
         },
-        [members, teamID, toastDispatch],
+        [projectID, teamID, toastDispatch],
     );
 
     useEffect(() => {
-        if (loadOnMount) loadMembers();
-    }, [loadMembers, loadOnMount]);
+        if (loadOnMount) asyncMemberDispatch({ type: MEMBER_ACTIONS.LOAD });
+    }, [asyncMemberDispatch, loadOnMount]);
+
+    useEffect(() => {
+        if (members) {
+            const index = members.findIndex(
+                (member) => member.userID === user.userID,
+            );
+            setUserIsAdmin(index > -1);
+        }
+    }, [members, user.userID]);
 
     return (
         <MembersContext.Provider
-            value={{ members, userIsAdmin, loadMembers, deleteMember }}>
+            value={{ members, userIsAdmin, asyncMemberDispatch }}>
             {children}
         </MembersContext.Provider>
     );

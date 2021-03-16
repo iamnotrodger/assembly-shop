@@ -18,7 +18,7 @@ const CreateTask = ({ projectID, onClose }) => {
     const [assignee, setAssignee] = useState(null);
     const [isTitleValid, setIsTitleValid] = useState(false);
 
-    const members = useMembers();
+    const { members } = useMembers();
     const { tasksDispatch } = useTasks();
     const { toastDispatch } = useToast();
     const setLoading = useLoadingAction();
