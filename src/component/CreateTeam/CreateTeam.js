@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import { createTeam } from '../../api/TeamAPI';
 import { getUsers } from '../../api/UserAPI';
 import { useLoadingAction } from '../../context/LoadingContext';
-import useTeams from '../../context/TeamsContext';
+import useTeams, { TEAMS_ACTIONS } from '../../context/TeamsContext';
 import { validateTeamName } from '../../utils/validate';
 import InputValidate from '../InputValidate';
 import SearchSelect from '../SearchSelect';
@@ -14,10 +14,11 @@ const CreateTeam = ({ onClose }) => {
     const [isValid, setIsValid] = useState(false);
     const [members, setMembers] = useState([]);
 
-    const { teams, setTeams } = useTeams();
+    const { teamsDispatch } = useTeams();
     const setLoading = useLoadingAction();
     const handleError = useErrorHandler();
     const history = useHistory();
+
     const handleNameChange = (value, valid) => {
         setName(value);
         setIsValid(valid);
@@ -39,9 +40,7 @@ const CreateTeam = ({ onClose }) => {
     };
 
     const addTeamToTeamsContext = (team) => {
-        if (!teams) return;
-        teams.unshift(team);
-        setTeams(teams);
+        teamsDispatch({ type: TEAMS_ACTIONS.ADD, payload: team });
     };
 
     const handleRedirect = (team) => {

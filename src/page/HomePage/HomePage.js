@@ -3,10 +3,10 @@ import { useErrorHandler } from 'react-error-boundary';
 import { getTeamAndProjects } from '../../api/ProjectAPI';
 import TeamSection from '../../component/TeamSection';
 import { useLoadingAction } from '../../context/LoadingContext';
-import useTeams from '../../context/TeamsContext';
+import useTeams, { TEAMS_ACTIONS } from '../../context/TeamsContext';
 
 const HomePage = () => {
-    const { teams, setTeams } = useTeams();
+    const { teams, teamsDispatch } = useTeams();
 
     const setLoading = useLoadingAction();
     const handleError = useErrorHandler();
@@ -17,7 +17,7 @@ const HomePage = () => {
                 setLoading(true);
                 try {
                     const teams = await getTeamAndProjects();
-                    setTeams(teams);
+                    teamsDispatch({ type: TEAMS_ACTIONS.LOAD, payload: teams });
                 } catch (error) {
                     handleError(error);
                 }

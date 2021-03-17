@@ -4,8 +4,7 @@ import { useHistory } from 'react-router';
 import { deleteProject } from '../../api/ProjectAPI';
 import useMembers from '../../context/MembersContext';
 import useProject from '../../context/ProjectContext';
-import useTeams from '../../context/TeamsContext';
-import { removeProject } from '../../utils/project';
+import useTeams, { TEAMS_ACTIONS } from '../../context/TeamsContext';
 import AlertPanel from '../AlertPanel';
 import ProjectName from '../ProjectName';
 
@@ -16,7 +15,7 @@ const ProjectSettings = () => {
     const { userIsAdmin } = useMembers();
     const handleError = useErrorHandler();
     const history = useHistory();
-    const { teams, setTeams } = useTeams();
+    const { teamsDispatch } = useTeams();
 
     const handleProjectNameSave = async (name) => {
         setProject({ ...project, ...{ name } });
@@ -26,17 +25,18 @@ const ProjectSettings = () => {
         try {
             const { projectID } = project;
             await deleteProject(projectID);
-            deleteProjectOnTeamsContext();
+            deleteProjectOnTeamsContext(project);
             handleRedirect();
         } catch (error) {
             handleError(error);
         }
     };
 
-    const deleteProjectOnTeamsContext = () => {
-        if (!teams) return;
-        const newTeamsState = removeProject(teams, project);
-        setTeams(newTeamsState);
+    const deleteProjectOnTeamsContext = (project) => {
+        teamsDispatch({
+            type: TEAMS_ACTIONS.DELETE_PROJECT,
+            payload: project,
+        });
     };
 
     const handleRedirect = () => {
