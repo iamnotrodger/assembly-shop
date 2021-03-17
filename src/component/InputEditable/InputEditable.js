@@ -10,26 +10,29 @@ const InputEditable = ({
     children,
 }) => {
     const [newText, setNewText] = useState(text);
+    const [saved, setSaved] = useState(false);
 
     const inputRef = useRef(null);
     const [isEditing, setIsEditing] = useDetectOutsideClick(inputRef, false);
 
     useEffect(() => {
-        if (!isEditing) {
+        if (!isEditing && !saved) {
             if (text !== newText) {
                 (async () => {
                     await onSave(newText);
+                    setSaved(true);
                 })();
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [isEditing]);
+    }, [isEditing, saved]);
 
     useEffect(() => {
         setNewText(text);
     }, [text]);
 
     const handleTextChange = (event) => {
+        setSaved(false);
         setNewText(event.target.value);
     };
 
@@ -44,13 +47,12 @@ const InputEditable = ({
         if (text !== newText) {
             await onSave(newText);
         }
+        setSaved(true);
         setIsEditing(false);
     };
 
     const handleCancel = () => {
-        if (text !== newText) {
-            setNewText(text);
-        }
+        setNewText(text);
         setIsEditing(false);
     };
 
