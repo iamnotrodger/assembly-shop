@@ -83,3 +83,20 @@ export const deleteTeam = async (teamID) => {
 
     if (!response.ok) throw await RequestError.parseResponse(response);
 };
+
+export const updateTeamName = async (name, teamID) => {
+    const accessToken = await getToken();
+    if (!accessToken) throw new Error('Unauthorized');
+
+    const response = await fetch(API_URL + `/api/team/${teamID}/name`, {
+        method: 'PUT',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({ name }),
+    });
+
+    if (!response.ok) throw await RequestError.parseResponse(response);
+};
