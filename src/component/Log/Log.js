@@ -6,7 +6,7 @@ import {
     formatAMPM,
     formatTime,
 } from '../../utils/time';
-import Time from '../Time';
+import Timer from '../Timer';
 
 const Log = ({ value, removable, onDelete }) => {
     const { logID, startTime, endTime } = value;
@@ -26,7 +26,10 @@ const Log = ({ value, removable, onDelete }) => {
                 {endTime ? (
                     <div>{formatTime(calculateTotal(startTime, endTime))}</div>
                 ) : (
-                    <Time total={calculateTime(0, startTime)} />
+                    <Timer
+                        total={calculateTime(0, startTime)}
+                        increment={1000}
+                    />
                 )}
 
                 <span>

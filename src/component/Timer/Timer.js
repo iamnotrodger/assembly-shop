@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { formatTime } from '../../utils/time';
 
-const Time = ({ total }) => {
+const Timer = ({ total, increment }) => {
     const [time, setTime] = useState(total);
 
     useEffect(() => {
         const timer = setTimeout(() => {
             setTime(time + 1000);
-        }, 1000);
+        }, increment);
 
         return () => clearTimeout(timer);
-    }, [time]);
+    }, [increment, time]);
 
     useEffect(() => {
         setTime(total);
@@ -19,4 +19,4 @@ const Time = ({ total }) => {
     return <div>{formatTime(time)}</div>;
 };
 
-export default Time;
+export default Timer;

@@ -1,5 +1,5 @@
 import React from 'react';
-import Time from '../Time';
+import Timer from '../Timer';
 import { calculateTime, formatTime } from '../../utils/time';
 
 const TaskTime = ({ total, log }) => {
@@ -8,7 +8,12 @@ const TaskTime = ({ total, log }) => {
     } else if (!log) {
         return <div>{formatTime(total)}</div>;
     } else {
-        return <Time total={calculateTime(total, log.startTime)} />;
+        return (
+            <Timer
+                total={calculateTime(total, log.startTime)}
+                increment={1000}
+            />
+        );
     }
 };
 
