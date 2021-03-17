@@ -8,6 +8,8 @@ export const reducer = (state, action) => {
     switch (action.type) {
         case MEMBER_ACTIONS.LOAD:
             return action.payload;
+        case MEMBER_ACTIONS.ADD:
+            return addMember(state, action.payload);
         case MEMBER_ACTIONS.DELETE:
             return deleteMember(state, action.payload);
         default:
@@ -19,5 +21,11 @@ const deleteMember = (members, userID) => {
     const newMembers = [...members];
     const index = newMembers.findIndex((member) => member.userID === userID);
     newMembers.splice(index, 1);
+    return newMembers;
+};
+
+const addMember = (members, member) => {
+    const newMembers = [...members];
+    newMembers.push(member);
     return newMembers;
 };

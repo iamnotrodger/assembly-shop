@@ -7,12 +7,11 @@ import React, {
     useState,
 } from 'react';
 import {
+    addTeamMember,
     deleteTeamMember,
     getProjectMembers,
     getTeamMembers,
 } from '../../api/MemberAPI';
-import { createErrorToast } from '../../utils/toast';
-import useToast, { TOAST_ACTIONS, TOAST_STATE } from '../ToastContext';
 import useUser from '../UserContext';
 import { MEMBER_ACTIONS, reducer } from './utils';
 
@@ -28,46 +27,38 @@ export const MembersProvider = ({
     const [userIsAdmin, setUserIsAdmin] = useState(false);
 
     const { user } = useUser();
-    const { toastDispatch } = useToast();
 
     const asyncMemberDispatch = useCallback(
         async (action) => {
-            try {
-                switch (action.type) {
-                    case MEMBER_ACTIONS.ADD:
-                        if (projectID) break;
-                        break;
-                    case MEMBER_ACTIONS.LOAD:
-                        let members;
-                        if (teamID) members = await getTeamMembers(teamID);
-                        else members = await getProjectMembers(projectID);
+            switch (action.type) {
+                case MEMBER_ACTIONS.ADD:
+                    if (projectID) break;
 
-                        action.payload = members;
-                        memberDispatch(action);
-                        break;
-                    case MEMBER_ACTIONS.DELETE:
-                        if (projectID) break;
-                        await deleteTeamMember(action.payload, teamID);
-                        memberDispatch(action);
-                        toastDispatch({
-                            type: TOAST_ACTIONS.ADD,
-                            payload: {
-                                state: TOAST_STATE.SUCCESS,
-                                title: 'Member Removed',
-                            },
-                        });
-                        break;
-                    default:
-                        memberDispatch(action);
-                }
-            } catch (error) {
-                toastDispatch({
-                    type: TOAST_ACTIONS.ADD,
-                    payload: createErrorToast(error.message),
-                });
+                    const user = action.payload;
+                    await addTeamMember(user.userID, teamID);
+
+                    action.payload = { teamID, userID: user.userID, user };
+                    memberDispatch(action);
+                    break;
+                case MEMBER_ACTIONS.LOAD:
+                    let members;
+                    if (teamID) members = await getTeamMembers(teamID);
+                    else members = await getProjectMembers(projectID);
+
+                    action.payload = members;
+                    memberDispatch(action);
+                    break;
+                case MEMBER_ACTIONS.DELETE:
+                    if (projectID) break;
+
+                    await deleteTeamMember(action.payload, teamID);
+                    memberDispatch(action);
+                    break;
+                default:
+                    memberDispatch(action);
             }
         },
-        [projectID, teamID, toastDispatch],
+        [projectID, teamID],
     );
 
     useEffect(() => {
@@ -77,7 +68,7 @@ export const MembersProvider = ({
     useEffect(() => {
         if (members) {
             const index = members.findIndex(
-                (member) => member.userID === user.userID,
+                (member) => member.userID === user.userID && member.admin,
             );
             setUserIsAdmin(index > -1);
         }
