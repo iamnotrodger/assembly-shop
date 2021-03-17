@@ -23,6 +23,6 @@ export const reducer = (state, action) => {
 
 const deleteToast = (toastList, toast) => {
     const index = toastList.findIndex((element) => element.id === toast.id);
-    toastList.splice(index, 1);
+    if (index > -1) toastList.splice(index, 1);
     return toastList;
 };

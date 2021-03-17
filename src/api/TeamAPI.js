@@ -12,9 +12,7 @@ export const getTeam = async (teamID) => {
         },
     });
 
-    if (!response.ok) {
-        throw await RequestError.parseResponse(response);
-    }
+    if (!response.ok) throw await RequestError.parseResponse(response);
 
     return await response.json();
 };
@@ -29,9 +27,7 @@ export const getTeams = async () => {
         },
     });
 
-    if (!response.ok) {
-        throw await RequestError.parseResponse(response);
-    }
+    if (!response.ok) throw await RequestError.parseResponse(response);
 
     const teams = await response.json();
     return teams;
@@ -47,9 +43,7 @@ export const getTeamsByAdmin = async () => {
         },
     });
 
-    if (!response.ok) {
-        throw await RequestError.parseResponse(response);
-    }
+    if (!response.ok) throw await RequestError.parseResponse(response);
 
     const teams = await response.json();
     return teams;
@@ -69,10 +63,23 @@ export const createTeam = async (newTeam) => {
         body: JSON.stringify(newTeam),
     });
 
-    if (!response.ok) {
-        throw await RequestError.parseResponse(response);
-    }
+    if (!response.ok) throw await RequestError.parseResponse(response);
 
     const { team } = await response.json();
     return team;
+};
+
+export const deleteTeam = async (teamID) => {
+    const accessToken = await getToken();
+    if (!accessToken) throw new Error('Unauthorized');
+
+    const response = await fetch(API_URL + `/api/team/${teamID}`, {
+        method: 'DELETE',
+        mode: 'cors',
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
+
+    if (!response.ok) throw await RequestError.parseResponse(response);
 };

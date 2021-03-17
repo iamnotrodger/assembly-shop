@@ -69,3 +69,18 @@ export const deleteTeamMember = async (userID, teamID) => {
 
     if (!response.ok) throw await RequestError.parseResponse(response);
 };
+
+export const quitTeam = async (teamID) => {
+    const accessToken = await getToken();
+    if (!accessToken) throw new Error('Unauthorized');
+
+    const response = await fetch(API_URL + `/api/member/team/${teamID}`, {
+        method: 'DELETE',
+        mode: 'cors',
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
+
+    if (!response.ok) throw await RequestError.parseResponse(response);
+};

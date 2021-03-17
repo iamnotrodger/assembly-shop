@@ -4,6 +4,7 @@ import { useParams } from 'react-router';
 import { getTeam } from '../../api/TeamAPI';
 import TabBoard from '../../component/TabBoard';
 import TeamMembers from '../../component/TeamMembers';
+import TeamSettings from '../../component/TeamSettings';
 import { useLoadingAction } from '../../context/LoadingContext';
 import { MembersProvider } from '../../context/MembersContext';
 
@@ -39,7 +40,7 @@ const TeamPage = () => {
                         <TeamMembers />
                     </div>
                     <div label='Settings'>
-                        <div>Settings</div>
+                        <TeamSettings teamID={teamID} />
                     </div>
                 </TabBoard>
             </MembersProvider>

@@ -20,7 +20,7 @@ export const reducer = (state, action) => {
 const deleteMember = (members, userID) => {
     const newMembers = [...members];
     const index = newMembers.findIndex((member) => member.userID === userID);
-    newMembers.splice(index, 1);
+    if (index > -1) newMembers.splice(index, 1);
     return newMembers;
 };
 

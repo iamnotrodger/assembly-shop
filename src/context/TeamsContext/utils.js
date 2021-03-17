@@ -27,10 +27,10 @@ export const reducer = (state, action) => {
 const deleteTeam = (state, teamID) => {
     if (!state) return;
 
-    const newState = [...state];
-    const index = newState.findIndex((team) => team.teamID === teamID);
-    newState.splice(index, 1);
-    return newState;
+    // eslint-disable-next-line eqeqeq
+    const index = state.findIndex((team) => team.teamID == teamID);
+    if (index > -1) state.splice(index, 1);
+    return state;
 };
 
 const addProject = (teams, project) => {
