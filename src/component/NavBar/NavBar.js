@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import useUser from '../../context/UserContext';
 import CreateProject from '../CreateProject';
 import CreateTeam from '../CreateTeam';
@@ -25,11 +25,9 @@ const NavBar = () => {
 
     return (
         <div>
-            <NavLink exact to='/' activeStyle={{ display: 'none' }}>
-                Back
-            </NavLink>
-
-            <h2>Assembly Shop</h2>
+            <Link to='/'>
+                <h1>Assembly Shop</h1>
+            </Link>
 
             <Menu header={<button>Create</button>}>
                 <MenuItem title='Create Team' onClick={handleTeamToggle} />
