@@ -9,13 +9,14 @@ import useTeams, {
     TEAMS_ACTIONS,
     useUsersTeams,
 } from '../../context/TeamsContext';
-import InputValidate from '../InputValidate/InputValidate';
 import { validateProjectName } from '../../utils/validate';
 
 const CreateProject = ({ onClose }) => {
     const [name, setName] = useState('');
     const [team, setTeam] = useState(null);
-    const [isValid, setIsValid] = useState(false);
+
+    const [nameError, setNameError] = useState(null);
+    const [teamError, setTeamError] = useState(null);
 
     const { usersTeams, setUsersTeams } = useUsersTeams();
     const { teamsDispatch } = useTeams();
@@ -39,12 +40,17 @@ const CreateProject = ({ onClose }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const handleNameChange = (value, valid) => {
+    const handleNameChange = (event) => {
+        const { value } = event.target;
         setName(value);
-        setIsValid(valid);
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        const valid = validateForm();
+        if (!valid) return;
+
         setLoading(true);
         try {
             const { teamID } = team;
@@ -60,6 +66,22 @@ const CreateProject = ({ onClose }) => {
         setLoading(false);
     };
 
+    const validateForm = () => {
+        let valid = true;
+
+        const nameError = validateProjectName(name);
+        const teamError = !team ? 'Team is required' : null;
+
+        setNameError(nameError);
+        setTeamError(teamError);
+
+        if (nameError || teamError) {
+            valid = false;
+        }
+
+        return valid;
+    };
+
     const addProjectToTeamsContext = (project) => {
         teamsDispatch({ type: TEAMS_ACTIONS.ADD_PROJECT, payload: project });
     };
@@ -72,29 +94,41 @@ const CreateProject = ({ onClose }) => {
 
     return (
         <div style={{ width: '50vw' }}>
-            <h3>Build Team</h3>
-            <label>
-                Project Name
-                <InputValidate
-                    placeholder='Name'
-                    value={name}
-                    onChange={handleNameChange}
-                    validate={validateProjectName}
-                />
-            </label>
-            <label>
-                Team
-                <Select
-                    placeholder='Team'
-                    options={usersTeams}
-                    getOptionLabel={({ name }) => name}
-                    getOptionValue={({ teamID }) => teamID}
-                    onChange={setTeam}
-                />
-            </label>
-            <button disabled={!isValid || !team} onClick={handleSubmit}>
-                Create Project
-            </button>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <h2>Build Team</h2>
+                </div>
+
+                <div>
+                    <label>
+                        Project Name
+                        <input
+                            placeholder='Name'
+                            value={name}
+                            onChange={handleNameChange}
+                        />
+                        <span>{nameError}</span>
+                    </label>
+                </div>
+
+                <div>
+                    <label>
+                        Team
+                        <Select
+                            placeholder='Team'
+                            options={usersTeams}
+                            getOptionLabel={({ name }) => name}
+                            getOptionValue={({ teamID }) => teamID}
+                            onChange={setTeam}
+                        />
+                        <span>{teamError}</span>
+                    </label>
+                </div>
+
+                <div>
+                    <button onClick={handleSubmit}>Create Project</button>
+                </div>
+            </form>
         </div>
     );
 };

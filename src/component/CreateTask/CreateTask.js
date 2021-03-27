@@ -4,28 +4,28 @@ import { createTask } from '../../api/TaskAPI';
 import { useLoadingAction } from '../../context/LoadingContext';
 import useMembers from '../../context/MembersContext';
 import useTasks, { TASK_ACTIONS } from '../../context/TasksContext';
-import InputValidate from '../InputValidate/InputValidate';
-import { validateTaskTitle } from '../../utils/validate';
 import useToast, {
     TOAST_ACTIONS,
     TOAST_STATE,
 } from '../../context/ToastContext';
 import { createErrorToast } from '../../utils/toast';
+import { validateTaskTitle } from '../../utils/validate';
 
 const CreateTask = ({ projectID, onClose }) => {
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
     const [assignee, setAssignee] = useState(null);
-    const [isTitleValid, setIsTitleValid] = useState(false);
+
+    const [titleError, setTitleError] = useState(null);
 
     const { members } = useMembers();
     const { tasksDispatch } = useTasks();
     const { toastDispatch } = useToast();
     const setLoading = useLoadingAction();
 
-    const handleTitleChange = (value, valid) => {
+    const handleTitleChange = (event) => {
+        const { value } = event.target;
         setTitle(value);
-        setIsTitleValid(valid);
     };
 
     const handleDescriptionChange = (event) => {
@@ -37,7 +37,12 @@ const CreateTask = ({ projectID, onClose }) => {
         setAssignee(value);
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        const valid = validateForm();
+        if (!valid) return;
+
         setLoading(true);
         try {
             const newTask = {
@@ -57,7 +62,7 @@ const CreateTask = ({ projectID, onClose }) => {
                 },
             });
 
-            onClose();
+            if (onClose) onClose();
         } catch (error) {
             toastDispatch({
                 type: TOAST_ACTIONS.ADD,
@@ -67,43 +72,59 @@ const CreateTask = ({ projectID, onClose }) => {
         setLoading(false);
     };
 
+    const validateForm = () => {
+        const error = validateTaskTitle(title);
+        setTitleError(error);
+
+        return error == null;
+    };
+
     return (
         <div style={{ width: '50vw' }}>
-            <label>
-                Task Title
-                <InputValidate
-                    required
-                    placeholder='Title'
-                    value={title}
-                    onChange={handleTitleChange}
-                    validate={validateTaskTitle}
-                />
-            </label>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <h2>Task</h2>
+                </div>
 
-            <label>
-                Description
-                <input
-                    placeholder='Description'
-                    value={description}
-                    onChange={handleDescriptionChange}
-                />
-            </label>
+                <div>
+                    <label>
+                        Task Title
+                        <input
+                            placeholder='Title'
+                            value={title}
+                            onChange={handleTitleChange}
+                        />
+                        <span>{titleError}</span>
+                    </label>
+                </div>
 
-            <div>
-                <Select
-                    placeholder='Member'
-                    isClearable={false}
-                    value={assignee}
-                    options={members}
-                    getOptionLabel={({ user: { email } }) => email}
-                    getOptionValue={({ user: { userID } }) => userID}
-                    onChange={onSelectAssignee}
-                />
-            </div>
+                <div>
+                    <label>
+                        Description
+                        <input
+                            placeholder='Description'
+                            value={description}
+                            onChange={handleDescriptionChange}
+                        />
+                    </label>
+                </div>
 
-            <button disabled={!isTitleValid} onClick={handleSubmit}>
-                Create Task
-            </button>
+                <div>
+                    <Select
+                        placeholder='Member'
+                        isClearable={false}
+                        value={assignee}
+                        options={members}
+                        getOptionLabel={({ user: { email } }) => email}
+                        getOptionValue={({ user: { userID } }) => userID}
+                        onChange={onSelectAssignee}
+                    />
+                </div>
+
+                <div>
+                    <button onClick={handleSubmit}>Create Task</button>
+                </div>
+            </form>
         </div>
     );
 };

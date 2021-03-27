@@ -9,13 +9,13 @@ import useTeams, {
     useUsersTeams,
 } from '../../context/TeamsContext';
 import { validateTeamName } from '../../utils/validate';
-import InputValidate from '../InputValidate';
 import SearchSelect from '../SearchSelect';
 
 const CreateTeam = ({ onClose }) => {
     const [name, setName] = useState('');
-    const [isValid, setIsValid] = useState(false);
     const [members, setMembers] = useState([]);
+
+    const [nameError, setNameError] = useState(null);
 
     const { teamsDispatch } = useTeams();
     const { usersTeams, setUsersTeams } = useUsersTeams();
@@ -23,12 +23,17 @@ const CreateTeam = ({ onClose }) => {
     const handleError = useErrorHandler();
     const history = useHistory();
 
-    const handleNameChange = (value, valid) => {
+    const handleNameChange = (event) => {
+        const { value } = event.target;
         setName(value);
-        setIsValid(valid);
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        const valid = validateForm();
+        if (!valid) return;
+
         setLoading(true);
         try {
             const team = await createTeam({ name, members });
@@ -41,6 +46,12 @@ const CreateTeam = ({ onClose }) => {
             handleError(error);
         }
         setLoading(false);
+    };
+
+    const validateForm = () => {
+        const error = validateTeamName(name);
+        setNameError(error);
+        return error == null;
     };
 
     const addTeamToTeamsContext = (team) => {
@@ -59,34 +70,45 @@ const CreateTeam = ({ onClose }) => {
 
     return (
         <div style={{ width: '50vw' }}>
-            <h3>Build Team</h3>
-            <label>
-                Team Name
-                <InputValidate
-                    required
-                    placeholder='Name'
-                    value={name}
-                    onChange={handleNameChange}
-                    validate={validateTeamName}
-                />
-            </label>
-            <label>
-                Members
-                <SearchSelect
-                    search={getUsers}
-                    isMulti
-                    key={members.length}
-                    placeholder='Email'
-                    value={members}
-                    getOptionLabel={({ email }) => email}
-                    getOptionValue={({ userID }) => userID}
-                    onChange={setMembers}
-                    closeMenuOnSelect={false}
-                />
-            </label>
-            <button disabled={!isValid} onClick={handleSubmit}>
-                Create Team
-            </button>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <h2>Build Team</h2>
+                </div>
+
+                <div>
+                    <label>
+                        Team Name
+                        <input
+                            type='text'
+                            placeholder='Team Name'
+                            onChange={handleNameChange}
+                        />
+                        <span>{nameError}</span>
+                    </label>
+                </div>
+
+                <div>
+                    <label>
+                        Members
+                        <SearchSelect
+                            id='team-members'
+                            search={getUsers}
+                            isMulti
+                            key={members.length}
+                            placeholder='Email'
+                            value={members}
+                            getOptionLabel={({ email }) => email}
+                            getOptionValue={({ userID }) => userID}
+                            onChange={setMembers}
+                            closeMenuOnSelect={false}
+                        />
+                    </label>
+                </div>
+
+                <div>
+                    <button>Create Team</button>
+                </div>
+            </form>
         </div>
     );
 };
