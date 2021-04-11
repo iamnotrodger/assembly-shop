@@ -1,3 +1,9 @@
-.App {
-    text-align: center;
-}
+@import 'style/abstract/mixin';
+
+@import 'style/base/base';
+@import 'style/base/animation';
+@import 'style/base/typography';
+@import 'style/base/utils';
+
+@import 'style/component/button';
+@import 'style/component/form';
