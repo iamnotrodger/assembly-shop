@@ -5,6 +5,8 @@ import MemberSection from '../MemberSection';
 import Modal from '../Modal';
 import Project from '../Project';
 
+import './TeamSection.scss';
+
 const TeamSection = ({ value: { teamID, name, numMembers, projects } }) => {
     const [showMembers, setShowMembers] = useState(false);
 
@@ -25,14 +27,21 @@ const TeamSection = ({ value: { teamID, name, numMembers, projects } }) => {
         );
 
     return (
-        <div>
-            <div>
-                <h3>{name}</h3>
-                <div onClick={handleShowMembersToggle}>
-                    Members ({numMembers})
+        <section className='team-section'>
+            <div className='team-section__header'>
+                <h2 className='heading-secondary team-section__title'>
+                    {name}
+                </h2>
+                <div
+                    className='team-section__members'
+                    onClick={handleShowMembersToggle}>
+                    <i className='material-icons md-24'>person</i>
+                    <p className='paragraph'>Members ({numMembers})</p>
                 </div>
-                <Link to={`/team/${teamID}/${linkName}`}>
-                    <div>Settings</div>
+                <Link
+                    className='team-section__settings'
+                    to={`/team/${teamID}/${linkName}`}>
+                    <i className='material-icons md-36'>settings</i>
                 </Link>
             </div>
 
@@ -45,7 +54,7 @@ const TeamSection = ({ value: { teamID, name, numMembers, projects } }) => {
                     </div>
                 </Modal>
             </MembersProvider>
-        </div>
+        </section>
     );
 };
 

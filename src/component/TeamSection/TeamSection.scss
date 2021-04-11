@@ -1,0 +1,32 @@
+.team-section {
+    &__header {
+        display: flex;
+        align-items: center;
+    }
+
+    &__title {
+        margin-right: auto;
+    }
+
+    &__members {
+        display: flex;
+
+        cursor: pointer;
+        color: var(--color-primary);
+        margin-right: 2rem;
+
+        & > i {
+            margin-right: 0.5rem;
+            align-self: center;
+        }
+    }
+
+    &__settings {
+        &,
+        &:link,
+        &:visited {
+            text-decoration: none;
+            color: var(--color-primary);
+        }
+    }
+}
