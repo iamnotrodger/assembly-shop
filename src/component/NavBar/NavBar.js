@@ -8,6 +8,8 @@ import MenuItem from '../MenuItem';
 import Modal from '../Modal';
 import UserIcon from '../UserIcon';
 
+import './NavBar.scss';
+
 const NavBar = () => {
     const { Logout } = useUser();
     const [isTeamOpen, setIsTeamOpen] = useState(false);
@@ -24,22 +26,29 @@ const NavBar = () => {
     };
 
     return (
-        <div>
-            <Link to='/'>
-                <h1>Assembly Shop</h1>
+        <header className='header'>
+            <Link className='header__title' to='/'>
+                <h1 className='heading-primary'>Assembly-Shop</h1>
             </Link>
 
-            <Menu header={<button>Create</button>}>
-                <MenuItem title='Create Team' onClick={handleTeamToggle} />
-                <MenuItem
-                    title='Create Project'
-                    onClick={handleProjectToggle}
-                />
-            </Menu>
+            <nav className='header__nav'>
+                <Menu icon='add'>
+                    <MenuItem
+                        icon='groups'
+                        title='Create Team'
+                        onClick={handleTeamToggle}
+                    />
+                    <MenuItem
+                        icon='ballot'
+                        title='Create Project'
+                        onClick={handleProjectToggle}
+                    />
+                </Menu>
 
-            <Menu header={<UserIcon value={user} />}>
-                <MenuItem title='Logout' onClick={Logout} />
-            </Menu>
+                <Menu header={<UserIcon value={user} />}>
+                    <MenuItem icon='logout' title='Logout' onClick={Logout} />
+                </Menu>
+            </nav>
 
             <Modal isOpen={isTeamOpen} onClose={handleTeamToggle}>
                 <CreateTeam onClose={handleTeamToggle} />
@@ -48,7 +57,7 @@ const NavBar = () => {
             <Modal isOpen={isProjectOpen} onClose={handleProjectToggle}>
                 <CreateProject onClose={handleProjectToggle} />
             </Modal>
-        </div>
+        </header>
     );
 };
 

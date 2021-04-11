@@ -1,0 +1,11 @@
+.menu-item {
+    display: grid;
+    grid-template-columns: min-content max-content;
+    align-items: center;
+    grid-gap: 1rem;
+
+    padding: 1rem;
+    background-color: var(--color-white);
+    list-style: none;
+    border-radius: var(--border-radius-small);
+}

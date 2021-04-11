@@ -1,11 +1,13 @@
 import React from 'react';
 
+import './MenuItem.scss';
+
 const MenuItem = ({ icon, title, onClick }) => {
     return (
-        <button onClick={onClick}>
-            <span>{icon}</span>
-            <h3>{title}</h3>
-        </button>
+        <li className='menu-item' onClick={onClick}>
+            <i className='material-icons md-36'>{icon}</i>
+            <h2 className='heading-secondary'>{title}</h2>
+        </li>
     );
 };
 
