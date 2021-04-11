@@ -15,16 +15,6 @@ const TeamSection = ({ value: { teamID, name, numMembers, projects } }) => {
     };
 
     const linkName = name.replace(/\s+/g, '-').toLowerCase();
-    const projectMap =
-        projects && projects.length > 0 ? (
-            <div>
-                {projects.map((project) => (
-                    <Project value={project} key={project.projectID} />
-                ))}
-            </div>
-        ) : (
-            <div>No Projects Available</div>
-        );
 
     return (
         <section className='team-section'>
@@ -45,7 +35,18 @@ const TeamSection = ({ value: { teamID, name, numMembers, projects } }) => {
                 </Link>
             </div>
 
-            {projectMap}
+            {projects && projects.length > 0 ? (
+                <div className='team-section__projects'>
+                    {projects.map((project) => (
+                        <Project value={project} key={project.projectID} />
+                    ))}
+                </div>
+            ) : (
+                <h2 className='heading-tertiary team-section__no-project'>
+                    <i className='material-icons md-36'>ballot</i>
+                    No Projects Available
+                </h2>
+            )}
 
             <MembersProvider teamID={teamID}>
                 <Modal isOpen={showMembers} onClose={handleShowMembersToggle}>

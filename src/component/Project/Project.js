@@ -1,19 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import './Project.scss';
+
 const Project = ({ value: { projectID, name } }) => {
     const linkName = name.replace(/\s+/g, '-').toLowerCase();
-    const color = backgroundColors[projectID % backgroundColors.length];
+    const color = projectID % 5;
 
     return (
-        <Link to={`/project/${projectID}/${linkName}`}>
-            <div style={{ background: color, padding: '30px', margin: '5px' }}>
-                <h3>{name}</h3>
-            </div>
+        <Link
+            className={`project project--${color}`}
+            to={`/project/${projectID}/${linkName}`}>
+            <h3 className='heading-tertiary project__title'>{name}</h3>
         </Link>
     );
 };
-
-const backgroundColors = ['red', 'aqua', 'green', 'yellow', 'orange'];
 
 export default Project;

@@ -1,0 +1,41 @@
+.project {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-white);
+
+    padding: 4rem;
+    background-color: var(--color-primary);
+    border-radius: var(--border-radius-small);
+    box-shadow: var(--shadow-dark);
+    height: 14rem;
+
+    &:link,
+    &:visited {
+        text-decoration: none;
+    }
+
+    &__title {
+        word-wrap: break-word;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+    }
+
+    &--1 {
+    }
+
+    &--2 {
+    }
+
+    &--3 {
+    }
+
+    &--4 {
+    }
+
+    &--5 {
+    }
+}

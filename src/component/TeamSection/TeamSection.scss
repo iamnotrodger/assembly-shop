@@ -1,4 +1,5 @@
 .team-section {
+    margin-bottom: 2rem;
     &__header {
         display: flex;
         align-items: center;
@@ -27,6 +28,22 @@
         &:visited {
             text-decoration: none;
             color: var(--color-primary);
+        }
+    }
+
+    &__projects {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr));
+        grid-gap: 1rem;
+    }
+
+    &__no-project {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        & > i {
+            margin-right: 0.5rem;
         }
     }
 }
