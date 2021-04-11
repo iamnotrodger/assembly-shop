@@ -1,0 +1,11 @@
+.home-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+
+    &__title {
+        display: grid;
+        place-items: center;
+        color: var(--color-grey-dark);
+    }
+}

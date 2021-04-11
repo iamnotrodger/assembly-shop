@@ -1,4 +1,6 @@
 .header {
+    position: static;
+
     display: grid;
     grid-template-columns: 1fr [title-start] max-content [title-end] 1fr;
     align-items: center;

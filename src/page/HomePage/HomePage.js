@@ -5,6 +5,8 @@ import TeamSection from '../../component/TeamSection';
 import { useLoadingAction } from '../../context/LoadingContext';
 import useTeams, { TEAMS_ACTIONS } from '../../context/TeamsContext';
 
+import './HomePage.scss';
+
 const HomePage = () => {
     const { teams, teamsDispatch } = useTeams();
 
@@ -27,18 +29,22 @@ const HomePage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const teamMaps =
-        teams && teams.length > 0 ? (
-            <div>
-                {teams.map((team) => (
-                    <TeamSection value={team} key={team.teamID} />
-                ))}
-            </div>
-        ) : (
-            <div>No Teams Available</div>
-        );
-
-    return <div>{teamMaps}</div>;
+    return (
+        <main className='home-page'>
+            {teams && teams.length > 0 ? (
+                <div>
+                    {teams.map((team) => (
+                        <TeamSection value={team} key={team.teamID} />
+                    ))}
+                </div>
+            ) : (
+                <h2 className='heading-secondary home-page__title'>
+                    <i className='material-icons md-48'>groups</i>
+                    No Teams Available
+                </h2>
+            )}
+        </main>
+    );
 };
 
 export default HomePage;
