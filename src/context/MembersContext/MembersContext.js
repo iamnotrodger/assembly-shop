@@ -66,13 +66,13 @@ export const MembersProvider = ({
     }, [asyncMemberDispatch, loadOnMount]);
 
     useEffect(() => {
-        if (members) {
+        if (members && user) {
             const index = members.findIndex(
                 (member) => member.userID === user.userID && member.admin,
             );
             setUserIsAdmin(index > -1);
         }
-    }, [members, user.userID]);
+    }, [members, user]);
 
     return (
         <MembersContext.Provider
