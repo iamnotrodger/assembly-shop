@@ -3,6 +3,8 @@ import useTasks from '../../context/TasksContext';
 import TaskList from './TaskList';
 import { filterTask } from './utils';
 
+import './TaskBoard.scss';
+
 const TaskBoard = () => {
     const [todo, setTodo] = useState([]);
     const [doing, setDoing] = useState([]);
@@ -21,11 +23,11 @@ const TaskBoard = () => {
         setDone(done);
     };
     return (
-        <div>
+        <section className='task-board'>
             <TaskList title='Todo' value={todo} />
             <TaskList title='Doing' value={doing} />
             <TaskList title='Done' value={done} />
-        </div>
+        </section>
     );
 };
 

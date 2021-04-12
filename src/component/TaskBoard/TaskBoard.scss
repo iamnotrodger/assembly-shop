@@ -1,0 +1,23 @@
+.task-board {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+    grid-row-gap: 2rem;
+    grid-column-gap: 1.5rem;
+    align-items: start;
+}
+
+.task-list {
+    padding: 1rem;
+    background-color: var(--color-grey-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-dark-big);
+
+    &__title {
+        margin-left: 1rem;
+    }
+
+    &__list {
+        display: grid;
+        grid-gap: 0.5rem;
+    }
+}
