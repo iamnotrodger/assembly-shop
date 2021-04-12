@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 
+import './Modal.scss';
+
 const Modal = ({
     isOpen,
     onClose,
@@ -15,13 +17,18 @@ const Modal = ({
     return ReactDom.createPortal(
         <>
             <div
-                className={overlayClass}
-                style={OVERLAY_STYLES}
+                className={`modal-overlay ${overlayClass || ''}`}
                 onClick={!fixed ? onClose : null}
             />
-            <div className={modalClass} style={MODAL_STYLES}>
+            <div className={`modal ${modalClass || ''}`}>
                 {hasButton ? (
-                    <button onClick={onClose}>Close Modal</button>
+                    <div className='modal__close'>
+                        <i
+                            className='material-icons md-36 modal__close-icon'
+                            onClick={onClose}>
+                            clear
+                        </i>
+                    </div>
                 ) : null}
                 {children}
             </div>
@@ -32,27 +39,6 @@ const Modal = ({
 
 Modal.defaultProps = {
     hasButton: true,
-};
-
-//FOR DEVELOPMENTAL PURPOSES
-const MODAL_STYLES = {
-    position: 'fixed',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    backgroundColor: '#FFF',
-    padding: '10px',
-    zIndex: 999,
-};
-
-const OVERLAY_STYLES = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    backgroundColor: 'rgba(0, 0, 0, .7)',
-    zIndex: 999,
 };
 
 export default Modal;
