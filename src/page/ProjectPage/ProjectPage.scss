@@ -1,0 +1,11 @@
+.project-page {
+    background-color: var(--color-tertiary);
+    height: 90vh;
+    width: 100vw;
+
+    &__main {
+        max-width: var(--max-content-width);
+        margin: 0 auto;
+        padding: 2rem;
+    }
+}

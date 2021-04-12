@@ -7,19 +7,23 @@ import { MembersProvider } from '../../context/MembersContext';
 import { ProjectProvider } from '../../context/ProjectContext';
 import { TasksProvider } from '../../context/TasksContext';
 
+import './ProjectPage.scss';
+
 const ProjectPage = () => {
     const { projectID } = useParams();
     return (
-        <div>
-            <ProjectProvider projectID={projectID}>
-                <MembersProvider projectID={projectID} loadOnMount>
-                    <ProjectHeader />
-                    <TasksProvider projectID={projectID}>
-                        <TaskBoard />
-                        <TaskButton projectID={projectID} />
-                    </TasksProvider>
-                </MembersProvider>
-            </ProjectProvider>
+        <div className='project-page'>
+            <main className='project-page__main'>
+                <ProjectProvider projectID={projectID}>
+                    <MembersProvider projectID={projectID} loadOnMount>
+                        <ProjectHeader />
+                        <TasksProvider projectID={projectID}>
+                            <TaskBoard />
+                            <TaskButton projectID={projectID} />
+                        </TasksProvider>
+                    </MembersProvider>
+                </ProjectProvider>
+            </main>
         </div>
     );
 };
