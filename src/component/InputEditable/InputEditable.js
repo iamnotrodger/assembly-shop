@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import useDetectOutsideClick from '../../hook/useDetectOutsideClick';
 
+import './InputEditable.scss';
+
 const InputEditable = ({
     text,
     onSave,
-    inputClass,
+    className,
     editable,
     hasButton,
+    dynamic,
     children,
 }) => {
     const [newText, setNewText] = useState(text);
@@ -38,12 +41,12 @@ const InputEditable = ({
 
     const handleKeyDown = (event) => {
         const { keyCode } = event;
-
         if (keyCode === 13 || keyCode === 9) handleSaveChanges();
         else if (keyCode === 27) handleCancel();
     };
 
-    const handleSaveChanges = async () => {
+    const handleSaveChanges = async (event) => {
+        if (event) event.preventDefault();
         if (text !== newText) {
             await onSave(newText);
         }
@@ -51,28 +54,47 @@ const InputEditable = ({
         setIsEditing(false);
     };
 
-    const handleCancel = () => {
+    const handleCancel = (event) => {
+        if (event) event.preventDefault();
         setNewText(text);
         setIsEditing(false);
     };
 
-    if (!isEditing) {
-        return <div onClick={() => setIsEditing(editable)}>{children}</div>;
-    }
-
     return (
-        <div ref={inputRef}>
-            <input
-                value={newText}
-                onKeyDown={handleKeyDown}
-                onChange={handleTextChange}
-                className={inputClass}
-            />
+        <div
+            ref={inputRef}
+            className={`input-editable ${
+                isEditing ? 'input-editable--is-editing' : ''
+            }`}>
+            <label
+                className={`input-editable__label ${
+                    editable ? 'input-editable--editable' : ''
+                }
+                `}
+                onClick={() => setIsEditing(editable)}>
+                <div className='input-editable__child'>{children}</div>
+                <input
+                    type='text'
+                    size={dynamic ? newText.length || 0 : null}
+                    className={`input-editable__input ${className || ''}`}
+                    value={newText}
+                    onKeyDown={handleKeyDown}
+                    onChange={handleTextChange}
+                />
+            </label>
 
             {hasButton ? (
-                <div>
-                    <button onClick={handleSaveChanges}>Save</button>
-                    <button onClick={handleCancel}>Cancel</button>
+                <div className='input-editable__buttons'>
+                    <i
+                        className='material-icons input-editable__icon input-editable__icon--save'
+                        onClick={handleSaveChanges}>
+                        save
+                    </i>
+                    <i
+                        className='material-icons input-editable__icon input-editable__icon--cancel'
+                        onClick={handleCancel}>
+                        clear
+                    </i>
                 </div>
             ) : null}
         </div>

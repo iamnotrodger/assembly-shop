@@ -28,11 +28,13 @@ const ProjectHeader = () => {
     return (
         <header className='project-header'>
             <ProjectName
+                className='heading-tertiary project-header__input'
                 name={project.name}
                 projectID={project.projectID}
                 teamID={project.teamID}
                 editable={userIsAdmin}
-                onSave={handleProjectNameSave}>
+                onSave={handleProjectNameSave}
+                dynamic={true}>
                 <h3 className='heading-tertiary project-header__project-name'>
                     {project.name}
                 </h3>

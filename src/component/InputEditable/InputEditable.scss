@@ -1,0 +1,50 @@
+.input-editable {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    cursor: default;
+
+    &--editable {
+        cursor: pointer;
+    }
+
+    &__label {
+        flex-grow: 1;
+    }
+
+    &__input {
+        width: 100%;
+        display: none;
+    }
+
+    &__buttons {
+        margin-left: 1rem;
+        display: none;
+    }
+
+    &__icon {
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+
+        &:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+
+        &--save {
+            background-color: #32b67a;
+        }
+    }
+
+    &--is-editing &__child {
+        display: none;
+    }
+
+    &--is-editing &__input {
+        display: block;
+    }
+
+    &--is-editing &__buttons {
+        display: block;
+    }
+}

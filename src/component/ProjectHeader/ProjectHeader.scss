@@ -7,11 +7,12 @@
 
 .project-header {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: center;
 
     & > * {
-        margin: 0 0.5rem;
+        margin: 0.5rem;
     }
 
     &__project-name {
@@ -34,5 +35,21 @@
     &__settings {
         cursor: pointer;
         color: var(--color-primary);
+    }
+
+    &__input {
+        @extend %name;
+        font-size: 2em;
+        padding: 1.4rem 1rem;
+        color: var(--color-grey-dark);
+        text-align: center;
+        max-width: 100vw;
+        border-style: none;
+        border-width: 0;
+        outline: none;
+
+        &:focus {
+            box-shadow: inset 0 0 0 0.2rem var(--color-primary);
+        }
     }
 }

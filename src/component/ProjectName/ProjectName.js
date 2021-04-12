@@ -5,14 +5,7 @@ import { createErrorToast } from '../../utils/toast';
 import { validateProjectName } from '../../utils/validate';
 import InputEditable from '../InputEditable';
 
-const ProjectName = ({
-    name,
-    projectID,
-    editable,
-    onSave,
-    hasButton,
-    children,
-}) => {
+const ProjectName = ({ name, projectID, onSave, children, ...props }) => {
     const { toastDispatch } = useToast();
 
     const handleSave = async (name) => {
@@ -32,11 +25,7 @@ const ProjectName = ({
 
     return (
         <>
-            <InputEditable
-                text={name}
-                onSave={handleSave}
-                editable={editable}
-                hasButton={hasButton}>
+            <InputEditable text={name} onSave={handleSave} {...props}>
                 {children}
             </InputEditable>
         </>
