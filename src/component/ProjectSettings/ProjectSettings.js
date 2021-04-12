@@ -48,29 +48,31 @@ const ProjectSettings = () => {
     };
 
     return (
-        <div>
-            <div>
-                <h1>Project Settings</h1>
+        <div className='form'>
+            <h2 className='form__title heading-secondary'>Project Settings</h2>
+
+            <div className='form__group'>
+                <label className='form__label'>
+                    Project Name
+                    <ProjectName
+                        className='form__input'
+                        name={project.name}
+                        projectID={project.projectID}
+                        teamID={project.teamID}
+                        editable={userIsAdmin}
+                        onSave={handleProjectNameSave}
+                        hasButton={true}>
+                        <div className='form__input'>{project.name}</div>
+                    </ProjectName>
+                </label>
             </div>
 
-            <label>
-                Project Name
-                <ProjectName
-                    name={project.name}
-                    projectID={project.projectID}
-                    teamID={project.teamID}
-                    editable={userIsAdmin}
-                    onSave={handleProjectNameSave}
-                    hasButton={true}>
-                    <h2>{project.name}</h2>
-                </ProjectName>
-            </label>
-
-            <div>
-                <button disabled={!userIsAdmin} onClick={handleAlertToggle}>
-                    Delete Project
-                </button>
-            </div>
+            <button
+                className='form__submit btn'
+                disabled={!userIsAdmin}
+                onClick={handleAlertToggle}>
+                Delete Project
+            </button>
 
             <AlertPanel
                 isOpen={isAlertOpen}

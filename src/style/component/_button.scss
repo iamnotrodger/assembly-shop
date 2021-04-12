@@ -10,4 +10,9 @@
     border: none;
     border-radius: var(--border-radius);
     background-color: var(--color-white);
+
+    &:disabled {
+        background-color: var(--color-grey-light);
+        color: var(--color-secondary);
+    }
 }
