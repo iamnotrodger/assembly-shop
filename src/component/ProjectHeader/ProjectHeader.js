@@ -6,6 +6,8 @@ import Modal from '../Modal';
 import ProjectName from '../ProjectName';
 import ProjectSettings from '../ProjectSettings';
 
+import './ProjectHeader.scss';
+
 const ProjectHeader = () => {
     const [isSettingsOpen, setIsSettingsOpen] = useState(false);
     const { project, team, setProject } = useProject();
@@ -24,30 +26,32 @@ const ProjectHeader = () => {
     };
 
     return (
-        <div>
+        <header className='project-header'>
             <ProjectName
                 name={project.name}
                 projectID={project.projectID}
                 teamID={project.teamID}
                 editable={userIsAdmin}
                 onSave={handleProjectNameSave}>
-                <div style={{ backgroundColor: '#cce6ff' }}>
-                    <h3>{project.name}</h3>
-                </div>
+                <h3 className='heading-tertiary project-header__project-name'>
+                    {project.name}
+                </h3>
             </ProjectName>
 
-            <Link to={teamLink}>
-                <div style={{ backgroundColor: '#cce6ff' }}>
-                    <h3>{team.name}</h3>
-                </div>
+            <Link className='project-header__team-name' to={teamLink}>
+                {team.name}
             </Link>
 
-            <div onClick={handleSettingsToggle}>settings</div>
+            <i
+                className='material-icons md-36 project-header__settings'
+                onClick={handleSettingsToggle}>
+                settings
+            </i>
 
             <Modal isOpen={isSettingsOpen} onClose={handleSettingsToggle}>
                 <ProjectSettings />
             </Modal>
-        </div>
+        </header>
     );
 };
 

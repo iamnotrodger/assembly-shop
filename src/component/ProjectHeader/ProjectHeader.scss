@@ -1,0 +1,38 @@
+%name {
+    padding: 1rem;
+    color: var(--color-white);
+    background-color: var(--color-secondary);
+    border-radius: var(--border-radius-small);
+}
+
+.project-header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > * {
+        margin: 0 0.5rem;
+    }
+
+    &__project-name {
+        @extend %name;
+    }
+
+    &__team-name {
+        @extend %name;
+        font-family: var(--font-secondary);
+        font-size: 2rem;
+        font-weight: 300;
+        cursor: pointer;
+
+        &:link,
+        &:visited {
+            text-decoration: none;
+        }
+    }
+
+    &__settings {
+        cursor: pointer;
+        color: var(--color-primary);
+    }
+}
