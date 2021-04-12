@@ -10,9 +10,9 @@ const Assignee = ({ value, children }) => {
     }
 
     return (
-        <div>
+        <div className='task__assignee'>
             <UserIcon value={value} />
-            <div>{user.userID === value.userID ? children : null}</div>
+            {user.userID === value.userID ? children : null}
         </div>
     );
 };

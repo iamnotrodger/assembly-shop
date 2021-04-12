@@ -1,13 +1,23 @@
 import React from 'react';
 
 const LogButton = ({ active, onStart, onStop }) => {
-    return (
-        <button
-            style={{ borderRadius: '50%' }}
-            onClick={active ? onStop : onStart}>
-            {active ? '||' : '|>'}
-        </button>
-    );
+    if (active) {
+        return (
+            <i
+                className='material-icons md-36 md-circle task__log-button'
+                onClick={onStop}>
+                pause
+            </i>
+        );
+    } else {
+        return (
+            <i
+                className='material-icons md-36 md-circle task__log-button'
+                onClick={onStart}>
+                play_arrow
+            </i>
+        );
+    }
 };
 
 export default LogButton;

@@ -12,7 +12,7 @@ const Menu = ({ children, icon, header }) => {
     return (
         <div className='menu' onClick={toggleMenu}>
             {icon ? (
-                <i className='material-icons md-36 menu__icon'>{icon}</i>
+                <i className='material-icons md-36 md-circle'>{icon}</i>
             ) : (
                 <div className='menu__header'>{header}</div>
             )}

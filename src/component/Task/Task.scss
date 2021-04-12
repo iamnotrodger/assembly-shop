@@ -1,0 +1,51 @@
+.task {
+    display: grid;
+    grid-template-columns: 1fr min-content;
+    grid-row-gap: 1rem;
+    align-items: center;
+
+    padding: 1rem;
+    background-color: var(--color-white);
+    border-radius: var(--border-radius-small);
+    box-shadow: var(--shadow-dark);
+
+    &__title {
+        cursor: pointer;
+        padding-right: 0.5rem;
+        line-height: 1;
+        word-wrap: break-word;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+    }
+
+    &__assignee {
+        display: flex;
+        cursor: default;
+
+        & > *:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+
+    &__log-button {
+        cursor: pointer;
+    }
+
+    &__time {
+        grid-column: 1 / -1;
+        width: 100%;
+
+        padding-top: 0.5rem;
+
+        text-align: center;
+        font-size: 1.6rem;
+        font-family: var(--font-tertiary);
+        letter-spacing: 0.3rem;
+        border-top: 1px solid var(--color-grey-dark);
+
+        cursor: pointer;
+    }
+}

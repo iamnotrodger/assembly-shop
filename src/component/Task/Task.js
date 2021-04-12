@@ -8,6 +8,8 @@ import TaskTime from '../TaskTime';
 import Assignee from './Assignee';
 import LogButton from './LogButton';
 
+import './Task.scss';
+
 const Task = ({ value }) => {
     const [isInfoOpen, setIsInfoOpen] = useState(false);
 
@@ -48,12 +50,12 @@ const Task = ({ value }) => {
     };
 
     return (
-        <div style={{ backgroundColor: 'red', margin: '5px' }}>
-            <div
-                style={{ backgroundColor: 'blue', cursor: 'pointer' }}
+        <div className='task'>
+            <h3
+                className='heading-tertiary task__title'
                 onClick={handleInfoToggle}>
-                <h3>{title}</h3>
-            </div>
+                {title}
+            </h3>
 
             <Assignee value={assignee}>
                 {!completed ? (
@@ -62,12 +64,17 @@ const Task = ({ value }) => {
                         onStart={onStart}
                         onStop={onStop}
                     />
-                ) : null}
+                ) : (
+                    <i className='material-icons md-36 md-circle'>check</i>
+                )}
             </Assignee>
 
-            <div>
-                <TaskTime total={totalTime} log={activeLog} />
-            </div>
+            <TaskTime
+                onClick={handleInfoToggle}
+                className='task__time'
+                total={totalTime}
+                log={activeLog}
+            />
 
             <Modal isOpen={isInfoOpen} onClose={handleInfoToggle}>
                 <TaskInfo value={value} />

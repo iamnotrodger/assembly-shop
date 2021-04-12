@@ -2,13 +2,6 @@
     position: relative;
     cursor: pointer;
 
-    &__icon {
-        border-radius: 50%;
-        background-color: var(--color-secondary);
-        color: var(--color-white);
-        padding: 0.5rem;
-    }
-
     &__list {
         position: absolute;
         top: 7rem;

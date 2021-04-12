@@ -27,3 +27,10 @@
 .material-icons.md-light.md-inactive {
     color: rgba(255, 255, 255, 0.3);
 }
+
+.md-circle {
+    border-radius: 50%;
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+    padding: 0.5rem;
+}
