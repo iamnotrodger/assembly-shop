@@ -93,43 +93,46 @@ const CreateProject = ({ onClose }) => {
     };
 
     return (
-        <div style={{ width: '50vw' }}>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <h2>Build Team</h2>
-                </div>
+        <form className='form' onSubmit={handleSubmit}>
+            <h2 className='form__title heading-secondary'>Build Project</h2>
 
-                <div>
-                    <label>
-                        Project Name
-                        <input
-                            placeholder='Name'
-                            value={name}
-                            onChange={handleNameChange}
-                        />
-                        <span>{nameError}</span>
-                    </label>
-                </div>
+            <div className='form__group'>
+                <label className='form__label'>
+                    Project Name
+                    <input
+                        className={`form__input ${
+                            nameError ? 'form__input--error' : ''
+                        }`}
+                        placeholder='Name'
+                        value={name}
+                        onChange={handleNameChange}
+                    />
+                    <span className='form__error'>{nameError}</span>
+                </label>
+            </div>
 
-                <div>
-                    <label>
-                        Team
-                        <Select
-                            placeholder='Team'
-                            options={usersTeams}
-                            getOptionLabel={({ name }) => name}
-                            getOptionValue={({ teamID }) => teamID}
-                            onChange={setTeam}
-                        />
-                        <span>{teamError}</span>
-                    </label>
-                </div>
+            <div className='form__group'>
+                <label className='form__label'>
+                    Team
+                    <Select
+                        className={`form__select ${
+                            teamError ? 'form__input--error' : ''
+                        }`}
+                        classNamePrefix='form__select'
+                        placeholder='Team'
+                        options={usersTeams}
+                        getOptionLabel={({ name }) => name}
+                        getOptionValue={({ teamID }) => teamID}
+                        onChange={setTeam}
+                    />
+                    <span className='form__error'>{teamError}</span>
+                </label>
+            </div>
 
-                <div>
-                    <button onClick={handleSubmit}>Create Project</button>
-                </div>
-            </form>
-        </div>
+            <button className='form__submit btn' onClick={handleSubmit}>
+                Create Project
+            </button>
+        </form>
     );
 };
 

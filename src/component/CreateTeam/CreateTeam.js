@@ -69,47 +69,46 @@ const CreateTeam = ({ onClose }) => {
     };
 
     return (
-        <div style={{ width: '50vw' }}>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <h2>Build Team</h2>
-                </div>
+        <form className='form' onSubmit={handleSubmit}>
+            <h2 className='form__title heading-secondary'>Build Team</h2>
 
-                <div>
-                    <label>
-                        Team Name
-                        <input
-                            type='text'
-                            placeholder='Team Name'
-                            onChange={handleNameChange}
-                        />
-                        <span>{nameError}</span>
-                    </label>
-                </div>
+            <div className='form__group'>
+                <label className='form__label'>
+                    Team Name
+                    <input
+                        className={`form__input ${
+                            nameError ? 'form__input--error' : ''
+                        }`}
+                        type='text'
+                        placeholder='Name'
+                        onChange={handleNameChange}
+                    />
+                    <span className='form__error'>{nameError}</span>
+                </label>
+            </div>
 
-                <div>
-                    <label>
-                        Members
-                        <SearchSelect
-                            id='team-members'
-                            search={getUsers}
-                            isMulti
-                            key={members.length}
-                            placeholder='Email'
-                            value={members}
-                            getOptionLabel={({ email }) => email}
-                            getOptionValue={({ userID }) => userID}
-                            onChange={setMembers}
-                            closeMenuOnSelect={false}
-                        />
-                    </label>
-                </div>
+            <div className='form__group'>
+                <label className='form__label'>
+                    Invite Members
+                    <SearchSelect
+                        className='form__select'
+                        classNamePrefix='form__select'
+                        id='team-members'
+                        search={getUsers}
+                        isMulti
+                        key={members.length}
+                        placeholder='Email'
+                        value={members}
+                        getOptionLabel={({ email }) => email}
+                        getOptionValue={({ userID }) => userID}
+                        onChange={setMembers}
+                        closeMenuOnSelect={false}
+                    />
+                </label>
+            </div>
 
-                <div>
-                    <button>Create Team</button>
-                </div>
-            </form>
-        </div>
+            <button className='form__submit btn'>Create Team</button>
+        </form>
     );
 };
 
