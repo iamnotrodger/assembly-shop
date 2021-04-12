@@ -13,6 +13,7 @@ const ProjectPage = () => {
     const { projectID } = useParams();
     return (
         <div className='project-page'>
+            <div className='project-page__background'></div>
             <main className='project-page__main'>
                 <ProjectProvider projectID={projectID}>
                     <MembersProvider projectID={projectID} loadOnMount>
