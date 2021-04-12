@@ -26,12 +26,12 @@ const NavBar = () => {
     };
 
     return (
-        <header className='header'>
-            <Link className='header__title' to='/'>
+        <header className='nav-bar'>
+            <Link className='nav-bar__title' to='/'>
                 <h1 className='heading-primary'>Assembly-Shop</h1>
             </Link>
 
-            <nav className='header__nav'>
+            <nav className='nav-bar__nav'>
                 <Menu icon='add'>
                     <MenuItem
                         icon='groups'
