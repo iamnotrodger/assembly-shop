@@ -30,17 +30,21 @@ const MemberSection = ({ removable }) => {
 
     if (!members) return <div>No Available Members</div>;
 
-    return members.map((member) => (
-        <Member
-            key={member.userID}
-            value={member}
-            onDelete={
-                removable && member.userID !== user.userID
-                    ? () => handleDelete(member.userID)
-                    : null
-            }
-        />
-    ));
+    return (
+        <section>
+            {members.map((member) => (
+                <Member
+                    key={member.userID}
+                    value={member}
+                    onDelete={
+                        removable && member.userID !== user.userID
+                            ? () => handleDelete(member.userID)
+                            : null
+                    }
+                />
+            ))}
+        </section>
+    );
 };
 
 export default MemberSection;
