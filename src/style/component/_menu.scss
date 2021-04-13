@@ -17,5 +17,11 @@
         &:hover {
             background-color: var(--color-grey-light);
         }
+
+        &--disabled {
+            cursor: default;
+            color: var(--color-secondary);
+            background-color: var(--color-grey-light);
+        }
     }
 }

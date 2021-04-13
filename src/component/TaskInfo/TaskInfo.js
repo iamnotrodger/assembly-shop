@@ -20,6 +20,7 @@ import Title from './Title';
 import TotalTime from './TotalTime';
 
 import './TaskInfo.scss';
+import useMembers from '../../context/MembersContext';
 
 const TaskInfo = ({ value }) => {
     const {
@@ -38,10 +39,11 @@ const TaskInfo = ({ value }) => {
 
     const { tasksDispatch } = useTasks();
     const { user } = useUser();
+    const { userIsAdmin } = useMembers();
     const setLoading = useLoadingAction();
     const { toastDispatch } = useToast();
 
-    const [owned, setOwned] = useState(
+    const [hasEditPermission, setHasEditPermission] = useState(
         assignee && assignee.userID === user.userID,
     );
 
@@ -69,10 +71,10 @@ const TaskInfo = ({ value }) => {
     }, [isLogLoaded, setLoading, tasksDispatch, value]);
 
     useEffect(() => {
-        if (assignee && user) {
-            setOwned(assignee && assignee.userID === user.userID);
-        }
-    }, [owned, assignee, user]);
+        setHasEditPermission(
+            userIsAdmin || (assignee && assignee.userID === user.userID),
+        );
+    }, [hasEditPermission, assignee, user, userIsAdmin]);
 
     const updateTask = (task) => {
         value = { ...value, ...task };
@@ -138,24 +140,43 @@ const TaskInfo = ({ value }) => {
                     className='more-menu'
                     header={<i className='material-icons md-36'>more_vert</i>}>
                     <MenuItem
-                        className='more-menu__item'
-                        onClick={handleAlertToggle}>
+                        className={`more-menu__item ${
+                            !hasEditPermission
+                                ? 'more-menu__item--disabled'
+                                : ''
+                        }`}
+                        onClick={hasEditPermission ? handleAlertToggle : null}>
                         <div>Delete</div>
                     </MenuItem>
                 </Menu>
             </div>
 
-            <Title id={taskID} value={title} onUpdate={updateTask} />
+            <Title
+                id={taskID}
+                value={title}
+                onUpdate={updateTask}
+                editable={hasEditPermission}
+            />
             <Description
                 id={taskID}
                 value={description}
                 onUpdate={updateTask}
+                editable={hasEditPermission}
             />
-            <Assignee id={taskID} value={assignee} onUpdate={updateTask} />
+            <Assignee
+                id={taskID}
+                value={assignee}
+                onUpdate={updateTask}
+                editable={hasEditPermission}
+            />
             <TotalTime value={totalTime} log={activeLog} />
-            <Logs value={logs} onUpdate={updateTask} owned={owned} />
+            <Logs
+                value={logs}
+                onUpdate={updateTask}
+                editable={hasEditPermission}
+            />
 
-            {owned ? (
+            {hasEditPermission ? (
                 <button
                     className='form__submit btn'
                     onClick={handleCompleteToggle}>

@@ -1,7 +1,7 @@
 import React from 'react';
-import LogList from './LogList';
+import Log from '../Log';
 
-const Logs = ({ value, onUpdate, owned }) => {
+const Logs = ({ value, onUpdate, editable }) => {
     const handleDeleteLog = (logID, totalTime) => {
         const task = {};
 
@@ -17,11 +17,14 @@ const Logs = ({ value, onUpdate, owned }) => {
         <div className='form__group'>
             <label className='form__label'>
                 Logs
-                <LogList
-                    value={value}
-                    onDelete={handleDeleteLog}
-                    owned={owned}
-                />
+                {value.map((log) => (
+                    <Log
+                        key={log.logID}
+                        value={log}
+                        removable={editable}
+                        onDelete={handleDeleteLog}
+                    />
+                ))}
             </label>
         </div>
     );

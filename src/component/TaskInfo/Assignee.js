@@ -5,7 +5,7 @@ import useMembers from '../../context/MembersContext';
 import useToast, { TOAST_ACTIONS } from '../../context/ToastContext';
 import { createErrorToast } from '../../utils/toast';
 
-const Assignee = ({ id, value, onUpdate }) => {
+const Assignee = ({ id, value, onUpdate, editable }) => {
     const { members } = useMembers();
     const { toastDispatch } = useToast();
 
@@ -26,6 +26,7 @@ const Assignee = ({ id, value, onUpdate }) => {
             <label className='form__label'>
                 Team Member
                 <Select
+                    isDisabled={!editable}
                     className='form__select'
                     classNamePrefix='form__select'
                     placeholder='Assign To'

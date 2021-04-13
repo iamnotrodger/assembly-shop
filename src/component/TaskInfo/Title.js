@@ -2,7 +2,7 @@ import React from 'react';
 import { updateTask } from '../../api/TaskAPI';
 import InputEditable from '../InputEditable';
 
-const Title = ({ id, value, onUpdate }) => {
+const Title = ({ id, value, onUpdate, editable }) => {
     const handleTitleSave = async (title) => {
         try {
             if (!title) return;
@@ -19,6 +19,7 @@ const Title = ({ id, value, onUpdate }) => {
                 Task Title
                 <InputEditable
                     className='form__input'
+                    editable={editable}
                     text={value}
                     onSave={handleTitleSave}
                     hasButton={true}>

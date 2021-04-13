@@ -2,7 +2,7 @@ import React from 'react';
 import { updateTask } from '../../api/TaskAPI';
 import InputEditable from '../InputEditable';
 
-const Description = ({ id, value, onUpdate }) => {
+const Description = ({ id, value, onUpdate, editable }) => {
     const handleDescriptionSave = async (description) => {
         try {
             await updateTask(id, description, 'description');
@@ -18,6 +18,7 @@ const Description = ({ id, value, onUpdate }) => {
                 Task Description
                 <InputEditable
                     className='form__textarea'
+                    editable={editable}
                     text={value}
                     type='text'
                     onSave={handleDescriptionSave}
