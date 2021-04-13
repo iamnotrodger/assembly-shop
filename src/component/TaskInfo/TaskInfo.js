@@ -41,7 +41,9 @@ const TaskInfo = ({ value }) => {
     const setLoading = useLoadingAction();
     const { toastDispatch } = useToast();
 
-    const [owned] = useState(assignee && assignee.userID === user.userID);
+    const [owned, setOwned] = useState(
+        assignee && assignee.userID === user.userID,
+    );
 
     useEffect(() => {
         if (!isLogLoaded) {
@@ -65,6 +67,12 @@ const TaskInfo = ({ value }) => {
             })();
         }
     }, [isLogLoaded, setLoading, tasksDispatch, value]);
+
+    useEffect(() => {
+        if (assignee && user) {
+            setOwned(assignee && assignee.userID === user.userID);
+        }
+    }, [owned, assignee, user]);
 
     const updateTask = (task) => {
         value = { ...value, ...task };
