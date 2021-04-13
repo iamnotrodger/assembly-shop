@@ -7,6 +7,7 @@ const InputEditable = ({
     text,
     onSave,
     className,
+    textarea,
     editable,
     hasButton,
     dynamic,
@@ -60,27 +61,38 @@ const InputEditable = ({
         setIsEditing(false);
     };
 
+    const containerClassName = `input-editable ${
+        isEditing ? 'input-editable--is-editing' : ''
+    }`;
+    const labelClassName = `input-editable__label ${
+        editable ? 'input-editable--editable' : ''
+    } ${textarea ? 'input-editable__textarea' : ''}`;
+    const inputClassName = `input-editable__input ${className || ''}`;
+
     return (
-        <div
-            ref={inputRef}
-            className={`input-editable ${
-                isEditing ? 'input-editable--is-editing' : ''
-            }`}>
+        <div ref={inputRef} className={containerClassName}>
             <label
-                className={`input-editable__label ${
-                    editable ? 'input-editable--editable' : ''
-                }
-                `}
+                className={labelClassName}
                 onClick={() => setIsEditing(editable)}>
                 <div className='input-editable__child'>{children}</div>
-                <input
-                    type='text'
-                    size={dynamic ? newText.length || 0 : null}
-                    className={`input-editable__input ${className || ''}`}
-                    value={newText}
-                    onKeyDown={handleKeyDown}
-                    onChange={handleTextChange}
-                />
+
+                {!textarea ? (
+                    <input
+                        type='text'
+                        size={dynamic ? newText.length || 0 : null}
+                        className={inputClassName}
+                        value={newText}
+                        onKeyDown={handleKeyDown}
+                        onChange={handleTextChange}
+                    />
+                ) : (
+                    <textarea
+                        className={inputClassName}
+                        value={newText}
+                        onKeyDown={handleKeyDown}
+                        onChange={handleTextChange}
+                    />
+                )}
             </label>
 
             {hasButton ? (

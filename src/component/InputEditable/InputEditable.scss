@@ -10,6 +10,7 @@
 
     &__label {
         flex-grow: 1;
+        margin-right: 1rem;
     }
 
     &__input {
@@ -18,13 +19,13 @@
     }
 
     &__buttons {
-        margin-left: 1rem;
         display: none;
     }
 
     &__icon {
         padding: 0.5rem;
         border-radius: 0.5rem;
+        margin-right: 1rem;
         cursor: pointer;
 
         &:not(:last-child) {
@@ -34,6 +35,12 @@
         &--save {
             background-color: #32b67a;
         }
+    }
+
+    &__textarea {
+        flex: 0 0 100%;
+        margin-bottom: 1rem;
+        margin-right: 0;
     }
 
     &--is-editing &__child {
