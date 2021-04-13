@@ -51,11 +51,9 @@ const Task = ({ value }) => {
 
     return (
         <div className='task'>
-            <h3
-                className='heading-tertiary task__title'
-                onClick={handleInfoToggle}>
-                {title}
-            </h3>
+            <div className='task__title-container' onClick={handleInfoToggle}>
+                <h3 className='heading-tertiary task__title'>{title}</h3>
+            </div>
 
             <Assignee value={assignee}>
                 {!completed ? (

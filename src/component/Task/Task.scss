@@ -9,9 +9,14 @@
     border-radius: var(--border-radius-small);
     box-shadow: var(--shadow-dark);
 
-    &__title {
+    &__title-container {
+        align-self: stretch;
         cursor: pointer;
-        padding-right: 0.5rem;
+        display: flex;
+        align-items: center;
+    }
+
+    &__title {
         line-height: 1;
         word-wrap: break-word;
         text-overflow: ellipsis;
