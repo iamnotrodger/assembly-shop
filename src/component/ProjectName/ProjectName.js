@@ -10,8 +10,8 @@ const ProjectName = ({ name, projectID, onSave, children, ...props }) => {
 
     const handleSave = async (name) => {
         try {
-            const { valid, error } = validateProjectName(name);
-            if (!valid) throw new Error(error);
+            const error = validateProjectName(name);
+            if (error) throw new Error(error);
 
             await updateProjectName(projectID, name);
             onSave(name);
