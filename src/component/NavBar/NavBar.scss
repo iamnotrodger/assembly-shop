@@ -19,15 +19,39 @@
             text-decoration: none;
         }
     }
+}
 
-    &__nav {
-        grid-column: title-end / -1;
-        justify-self: end;
+.nav {
+    grid-column: title-end / -1;
+    justify-self: end;
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
+    justify-content: end;
+    grid-gap: 1.5rem;
+
+    &__menu {
+        top: 7rem;
+        right: -1rem;
 
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        place-items: center;
-        justify-content: end;
-        grid-gap: 1.5rem;
+        grid-gap: 1rem;
+
+        padding: 1rem;
+        border-radius: var(--border-radius);
+        background-color: var(--color-primary);
+        box-shadow: var(--shadow-dark);
+    }
+
+    &__item {
+        display: grid;
+        grid-template-columns: min-content max-content;
+        align-items: center;
+        grid-gap: 1rem;
+
+        padding: 1rem;
+        background-color: var(--color-white);
+        border-radius: var(--border-radius-small);
     }
 }

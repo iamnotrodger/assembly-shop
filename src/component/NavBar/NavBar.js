@@ -31,22 +31,29 @@ const NavBar = () => {
                 <h1 className='heading-primary'>Assembly-Shop</h1>
             </Link>
 
-            <nav className='nav-bar__nav'>
-                <Menu icon='add'>
+            <nav className='nav'>
+                <Menu
+                    className='nav__menu'
+                    header={
+                        <i className='material-icons md-36 md-circle'>add</i>
+                    }>
+                    <MenuItem className='nav__item' onClick={handleTeamToggle}>
+                        <i className='material-icons md-36'>groups</i>
+                        <h2 className='heading-secondary'>Create Team</h2>
+                    </MenuItem>
                     <MenuItem
-                        icon='groups'
-                        title='Create Team'
-                        onClick={handleTeamToggle}
-                    />
-                    <MenuItem
-                        icon='ballot'
-                        title='Create Project'
-                        onClick={handleProjectToggle}
-                    />
+                        className='nav__item'
+                        onClick={handleProjectToggle}>
+                        <i className='material-icons md-36'>ballot</i>
+                        <h2 className='heading-secondary'>Create Project</h2>
+                    </MenuItem>
                 </Menu>
 
-                <Menu header={<UserIcon value={user} />}>
-                    <MenuItem icon='logout' title='Logout' onClick={Logout} />
+                <Menu className='nav__menu' header={<UserIcon value={user} />}>
+                    <MenuItem className='nav__item' onClick={Logout}>
+                        <i className='material-icons md-36'>logout</i>
+                        <h2 className='heading-secondary'>Logout</h2>
+                    </MenuItem>
                 </Menu>
             </nav>
 

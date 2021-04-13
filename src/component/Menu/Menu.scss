@@ -4,16 +4,10 @@
 
     &__list {
         position: absolute;
-        top: 7rem;
-        right: -1rem;
         z-index: 1000;
 
-        display: grid;
-        grid-gap: 1rem;
-
-        padding: 1rem;
-        border-radius: var(--border-radius);
-        background-color: var(--color-primary);
-        box-shadow: var(--shadow-dark);
+        & > li {
+            list-style: none;
+        }
     }
 }
