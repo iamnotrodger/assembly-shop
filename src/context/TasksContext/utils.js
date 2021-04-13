@@ -9,7 +9,7 @@ export const reducer = (state, action) => {
     const newState = [...state];
     switch (action.type) {
         case TASK_ACTIONS.ADD:
-            newState.push(action.payload);
+            newState.unshift(action.payload);
             return newState;
         case TASK_ACTIONS.UPDATE:
             newState[action.payload.index] = action.payload;
