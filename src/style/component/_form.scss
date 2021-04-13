@@ -6,11 +6,14 @@
     border: none;
     border-radius: var(--border-radius-small);
     background-color: var(--color-quaternary);
+
+    &::placeholder {
+        color: #a2a2a2;
+    }
 }
 
 .form {
     display: grid;
-    // grid-gap: 2rem;
     padding: 0 5rem;
 
     &__title {
@@ -56,6 +59,12 @@
         &__single-value {
             color: var(--color-grey-dark) !important;
         }
+    }
+
+    &__textarea {
+        @extend %form-input-style;
+        resize: none;
+        min-height: 15rem;
     }
 
     &__submit {

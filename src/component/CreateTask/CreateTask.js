@@ -80,37 +80,42 @@ const CreateTask = ({ projectID, onClose }) => {
     };
 
     return (
-        <div style={{ width: '50vw' }}>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <h2>Task</h2>
-                </div>
+        <form className='form' onSubmit={handleSubmit}>
+            <h2 className='form__title heading-secondary'>Task</h2>
 
-                <div>
-                    <label>
-                        Task Title
-                        <input
-                            placeholder='Title'
-                            value={title}
-                            onChange={handleTitleChange}
-                        />
-                        <span>{titleError}</span>
-                    </label>
-                </div>
+            <div className='form__group'>
+                <label className='form__label'>
+                    Task Title
+                    <input
+                        className={`form__input ${
+                            titleError ? 'form__input--error' : ''
+                        }`}
+                        placeholder='Title'
+                        value={title}
+                        onChange={handleTitleChange}
+                    />
+                    <span className='form__error'>{titleError}</span>
+                </label>
+            </div>
 
-                <div>
-                    <label>
-                        Description
-                        <input
-                            placeholder='Description'
-                            value={description}
-                            onChange={handleDescriptionChange}
-                        />
-                    </label>
-                </div>
+            <div className='form__group'>
+                <label className='form__label'>
+                    Description
+                    <textarea
+                        className='form__textarea'
+                        placeholder='Description'
+                        value={description}
+                        onChange={handleDescriptionChange}
+                    />
+                </label>
+            </div>
 
-                <div>
+            <div className='form__group'>
+                <label className='form__label'>
+                    Member
                     <Select
+                        className='form__select'
+                        classNamePrefix='form__select'
                         placeholder='Member'
                         isClearable={false}
                         value={assignee}
@@ -119,13 +124,11 @@ const CreateTask = ({ projectID, onClose }) => {
                         getOptionValue={({ user: { userID } }) => userID}
                         onChange={onSelectAssignee}
                     />
-                </div>
+                </label>
+            </div>
 
-                <div>
-                    <button onClick={handleSubmit}>Create Task</button>
-                </div>
-            </form>
-        </div>
+            <button className='form__submit btn'>Create Task</button>
+        </form>
     );
 };
 
