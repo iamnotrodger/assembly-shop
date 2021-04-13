@@ -15,12 +15,12 @@ const Modal = ({
     if (!isOpen) return null;
 
     return ReactDom.createPortal(
-        <>
+        <div className='modal'>
             <div
-                className={`modal-overlay ${overlayClass || ''}`}
+                className={`modal__overlay ${overlayClass || ''}`}
                 onClick={!fixed ? onClose : null}
             />
-            <div className={`modal ${modalClass || ''}`}>
+            <div className={`modal__content ${modalClass || ''}`}>
                 {hasButton ? (
                     <div className='modal__close'>
                         <i
@@ -32,7 +32,7 @@ const Modal = ({
                 ) : null}
                 {children}
             </div>
-        </>,
+        </div>,
         document.getElementById('portal'),
     );
 };
