@@ -22,18 +22,22 @@ const Assignee = ({ id, value, onUpdate }) => {
     };
 
     return (
-        <div>
-            <div>Team Member</div>
-            <Select
-                placeholder='Assigned To'
-                isClearable={false}
-                isSearchable={false}
-                value={value ? { user: value } : null}
-                options={members}
-                getOptionLabel={({ user: { email } }) => email}
-                getOptionValue={({ user: { userID } }) => userID}
-                onChange={handleMemberChange}
-            />
+        <div className='form__group'>
+            <label className='form__label'>
+                Team Member
+                <Select
+                    className='form__select'
+                    classNamePrefix='form__select'
+                    placeholder='Assign To'
+                    isClearable={false}
+                    isSearchable={false}
+                    value={value ? { user: value } : null}
+                    options={members}
+                    getOptionLabel={({ user: { email } }) => email}
+                    getOptionValue={({ user: { userID } }) => userID}
+                    onChange={handleMemberChange}
+                />
+            </label>
         </div>
     );
 };

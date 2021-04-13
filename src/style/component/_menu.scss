@@ -1,0 +1,21 @@
+.more-menu {
+    top: 100%;
+    right: 0;
+
+    margin-left: -0.5rem;
+    box-shadow: var(--shadow-dark);
+    background-color: var(--color-white);
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+
+    .more-menu__item {
+        font-size: 1.4rem;
+        color: var(--color-primary);
+        padding: 0.5rem;
+        border-radius: 0.5rem;
+
+        &:hover {
+            background-color: var(--color-grey-light);
+        }
+    }
+}

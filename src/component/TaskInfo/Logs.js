@@ -11,16 +11,18 @@ const Logs = ({ value, onUpdate, owned }) => {
         onUpdate(task);
     };
 
+    if (!value || value.length === 0) return null;
+
     return (
-        <div>
-            <h3>Logs</h3>
-            <div>
+        <div className='form__group'>
+            <label className='form__label'>
+                Logs
                 <LogList
                     value={value}
                     onDelete={handleDeleteLog}
                     owned={owned}
                 />
-            </div>
+            </label>
         </div>
     );
 };

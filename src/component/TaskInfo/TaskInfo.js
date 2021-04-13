@@ -3,20 +3,23 @@ import { getLogs } from '../../api/LogAPI';
 import { completeTaskToggle, deleteTask } from '../../api/TaskAPI';
 import { useLoadingAction } from '../../context/LoadingContext';
 import useTasks, { TASK_ACTIONS } from '../../context/TasksContext';
-import useUser from '../../context/UserContext';
-import { addLog, uniqueLogs } from '../../utils/log';
-import TaskTime from '../TaskTime';
-import Assignee from './Assignee';
-import Title from './Title';
-import Description from './Description';
-import Logs from './Logs';
-import AlertPanel from '../AlertPanel';
-import Menu from '../Menu';
 import useToast, {
     TOAST_ACTIONS,
     TOAST_STATE,
 } from '../../context/ToastContext';
+import useUser from '../../context/UserContext';
+import { addLog, uniqueLogs } from '../../utils/log';
 import { createErrorToast } from '../../utils/toast';
+import AlertPanel from '../AlertPanel';
+import Menu from '../Menu';
+import MenuItem from '../MenuItem';
+import Assignee from './Assignee';
+import Description from './Description';
+import Logs from './Logs';
+import Title from './Title';
+import TotalTime from './TotalTime';
+
+import './TaskInfo.scss';
 
 const TaskInfo = ({ value }) => {
     const {
@@ -120,40 +123,37 @@ const TaskInfo = ({ value }) => {
     };
 
     return (
-        <div style={{ width: '50vw' }}>
-            <div>
-                <h2>Task</h2>
-                <div style={{ backgroundColor: 'aqua' }}>
-                    <Menu header=':'>
-                        <button onClick={handleAlertToggle}>delete</button>
-                    </Menu>
-                </div>
+        <div className='form'>
+            <div className='task-info__title-container'>
+                <h2 className='form__title heading-secondary'>Task</h2>
+                <Menu
+                    className='more-menu'
+                    header={<i className='material-icons md-36'>more_vert</i>}>
+                    <MenuItem
+                        className='more-menu__item'
+                        onClick={handleAlertToggle}>
+                        <div>Delete</div>
+                    </MenuItem>
+                </Menu>
             </div>
 
             <Title id={taskID} value={title} onUpdate={updateTask} />
-
-            <Assignee id={taskID} value={assignee} onUpdate={updateTask} />
-
             <Description
                 id={taskID}
                 value={description}
                 onUpdate={updateTask}
             />
-
-            <div>
-                <div>Total Duration</div>
-                <TaskTime total={totalTime} log={activeLog} />
-            </div>
-
+            <Assignee id={taskID} value={assignee} onUpdate={updateTask} />
+            <TotalTime value={totalTime} log={activeLog} />
             <Logs value={logs} onUpdate={updateTask} owned={owned} />
 
-            <div>
-                {owned ? (
-                    <button onClick={handleCompleteToggle}>
-                        {completed ? 'Incomplete' : 'Completed'}
-                    </button>
-                ) : null}
-            </div>
+            {owned ? (
+                <button
+                    className='form__submit btn'
+                    onClick={handleCompleteToggle}>
+                    {completed ? 'Incomplete' : 'Complete'}
+                </button>
+            ) : null}
 
             <AlertPanel
                 isOpen={isAlertOpen}

@@ -14,11 +14,15 @@ const Title = ({ id, value, onUpdate }) => {
         }
     };
     return (
-        <div>
-            <label>
+        <div className='form__group'>
+            <label className='form__label'>
                 Task Title
-                <InputEditable text={value} onSave={handleTitleSave}>
-                    <h2>{value}</h2>
+                <InputEditable
+                    className='form__input'
+                    text={value}
+                    onSave={handleTitleSave}
+                    hasButton={true}>
+                    <div className='form__input'>{value}</div>
                 </InputEditable>
             </label>
         </div>

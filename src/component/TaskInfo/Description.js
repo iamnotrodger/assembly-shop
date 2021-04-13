@@ -13,15 +13,21 @@ const Description = ({ id, value, onUpdate }) => {
     };
 
     return (
-        <div>
-            <label>
+        <div className='form__group'>
+            <label className='form__label'>
                 Task Description
                 <InputEditable
+                    className='form__textarea'
                     text={value}
                     type='text'
                     onSave={handleDescriptionSave}
+                    textarea
                     hasButton>
-                    <p>{value || 'Description'}</p>
+                    <textarea
+                        readOnly
+                        className='form__textarea'
+                        value={value || 'Description'}
+                    />
                 </InputEditable>
             </label>
         </div>

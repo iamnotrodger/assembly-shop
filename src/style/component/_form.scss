@@ -21,13 +21,16 @@
         justify-self: center;
     }
 
+    &__group {
+        margin-bottom: 2rem;
+    }
+
     &__label {
         position: relative;
         display: grid;
         grid-gap: 0.5rem;
         font-size: 2rem;
         color: var(--color-white);
-        padding-bottom: 2rem;
     }
 
     &__input {
@@ -43,7 +46,7 @@
 
     &__error {
         position: absolute;
-        bottom: -0.3rem;
+        bottom: -2.4rem;
         font-size: 1.5rem;
         font-family: var(--font-secondary);
         color: var(--color-error);
@@ -63,8 +66,13 @@
 
     &__textarea {
         @extend %form-input-style;
+        overflow-y: scroll;
+        word-break: break-all;
         resize: none;
+        width: 100%;
         min-height: 15rem;
+        max-height: 40rem;
+        margin-bottom: -1rem;
     }
 
     &__submit {

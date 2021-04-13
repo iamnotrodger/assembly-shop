@@ -1,16 +1,12 @@
 .input-editable {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    grid-row-gap: 2rem;
     align-items: center;
     cursor: default;
 
     &--editable {
         cursor: pointer;
-    }
-
-    &__label {
-        flex-grow: 1;
-        margin-right: 1rem;
     }
 
     &__input {
@@ -20,17 +16,13 @@
 
     &__buttons {
         display: none;
+        margin-left: 1rem;
     }
 
     &__icon {
         padding: 0.5rem;
         border-radius: 0.5rem;
-        margin-right: 1rem;
         cursor: pointer;
-
-        &:not(:last-child) {
-            margin-right: 0.5rem;
-        }
 
         &--save {
             background-color: #32b67a;
@@ -38,9 +30,7 @@
     }
 
     &__textarea {
-        flex: 0 0 100%;
-        margin-bottom: 1rem;
-        margin-right: 0;
+        grid-column: 1 / -1;
     }
 
     &--is-editing &__child {

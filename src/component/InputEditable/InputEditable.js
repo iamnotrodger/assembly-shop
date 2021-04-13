@@ -42,7 +42,7 @@ const InputEditable = ({
 
     const handleKeyDown = (event) => {
         const { keyCode } = event;
-        if (keyCode === 13 || keyCode === 9) handleSaveChanges();
+        if ((!textarea && keyCode === 13) || keyCode === 9) handleSaveChanges();
         else if (keyCode === 27) handleCancel();
     };
 
