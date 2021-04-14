@@ -10,7 +10,7 @@ import useToast, {
 import useUser from '../../context/UserContext';
 import { addLog, uniqueLogs } from '../../utils/log';
 import { createErrorToast } from '../../utils/toast';
-import AlertPanel from '../AlertPanel';
+import AlertPanel, { ALERT_TYPE } from '../AlertPanel';
 import Menu from '../Menu';
 import MenuItem from '../MenuItem';
 import Assignee from './Assignee';
@@ -185,8 +185,10 @@ const TaskInfo = ({ value }) => {
             ) : null}
 
             <AlertPanel
+                type={ALERT_TYPE.CRITICAL}
                 isOpen={isAlertOpen}
-                message='Deleting the task cannot be undone'
+                title='Delete the task?'
+                submitText='Delete'
                 onSubmit={handleDelete}
                 onClose={handleAlertToggle}
             />

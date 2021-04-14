@@ -5,7 +5,7 @@ import { deleteProject } from '../../api/ProjectAPI';
 import useMembers from '../../context/MembersContext';
 import useProject from '../../context/ProjectContext';
 import useTeams, { TEAMS_ACTIONS } from '../../context/TeamsContext';
-import AlertPanel from '../AlertPanel';
+import AlertPanel, { ALERT_TYPE } from '../AlertPanel';
 import ProjectName from '../ProjectName';
 
 const ProjectSettings = () => {
@@ -75,8 +75,10 @@ const ProjectSettings = () => {
             </button>
 
             <AlertPanel
+                type={ALERT_TYPE.CRITICAL}
+                title='Permanently Delete the Project?'
+                submitText='Delete'
                 isOpen={isAlertOpen}
-                message='Deleting the project cannot be undone. All the following tasks withing the project will be deleted.'
                 onSubmit={handleDeleteProject}
                 onClose={handleAlertToggle}
             />
