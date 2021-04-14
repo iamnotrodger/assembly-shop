@@ -27,8 +27,19 @@
         background-color: var(--color-primary);
         border-radius: var(--border-radius);
         padding: 1rem;
-        padding-bottom: 3.6rem;
         z-index: 999;
+    }
+
+    &__content--with-button {
+        padding-bottom: 3.6rem;
+    }
+
+    &__content--with-button > &__children {
+        margin-top: -2.6rem;
+    }
+
+    &__children {
+        padding: 0 5rem;
     }
 
     &__close {

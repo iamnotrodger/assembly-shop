@@ -20,7 +20,10 @@ const Modal = ({
                 className={`modal__overlay ${overlayClass || ''}`}
                 onClick={!fixed ? onClose : null}
             />
-            <div className={`modal__content ${modalClass || ''}`}>
+            <div
+                className={`modal__content ${modalClass || ''} ${
+                    hasButton ? 'modal__content--with-button' : ''
+                }`}>
                 {hasButton ? (
                     <div className='modal__close'>
                         <i
@@ -30,7 +33,7 @@ const Modal = ({
                         </i>
                     </div>
                 ) : null}
-                {children}
+                <div className='modal__children'>{children}</div>
             </div>
         </div>,
         document.getElementById('portal'),

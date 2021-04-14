@@ -1,0 +1,100 @@
+.alert-panel {
+    display: flex;
+    flex-direction: column;
+
+    padding: 2rem;
+    padding-top: 4rem;
+    width: 26rem;
+    min-height: 24rem;
+
+    text-align: center;
+    color: var(--color-white);
+
+    &__modal {
+        padding: 0;
+        width: fit-content;
+        border-radius: var(--border-radius-small);
+        align-self: center;
+        box-shadow: var(--shadow-dark-big);
+
+        &-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        & > .modal__children {
+            padding: 0;
+        }
+    }
+
+    &__text-container {
+        flex-grow: 1;
+
+        display: grid;
+        grid-gap: 0.5rem;
+        place-content: center;
+    }
+
+    &__title {
+        line-height: 1;
+        word-wrap: break-word;
+    }
+
+    &__message {
+        font-family: var(--font-secondary);
+        font-size: 1.4rem;
+        word-wrap: break-word;
+        margin-bottom: 1rem;
+    }
+
+    &__button-container {
+        display: flex;
+        justify-content: center;
+    }
+
+    &__button {
+        cursor: pointer;
+        padding: 1rem;
+        width: 100%;
+        border: none;
+        border-radius: var(--border-radius-small);
+        outline: none;
+
+        font-size: 1.6rem;
+        font-family: var(--font-secondary);
+        font-weight: 600;
+
+        transition: all 0.2s ease;
+
+        &:first-child {
+            margin-right: 1rem;
+        }
+
+        &--submit {
+            color: var(--color-white);
+            background-color: var(--color-success);
+
+            &:hover,
+            &:active {
+                background-color: var(--color-success-saturated);
+            }
+        }
+
+        &--cancel {
+            color: var(--color-white);
+            background-color: #c0c2ce;
+
+            &:hover {
+                background-color: #e3e3e3;
+            }
+        }
+    }
+
+    &--critical &__button--submit {
+        background-color: var(--color-error);
+
+        &:hover,
+        &:active {
+            background-color: var(--color-error-saturated);
+        }
+    }
+}
