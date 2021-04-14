@@ -1,3 +1,5 @@
+$toast-opacity: 0.85;
+
 .toast-list {
     position: fixed;
     display: grid;
@@ -24,7 +26,7 @@
 
     padding: 1rem;
 
-    opacity: 0.85;
+    opacity: $toast-opacity;
     background-color: var(--color-primary);
     border-radius: var(--border-radius-small);
     box-shadow: var(--shadow-dark);
@@ -135,5 +137,24 @@
     }
     to {
         transform: translateX(0);
+    }
+}
+
+.toast-transition {
+    &-enter {
+        opacity: 0;
+    }
+    &-enter-active {
+        opacity: $toast-opacity;
+        transition: opacity 500ms ease-in;
+    }
+    &-exit {
+        opacity: $toast-opacity;
+        transform: translateY(0);
+    }
+    &-exit-active {
+        opacity: 0;
+        transform: translateY(-50%);
+        transition: all 250ms ease-in;
     }
 }
