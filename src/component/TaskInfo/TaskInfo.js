@@ -87,6 +87,13 @@ const TaskInfo = ({ value }) => {
     const handleDelete = async () => {
         try {
             await deleteTask(taskID);
+            toastDispatch({
+                type: TOAST_ACTIONS.ADD,
+                payload: {
+                    state: TOAST_STATE.SUCCESS,
+                    title: 'Task Deleted',
+                },
+            });
             tasksDispatch({ type: TASK_ACTIONS.DELETE, payload: value });
         } catch (error) {
             toastDispatch({
