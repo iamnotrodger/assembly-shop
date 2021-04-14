@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import CreateTask from '../CreateTask';
 import Modal from '../Modal';
 
+import './TaskButton.scss';
+
 const TaskButton = ({ teamID, projectID }) => {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -11,9 +13,11 @@ const TaskButton = ({ teamID, projectID }) => {
 
     return (
         <>
-            <button style={style} onClick={openToggle}>
-                {'+'}
-            </button>
+            <i
+                className='material-icons md-circle task-button btn--animate-pop'
+                onClick={openToggle}>
+                add
+            </i>
             <Modal isOpen={isOpen} onClose={openToggle}>
                 <CreateTask
                     onClose={openToggle}
@@ -23,17 +27,6 @@ const TaskButton = ({ teamID, projectID }) => {
             </Modal>
         </>
     );
-};
-
-const style = {
-    borderRadius: '50%',
-    position: 'fixed',
-    bottom: 0,
-    right: 0,
-    width: '75px',
-    height: '75px',
-    cursor: 'pointer',
-    margin: '30px',
 };
 
 export default TaskButton;
