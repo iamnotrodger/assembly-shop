@@ -3,24 +3,11 @@ import { TOAST_STATE } from '../../context/ToastContext';
 export const getIcon = (state) => {
     switch (state) {
         case TOAST_STATE.SUCCESS:
-            return '';
+            return 'done';
         case TOAST_STATE.WARNING:
-            return '';
+            return 'success';
         case TOAST_STATE.ERROR:
-            return '';
-        default:
-            return '';
-    }
-};
-
-export const getBackground = (state) => {
-    switch (state) {
-        case TOAST_STATE.SUCCESS:
-            return 'green';
-        case TOAST_STATE.WARNING:
-            return 'orange';
-        case TOAST_STATE.ERROR:
-            return 'red';
+            return 'error';
         default:
             return '';
     }

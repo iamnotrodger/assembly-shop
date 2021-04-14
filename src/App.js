@@ -36,7 +36,7 @@ const App = () => {
         <div className='App'>
             <ErrorBoundary FallbackComponent={ErrorFallback}>
                 <LoadingContextProvider>
-                    <ToastProvider autoDelete dismissTime={2500}>
+                    <ToastProvider autoDelete dismissTime={3000}>
                         <LoadingScreen />
                         <Toast position='top-right' />
                         <Router>

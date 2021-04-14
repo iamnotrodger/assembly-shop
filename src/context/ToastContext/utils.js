@@ -1,6 +1,10 @@
 let TOAST_ID = 0;
 
-export const TOAST_STATE = { SUCCESS: 0, WARNING: 1, ERROR: 2 };
+export const TOAST_STATE = {
+    SUCCESS: 'success',
+    WARNING: 'warning',
+    ERROR: 'error',
+};
 
 export const TOAST_ACTIONS = {
     ADD: 0,

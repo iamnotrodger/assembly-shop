@@ -1,7 +1,7 @@
 import React from 'react';
 import useToast, { TOAST_ACTIONS } from '../../context/ToastContext';
 import './Toast.scss';
-import { getBackground, getIcon } from './utils';
+import { getIcon } from './utils';
 
 const Toast = ({ position }) => {
     const { toastList, toastDispatch } = useToast();
@@ -15,21 +15,28 @@ const Toast = ({ position }) => {
 
     return (
         <>
-            <div className={`notification-container ${position}`}>
+            <div className={`toast-list ${position}`}>
                 {toastList.map((toast, i) => (
                     <div
                         key={i}
-                        className={`notification toast ${position}`}
-                        style={{ background: getBackground(toast.state) }}>
-                        <button onClick={() => handleDelete(toast)}>X</button>
-                        <div className='notification-image'>
-                            <img src={getIcon(toast.state)} alt='' />
-                        </div>
-                        <div>
-                            <p className='notification-title'>{toast.title}</p>
-                            <p className='notification-message'>
-                                {toast.description}
-                            </p>
+                        className={`toast toast--${toast.state} toast__container ${position}`}>
+                        <i
+                            className='material-icons md-24 toast__button'
+                            onClick={() => handleDelete(toast)}>
+                            clear
+                        </i>
+
+                        <div className='toast__content'>
+                            <i className='material-icons md-36 toast__icon'>
+                                {getIcon(toast.state)}
+                            </i>
+
+                            <div className='toast__text-container'>
+                                <h3 className='toast__title'>{toast.title}</h3>
+                                <p className='toast__description'>
+                                    {toast.description}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 ))}
