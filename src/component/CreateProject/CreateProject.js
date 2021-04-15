@@ -4,7 +4,6 @@ import { useHistory } from 'react-router-dom';
 import Select from 'react-select';
 import { createProject } from '../../api/ProjectAPI';
 import { getTeamsByAdmin } from '../../api/TeamAPI';
-import { useLoadingAction } from '../../context/LoadingContext';
 import useTeams, {
     TEAMS_ACTIONS,
     useUsersTeams,
@@ -18,9 +17,10 @@ const CreateProject = ({ onClose }) => {
     const [nameError, setNameError] = useState(null);
     const [teamError, setTeamError] = useState(null);
 
+    const [loading, setLoading] = useState(false);
+
     const { usersTeams, setUsersTeams } = useUsersTeams();
     const { teamsDispatch } = useTeams();
-    const setLoading = useLoadingAction();
     const handleError = useErrorHandler();
     const history = useHistory();
 
@@ -118,6 +118,7 @@ const CreateProject = ({ onClose }) => {
                         className={`form__select ${
                             teamError ? 'form__input--error' : ''
                         }`}
+                        isLoading={loading}
                         classNamePrefix='form__select'
                         placeholder='Team'
                         options={usersTeams}
