@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import useMembers, { MEMBER_ACTIONS } from '../../context/MembersContext';
-import useToast, { TOAST_ACTIONS } from '../../context/ToastContext';
+import useToast, {
+    TOAST_ACTIONS,
+    TOAST_STATE,
+} from '../../context/ToastContext';
 import useUser from '../../context/UserContext';
 import { createErrorToast } from '../../utils/toast';
 import AlertPanel, { ALERT_TYPE } from '../AlertPanel';
@@ -23,6 +26,13 @@ const MemberSection = ({ removable }) => {
             await asyncMemberDispatch({
                 type: MEMBER_ACTIONS.DELETE,
                 payload: id,
+            });
+            toastDispatch({
+                type: TOAST_ACTIONS.ADD,
+                payload: {
+                    state: TOAST_STATE.SUCCESS,
+                    title: 'Member Removed',
+                },
             });
         } catch (error) {
             toastDispatch({

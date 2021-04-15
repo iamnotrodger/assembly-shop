@@ -15,7 +15,9 @@
 
     transition: all 0.2s ease-in;
 
-    &:disabled {
+    &:disabled,
+    &:disabled:hover {
+        cursor: default;
         background-color: var(--color-grey-light);
         color: var(--color-secondary);
     }
@@ -55,5 +57,27 @@
             transform: scale(1.4);
             opacity: 0;
         }
+    }
+}
+
+.btn-success {
+    cursor: pointer;
+    border: none;
+    outline: none;
+
+    color: var(--color-white);
+    background-color: var(--color-success);
+
+    transition: background-color 200ms ease-in;
+
+    &:disabled,
+    &:disabled:hover {
+        cursor: default;
+        background-color: var(--color-success-unsaturated);
+    }
+
+    &:hover,
+    &active {
+        background-color: var(--color-success-saturated);
     }
 }

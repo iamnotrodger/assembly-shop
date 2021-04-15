@@ -1,11 +1,14 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import useMembers, { MEMBER_ACTIONS } from '../../context/MembersContext';
-import useToast, { TOAST_ACTIONS } from '../../context/ToastContext';
+import useToast, {
+    TOAST_ACTIONS,
+    TOAST_STATE,
+} from '../../context/ToastContext';
 import { createErrorToast } from '../../utils/toast';
 import SearchSelect from '../SearchSelect';
 import { getUsers } from '../../api/UserAPI';
 
-const AddMember = () => {
+const AddMember = ({ disabled }) => {
     const [member, setMember] = useState(null);
     const [memberMap, setMemberMap] = useState({});
 
@@ -13,11 +16,13 @@ const AddMember = () => {
     const { toastDispatch } = useToast();
 
     useEffect(() => {
-        const map = members.reduce((map, member) => {
-            map[member.userID] = { member };
-            return map;
-        }, {});
-        setMemberMap(map);
+        if (members) {
+            const map = members.reduce((map, member) => {
+                map[member.userID] = { member };
+                return map;
+            }, {});
+            setMemberMap(map);
+        }
     }, [members]);
 
     //** Filters the members that's already in the team */
@@ -35,6 +40,13 @@ const AddMember = () => {
                 type: MEMBER_ACTIONS.ADD,
                 payload: member,
             });
+            toastDispatch({
+                type: TOAST_ACTIONS.ADD,
+                payload: {
+                    state: TOAST_STATE.SUCCESS,
+                    title: 'Member added',
+                },
+            });
             setMember(null);
         } catch (error) {
             toastDispatch({
@@ -45,20 +57,33 @@ const AddMember = () => {
     };
 
     return (
-        <div>
-            <SearchSelect
-                search={searchAndFilterMembers}
-                isClearable
-                placeholder='Email'
-                value={member}
-                getOptionLabel={({ email }) => email}
-                getOptionValue={({ userID }) => userID}
-                onChange={setMember}
-                closeMenuOnSelect={true}
-            />
-            <button onClick={handleAddMember} disabled={!member}>
-                ADD
-            </button>
+        <div className='add-member'>
+            <h3 className='heading-tertiary add-member__title'>
+                Invite Members!
+            </h3>
+            <div className='add-member__content'>
+                <SearchSelect
+                    search={searchAndFilterMembers}
+                    className='form__select add-member__search'
+                    classNamePrefix='form__select'
+                    isDisabled={disabled}
+                    isClearable
+                    placeholder='Email'
+                    value={member}
+                    getOptionLabel={({ email }) => email}
+                    getOptionValue={({ userID }) => userID}
+                    onChange={setMember}
+                    closeMenuOnSelect={true}
+                />
+                <button
+                    className='btn-success add-member__button'
+                    onClick={handleAddMember}
+                    disabled={disabled || !member}>
+                    <i className='material-icons md-36 add-team__button-icon'>
+                        person_add
+                    </i>
+                </button>
+            </div>
         </div>
     );
 };
