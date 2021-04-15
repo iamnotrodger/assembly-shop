@@ -1,16 +1,25 @@
 .team-section {
     margin-bottom: 2rem;
+
     &__header {
         display: flex;
         align-items: center;
+        margin-bottom: 1rem;
     }
 
     &__title {
         margin-right: auto;
+        word-wrap: break-word;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
     }
 
     &__members {
         display: flex;
+        white-space: nowrap;
 
         cursor: pointer;
         color: var(--color-primary);
