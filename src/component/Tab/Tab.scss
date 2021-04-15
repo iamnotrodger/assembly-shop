@@ -1,0 +1,29 @@
+.tab {
+    cursor: pointer;
+    list-style: none;
+    font-family: var(--font-secondary);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-white);
+    padding: 1rem;
+
+    border-radius: var(--border-radius-small) var(--border-radius-small) 0 0;
+    box-shadow: var(--shadow-dark);
+    background-color: var(--color-grey-dark);
+
+    transition: all 200ms ease-in;
+
+    &:hover {
+        background-color: var(--color-grey-dark-secondary);
+    }
+
+    &--active {
+        color: var(--color-grey-dark);
+        background-color: var(--color-grey-light);
+
+        &:hover {
+            color: var(--color-grey-dark);
+            background-color: var(--color-white-dark);
+        }
+    }
+}

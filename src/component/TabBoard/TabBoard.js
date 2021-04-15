@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import Tab from '../Tab';
 
+import './TabBoard.scss';
+
 const TabBoard = ({ children }) => {
     const [activeTab, setActiveTab] = useState(children[0].props.label);
 
@@ -9,8 +11,8 @@ const TabBoard = ({ children }) => {
     };
 
     return (
-        <div>
-            <ol style={{ paddingLeft: 0 }}>
+        <div className='tab-board'>
+            <ol className='tab-board__list'>
                 {children.map((child, index) => {
                     const { label } = child.props;
                     return (
@@ -23,7 +25,7 @@ const TabBoard = ({ children }) => {
                     );
                 })}
             </ol>
-            <div>
+            <div className='tab-board__content'>
                 {children.map((child) => {
                     if (child.props.label !== activeTab) return null;
                     return child.props.children;

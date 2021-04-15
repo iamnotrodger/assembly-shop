@@ -1,5 +1,7 @@
 import React from 'react';
 
+import './Tab.scss';
+
 const Tab = ({ active, label, onClick }) => {
     const handleOnClick = () => {
         onClick(label);
@@ -7,11 +9,7 @@ const Tab = ({ active, label, onClick }) => {
 
     return (
         <li
-            style={{
-                backgroundColor: active ? 'red' : 'blue',
-                padding: '5px',
-                listStyleType: 'none',
-            }}
+            className={`tab ${active ? 'tab--active' : ''}`}
             onClick={handleOnClick}>
             {label}
         </li>

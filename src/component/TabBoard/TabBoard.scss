@@ -1,0 +1,20 @@
+.tab-board {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    &__list {
+        display: flex;
+
+        & > li:not(:last-child) {
+            margin-right: 0.5rem;
+        }
+    }
+
+    &__content {
+        background: var(--color-grey-light);
+        border-radius: var(--border-radius-small);
+        box-shadow: var(--shadow-dark);
+    }
+}
