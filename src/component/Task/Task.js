@@ -1,18 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { startTask, stopTask } from '../../api/TaskAPI';
 import useTasks, { TASK_ACTIONS } from '../../context/TasksContext';
 import { addLog } from '../../utils/log';
-import Modal from '../Modal';
-import TaskInfo from '../TaskInfo/TaskInfo';
 import TaskTime from '../TaskTime';
 import Assignee from './Assignee';
 import LogButton from './LogButton';
 
 import './Task.scss';
 
-const Task = ({ value }) => {
-    const [isInfoOpen, setIsInfoOpen] = useState(false);
-
+const Task = ({ value, onClick }) => {
     const { taskID, title, totalTime, assignee, activeLog, completed } = value;
 
     const { tasksDispatch } = useTasks();
@@ -45,13 +41,9 @@ const Task = ({ value }) => {
         }
     };
 
-    const handleInfoToggle = () => {
-        setIsInfoOpen(!isInfoOpen);
-    };
-
     return (
         <div className='task'>
-            <div className='task__title-container' onClick={handleInfoToggle}>
+            <div className='task__title-container' onClick={onClick || null}>
                 <h3 className='heading-tertiary task__title'>{title}</h3>
             </div>
 
@@ -68,15 +60,11 @@ const Task = ({ value }) => {
             </Assignee>
 
             <TaskTime
-                onClick={handleInfoToggle}
+                onClick={onClick || null}
                 className='task__time'
                 total={totalTime}
                 log={activeLog}
             />
-
-            <Modal isOpen={isInfoOpen} onClose={handleInfoToggle}>
-                <TaskInfo value={value} />
-            </Modal>
         </div>
     );
 };

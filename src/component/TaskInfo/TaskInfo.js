@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { getLogs } from '../../api/LogAPI';
 import { completeTaskToggle, deleteTask } from '../../api/TaskAPI';
 import { useLoadingAction } from '../../context/LoadingContext';
+import useMembers from '../../context/MembersContext';
 import useTasks, { TASK_ACTIONS } from '../../context/TasksContext';
 import useToast, {
     TOAST_ACTIONS,
@@ -20,9 +21,9 @@ import Title from './Title';
 import TotalTime from './TotalTime';
 
 import './TaskInfo.scss';
-import useMembers from '../../context/MembersContext';
 
-const TaskInfo = ({ value }) => {
+const TaskInfo = ({ value, onClose }) => {
+    const [task, setTask] = useState(value);
     const {
         taskID,
         title,
@@ -33,7 +34,7 @@ const TaskInfo = ({ value }) => {
         isLogLoaded,
         completed,
         logs,
-    } = value;
+    } = task;
 
     const [isAlertOpen, setIsAlertOpen] = useState(false);
 
@@ -76,8 +77,9 @@ const TaskInfo = ({ value }) => {
         );
     }, [hasEditPermission, assignee, user, userIsAdmin]);
 
-    const updateTask = (task) => {
-        value = { ...value, ...task };
+    const updateTask = (newTask) => {
+        const value = { ...task, ...newTask };
+        setTask(value);
         tasksDispatch({
             type: TASK_ACTIONS.UPDATE,
             payload: value,
@@ -94,7 +96,8 @@ const TaskInfo = ({ value }) => {
                     title: 'Task Deleted',
                 },
             });
-            tasksDispatch({ type: TASK_ACTIONS.DELETE, payload: value });
+            tasksDispatch({ type: TASK_ACTIONS.DELETE, payload: task });
+            onClose();
         } catch (error) {
             toastDispatch({
                 type: TOAST_ACTIONS.ADD,
@@ -109,12 +112,14 @@ const TaskInfo = ({ value }) => {
 
             if (!completed) {
                 const { totalTime, log } = result;
-                value.activeLog = null;
-                value.totalTime = totalTime;
-                value.logs = addLog(logs, log);
+                task.activeLog = null;
+                task.totalTime = totalTime;
+                task.logs = addLog(logs, log);
             }
 
-            value.completed = !completed;
+            task.completed = !completed;
+
+            updateTask(task);
 
             toastDispatch({
                 type: TOAST_ACTIONS.ADD,
@@ -122,10 +127,6 @@ const TaskInfo = ({ value }) => {
                     state: TOAST_STATE.SUCCESS,
                     title: `Task ${!completed ? 'Complete' : 'Incomplete'}`,
                 },
-            });
-            tasksDispatch({
-                type: TASK_ACTIONS.UPDATE,
-                payload: value,
             });
         } catch (error) {
             toastDispatch({

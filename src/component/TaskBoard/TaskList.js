@@ -2,7 +2,7 @@ import React from 'react';
 import Task from '../Task';
 import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-const TaskList = ({ title, value }) => {
+const TaskList = ({ title, value, onClick }) => {
     return (
         <div className='task-list'>
             <h3 className='heading-tertiary task-list__title'>{title}</h3>
@@ -12,7 +12,11 @@ const TaskList = ({ title, value }) => {
                         key={task.taskID}
                         timeout={500}
                         classNames='task-transition'>
-                        <Task key={task.taskID} value={task} />
+                        <Task
+                            key={task.taskID}
+                            value={task}
+                            onClick={() => onClick(task)}
+                        />
                     </CSSTransition>
                 ))}
             </TransitionGroup>
