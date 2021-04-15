@@ -103,7 +103,7 @@ const InputEditable = ({
                         save
                     </i>
                     <i
-                        className='material-icons input-editable__icon input-editable__icon--cancel'
+                        className='material-icons input-editable__icon input-editable__icon--cancel animate-hover-white'
                         onClick={handleCancel}>
                         clear
                     </i>

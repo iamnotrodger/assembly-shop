@@ -1,0 +1,29 @@
+.animate-hover-primary {
+    color: var(--color-primary);
+    transition: background-color 200ms ease-in;
+
+    &:hover,
+    &:active {
+        color: var(--color-primary-dark);
+    }
+}
+
+.animate-hover-white {
+    color: var(--color-white);
+    transition: background-color 200ms ease-in;
+
+    &:hover,
+    &:active {
+        color: var(--color-grey-light);
+    }
+}
+
+.animate-hover-bg-secondary {
+    background-color: var(--color-secondary);
+    transition: background-color 200ms ease-in;
+
+    &:hover,
+    &active {
+        background-color: var(--color-primary);
+    }
+}

@@ -23,7 +23,7 @@ const TeamSection = ({ value: { teamID, name, numMembers, projects } }) => {
                     {name}
                 </h2>
                 <div
-                    className='team-section__members'
+                    className='team-section__members animate-hover-primary'
                     onClick={handleShowMembersToggle}>
                     <i className='material-icons md-24'>person</i>
                     <p className='paragraph'>Members ({numMembers})</p>
@@ -31,7 +31,9 @@ const TeamSection = ({ value: { teamID, name, numMembers, projects } }) => {
                 <Link
                     className='team-section__settings'
                     to={`/team/${teamID}/${linkName}`}>
-                    <i className='material-icons md-36'>settings</i>
+                    <i className='material-icons md-36 animate-hover-primary'>
+                        settings
+                    </i>
                 </Link>
             </div>
 

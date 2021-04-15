@@ -25,7 +25,12 @@
         cursor: pointer;
 
         &--save {
-            background-color: #32b67a;
+            background-color: var(--color-success);
+            transition: background-color 200ms ease-in;
+
+            &:hover {
+                background-color: var(--color-success-saturated);
+            }
         }
     }
 

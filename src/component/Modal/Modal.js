@@ -27,7 +27,7 @@ const Modal = ({
                 {hasButton ? (
                     <div className='modal__close'>
                         <i
-                            className='material-icons md-36 modal__close-icon'
+                            className='material-icons md-36 modal__close-icon animate-hover-white'
                             onClick={onClose}>
                             clear
                         </i>

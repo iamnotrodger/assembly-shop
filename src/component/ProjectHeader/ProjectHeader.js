@@ -35,17 +35,22 @@ const ProjectHeader = () => {
                 editable={userIsAdmin}
                 onSave={handleProjectNameSave}
                 dynamic={true}>
-                <h3 className='heading-tertiary project-header__project-name'>
+                <h3
+                    className={`heading-tertiary project-header__project-name ${
+                        userIsAdmin ? 'animate-hover-bg-secondary' : ''
+                    }`}>
                     {project.name}
                 </h3>
             </ProjectName>
 
-            <Link className='project-header__team-name' to={teamLink}>
+            <Link
+                className='project-header__team-name animate-hover-bg-secondary'
+                to={teamLink}>
                 {team.name}
             </Link>
 
             <i
-                className='material-icons md-36 project-header__settings'
+                className='material-icons md-36 project-header__settings animate-hover-primary'
                 onClick={handleSettingsToggle}>
                 settings
             </i>

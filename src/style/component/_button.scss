@@ -13,11 +13,16 @@
     background-color: var(--color-white);
     cursor: pointer;
 
-    transition: all 0.2s;
+    transition: all 0.2s ease-in;
 
     &:disabled {
         background-color: var(--color-grey-light);
         color: var(--color-secondary);
+    }
+
+    &:hover,
+    &:active {
+        background-color: var(--color-white-dark);
     }
 
     &--animate-pop {

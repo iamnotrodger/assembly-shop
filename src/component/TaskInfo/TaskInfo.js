@@ -146,7 +146,11 @@ const TaskInfo = ({ value, onClose }) => {
                 <h2 className='form__title heading-secondary'>Task</h2>
                 <Menu
                     className='more-menu'
-                    header={<i className='material-icons md-36'>more_vert</i>}>
+                    header={
+                        <i className='material-icons md-36 animate-hover-white'>
+                            more_vert
+                        </i>
+                    }>
                     <MenuItem
                         className={`more-menu__item ${
                             !hasEditPermission
