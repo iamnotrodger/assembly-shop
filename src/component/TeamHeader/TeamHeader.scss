@@ -1,0 +1,135 @@
+%name {
+    padding: 1rem;
+    line-height: 1;
+    font-weight: 900;
+    font-family: var(--font-primary);
+    color: var(--color-white);
+
+    background-color: transparent;
+    border-radius: var(--border-radius-small);
+}
+
+.team-header {
+    padding: 1rem;
+    height: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    background-color: var(--color-secondary);
+
+    &__title {
+        color: var(--color-primary);
+    }
+
+    &__input {
+        @extend %name;
+        border: none;
+        font-size: 2.4rem;
+        text-align: center;
+        max-width: var(--max-content-width);
+        margin: 0 auto;
+        border: none;
+        outline: none;
+        line-height: 2;
+    }
+
+    &__team-name-container {
+        word-break: break-all;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+    }
+
+    &__team-name {
+        @extend %name;
+        font-size: 6.4rem;
+
+        &:hover {
+            color: var(--color-white-dark);
+        }
+    }
+
+    &--1 {
+        background-color: #19aad1;
+    }
+
+    &--1 &__title {
+        color: var(--color-white);
+    }
+
+    &--1 &__input {
+        color: #ffcc4c;
+    }
+
+    &--1 &__team-name {
+        color: #ffcc4c;
+
+        &:hover {
+            color: #f9c238;
+        }
+    }
+
+    &--2 {
+        background-color: #083ea7;
+    }
+
+    &--2 &__title {
+        color: var(--color-white);
+    }
+
+    &--2 &__input {
+        color: #1fde91;
+    }
+
+    &--2 &__team-name {
+        color: #1fde91;
+
+        &:hover {
+            color: #1dd088;
+        }
+    }
+
+    &--3 {
+        background-color: #384d9d;
+    }
+
+    &--3 &__title {
+        color: var(--color-white);
+    }
+
+    &--3 &__input {
+        color: #f6f3eb;
+    }
+
+    &--3 &__team-name {
+        color: #f6f3eb;
+
+        &:hover {
+            color: #dcdad3;
+        }
+    }
+
+    &--4 {
+        background-color: #112378;
+    }
+
+    &--4 &__title {
+        color: var(--color-white);
+    }
+
+    &--4 &__input {
+        color: #fbeccf;
+    }
+
+    &--4 &__team-name {
+        color: #fbeccf;
+
+        &:hover {
+            color: #e3d5bb;
+        }
+    }
+}

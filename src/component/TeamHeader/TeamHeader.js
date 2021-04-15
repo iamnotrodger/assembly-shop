@@ -8,8 +8,11 @@ import { createErrorToast } from '../../utils/toast';
 import { validateTeamName } from '../../utils/validate';
 import InputEditable from '../InputEditable';
 
+import './TeamHeader.scss';
+
 const TeamHeader = ({ teamID }) => {
     const [teamName, setTeamName] = useState('');
+    const scheme = teamID % 5;
 
     const { userIsAdmin } = useMembers();
     const setLoading = useLoadingAction();
@@ -32,8 +35,8 @@ const TeamHeader = ({ teamID }) => {
 
     const handleSave = async (input) => {
         try {
-            const { valid, error } = validateTeamName(input);
-            if (!valid) throw new Error(error);
+            const error = validateTeamName(input);
+            if (error) throw new Error(error);
 
             await updateTeamName(input, teamID);
             setTeamName(input);
@@ -46,17 +49,22 @@ const TeamHeader = ({ teamID }) => {
     };
 
     return (
-        <div>
-            <h1>Team</h1>
-            <div>
-                <InputEditable
-                    text={teamName}
-                    editable={userIsAdmin}
-                    onSave={handleSave}
-                    hasButton>
-                    <h1>{teamName}</h1>
-                </InputEditable>
-            </div>
+        <div className={`team-header team-header--${scheme}`}>
+            <h2 className='heading-secondary team-header__title'>Team</h2>
+            <InputEditable
+                text={teamName}
+                className={`team-header__input team-header--${scheme}`}
+                editable={userIsAdmin}
+                onSave={handleSave}
+                hasButton={false}
+                dynamic={true}>
+                <div className='team-header__team-name-container'>
+                    <h1
+                        className={`team-header__team-name team-header--${scheme}`}>
+                        {teamName}
+                    </h1>
+                </div>
+            </InputEditable>
         </div>
     );
 };
