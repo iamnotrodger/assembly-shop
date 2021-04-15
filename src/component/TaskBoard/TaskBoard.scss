@@ -21,3 +21,28 @@
         grid-gap: 1rem;
     }
 }
+
+.task-transition {
+    &-enter {
+        height: 0;
+        overflow: hidden;
+        opacity: 0;
+    }
+    &-enter-active {
+        height: 100%;
+        overflow: hidden;
+        opacity: 1;
+        transition: all 500ms ease;
+    }
+    &-exit {
+        height: 100%;
+        overflow: hidden;
+        opacity: 1;
+    }
+    &-exit-active {
+        height: 0;
+        overflow: hidden;
+        opacity: 0;
+        transition: all 500ms ease;
+    }
+}

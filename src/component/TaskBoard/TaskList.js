@@ -1,15 +1,21 @@
 import React from 'react';
 import Task from '../Task';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
 const TaskList = ({ title, value }) => {
     return (
         <div className='task-list'>
             <h3 className='heading-tertiary task-list__title'>{title}</h3>
-            <div className='task-list__list'>
+            <TransitionGroup className='task-list__list'>
                 {value.map((task) => (
-                    <Task key={task.taskID} value={task} />
+                    <CSSTransition
+                        key={task.taskID}
+                        timeout={500}
+                        classNames='task-transition'>
+                        <Task key={task.taskID} value={task} />
+                    </CSSTransition>
                 ))}
-            </div>
+            </TransitionGroup>
         </div>
     );
 };
