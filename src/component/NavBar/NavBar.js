@@ -35,7 +35,9 @@ const NavBar = () => {
                 <Menu
                     className='nav__menu'
                     header={
-                        <i className='material-icons md-36 md-circle'>add</i>
+                        <i className='material-icons md-36 md-circle nav__header'>
+                            add
+                        </i>
                     }>
                     <MenuItem className='nav__item' onClick={handleTeamToggle}>
                         <i className='material-icons md-36'>groups</i>
@@ -49,7 +51,9 @@ const NavBar = () => {
                     </MenuItem>
                 </Menu>
 
-                <Menu className='nav__menu' header={<UserIcon value={user} />}>
+                <Menu
+                    className='nav__menu'
+                    header={<UserIcon className='nav__header' value={user} />}>
                     <MenuItem className='nav__item' onClick={Logout}>
                         <i className='material-icons md-36'>logout</i>
                         <h2 className='heading-secondary'>Logout</h2>
