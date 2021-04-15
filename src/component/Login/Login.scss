@@ -1,0 +1,61 @@
+.login {
+    padding: 5rem;
+    padding-top: 3rem;
+    background-color: var(--color-grey-light);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-dark);
+
+    &__title {
+        margin-bottom: 2rem;
+        font-family: var(--font-secondary);
+        font-weight: 400;
+    }
+
+    &__button-container {
+        display: grid;
+        grid-gap: 1rem;
+    }
+
+    &__button {
+        display: flex;
+        align-items: center;
+
+        min-width: 26rem;
+        padding: 1rem;
+        border-radius: var(--border-radius-small);
+        transition: all 0.2s ease-in;
+
+        &,
+        &:link,
+        &:visited {
+            text-align: left;
+            text-decoration: none;
+        }
+
+        &--facebook {
+            color: var(--color-white);
+            background-color: var(--color-primary);
+
+            &:hover {
+                background-color: var(--color-primary-dark);
+            }
+        }
+
+        &--google {
+            color: var(--color-white);
+            background-color: var(--color-success);
+
+            &:hover {
+                background-color: var(--color-success-saturated);
+            }
+        }
+    }
+
+    &__icon {
+        margin-right: 1rem;
+    }
+
+    &__text {
+        font-size: 1.6rem;
+    }
+}

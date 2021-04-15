@@ -1,11 +1,11 @@
 const LoginData = [
     {
-        logo: '',
+        icon: 'public',
         name: 'google',
         href: `${process.env.REACT_APP_API_URL}/api/auth/google`,
     },
     {
-        logo: '',
+        icon: 'facebook',
         name: 'facebook',
         href: `${process.env.REACT_APP_API_URL}/api/auth/facebook`,
     },

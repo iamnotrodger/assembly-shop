@@ -1,12 +1,14 @@
 import React from 'react';
 import Login from '../../component/Login';
 
+import './LoginPage.scss';
+
 const LoginPage = () => {
     return (
-        <div>
-            <h1>Login Page</h1>
+        <main className='login-page'>
+            <h1 className='heading-primary login-page__title'>Assembly-Shop</h1>
             <Login />
-        </div>
+        </main>
     );
 };
 
