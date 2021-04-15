@@ -20,7 +20,6 @@ export const UserProvider = ({ children }) => {
     const setLoading = useLoadingAction();
     const history = useHistory();
 
-    //Gets the user on mount and very time user is logged in
     useEffect(() => {
         Login();
         // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -11,7 +11,7 @@ const Member = ({ value, onDelete }) => {
             {value.admin ? <div className='member__role'>ADMIN</div> : null}
             {onDelete ? (
                 <i
-                    className=' material-icons md-36 member__button'
+                    className=' material-icons md-36 member__button animate-hover-primary'
                     onClick={onDelete}>
                     clear
                 </i>

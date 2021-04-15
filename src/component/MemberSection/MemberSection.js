@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import useMembers, { MEMBER_ACTIONS } from '../../context/MembersContext';
 import useToast, { TOAST_ACTIONS } from '../../context/ToastContext';
 import useUser from '../../context/UserContext';
 import { createErrorToast } from '../../utils/toast';
+import AlertPanel, { ALERT_TYPE } from '../AlertPanel';
 import Member from '../Member';
 
 const MemberSection = ({ removable }) => {
+    const [isAlertOpen, setIsAlertOpen] = useState(false);
+    const [memberToDelete, setMemberToDelete] = useState(null);
+
     const { members, asyncMemberDispatch } = useMembers();
     const { user } = useUser();
-    const { tokenDispatch } = useToast();
+    const { toastDispatch } = useToast();
 
     useEffect(() => {
         if (!members) asyncMemberDispatch({ type: MEMBER_ACTIONS.LOAD });
@@ -21,11 +25,15 @@ const MemberSection = ({ removable }) => {
                 payload: id,
             });
         } catch (error) {
-            tokenDispatch({
+            toastDispatch({
                 type: TOAST_ACTIONS.ADD,
                 payload: createErrorToast(error.message),
             });
         }
+    };
+
+    const handleAlertToggle = () => {
+        setIsAlertOpen(!isAlertOpen);
     };
 
     if (!members) return <div>No Available Members</div>;
@@ -38,11 +46,31 @@ const MemberSection = ({ removable }) => {
                     value={member}
                     onDelete={
                         removable && member.userID !== user.userID
-                            ? () => handleDelete(member.userID)
+                            ? () => {
+                                  setMemberToDelete(member);
+                                  handleAlertToggle();
+                              }
                             : null
                     }
                 />
             ))}
+
+            <AlertPanel
+                type={ALERT_TYPE.CRITICAL}
+                isOpen={isAlertOpen}
+                title='Remove member?'
+                message={memberToDelete && memberToDelete.user.email}
+                submitText='Remove'
+                onSubmit={() => {
+                    if (!memberToDelete) return null;
+                    handleDelete(memberToDelete.userID);
+                    handleAlertToggle();
+                }}
+                onClose={() => {
+                    handleAlertToggle();
+                    setMemberToDelete(null);
+                }}
+            />
         </section>
     );
 };
