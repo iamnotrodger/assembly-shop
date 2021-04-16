@@ -10,12 +10,17 @@ const ErrorFallback = ({ error: { message, code } }) => {
             return <NotAuthorized message={message} />;
         default:
             return (
-                <div role='alert'>
-                    <h1>{code}</h1>
-                    <p>Something went wrong:</p>
-                    <pre>{message}</pre>
-                    <pre>Try reloading the page</pre>
-                </div>
+                <main role='alert' className='error-fallback'>
+                    <i className='material-icons error-fallback__icon'>error</i>
+                    <h1 className='error-fallback__code'>{code}</h1>
+                    <h2 className='error-fallback__title'>
+                        Something went wrong
+                    </h2>
+                    <p className='error-fallback__message'>{message}</p>
+                    <p className='error-fallback__message'>
+                        Try reloading the page
+                    </p>
+                </main>
             );
     }
 };

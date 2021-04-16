@@ -1,0 +1,31 @@
+.error-fallback {
+    max-width: var(--max-content-width);
+    margin: 0 auto;
+    margin-top: 5rem;
+    padding: 0 3rem;
+    text-align: center;
+    color: var(--color-grey-dark);
+
+    &__icon {
+        font-size: 12.8rem;
+    }
+
+    &__code {
+        font-size: 12.8rem;
+        line-height: 1;
+    }
+
+    &__title {
+        font-family: var(--font-primary);
+        font-size: 6.4rem;
+        line-height: 1;
+    }
+    &__message {
+        font-family: var(--font-secondary);
+        font-size: 2rem;
+
+        &:first-of-type {
+            margin-top: 2rem;
+        }
+    }
+}
