@@ -1,6 +1,7 @@
 .nav-bar {
     position: -webkit-sticky;
     position: sticky;
+    z-index: 99;
     top: 0;
 
     display: grid;
