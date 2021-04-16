@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Select from 'react-select';
 import { createTask } from '../../api/TaskAPI';
-import { useLoadingAction } from '../../context/LoadingContext';
 import useMembers from '../../context/MembersContext';
 import useTasks, { TASK_ACTIONS } from '../../context/TasksContext';
 import useToast, {
@@ -21,7 +20,6 @@ const CreateTask = ({ projectID, onClose }) => {
     const { members } = useMembers();
     const { tasksDispatch } = useTasks();
     const { toastDispatch } = useToast();
-    const setLoading = useLoadingAction();
 
     const handleTitleChange = (event) => {
         const { value } = event.target;
@@ -43,7 +41,6 @@ const CreateTask = ({ projectID, onClose }) => {
         const valid = validateForm();
         if (!valid) return;
 
-        setLoading(true);
         try {
             const newTask = {
                 projectID,
@@ -69,7 +66,6 @@ const CreateTask = ({ projectID, onClose }) => {
                 payload: createErrorToast(error.message),
             });
         }
-        setLoading(false);
     };
 
     const validateForm = () => {
