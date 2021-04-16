@@ -76,7 +76,7 @@ const AddMember = ({ disabled }) => {
                     closeMenuOnSelect={true}
                 />
                 <button
-                    className='btn-success add-member__button'
+                    className='btn--success add-member__button'
                     onClick={handleAddMember}
                     disabled={disabled || !member}>
                     <i className='material-icons md-36 add-team__button-icon'>

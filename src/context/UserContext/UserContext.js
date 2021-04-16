@@ -8,7 +8,6 @@ import React, {
 import { useHistory } from 'react-router';
 import { logout } from '../../api/AuthAPI';
 import { getProfile } from '../../api/UserAPI';
-import { useLoadingAction } from '../LoadingContext';
 
 const UserContext = createContext();
 
@@ -17,7 +16,6 @@ export const UserProvider = ({ children }) => {
     const [isAuthorized, setIsAuthorized] = useState(false);
     const [isLoaded, setIsLoaded] = useState(false);
 
-    const setLoading = useLoadingAction();
     const history = useHistory();
 
     useEffect(() => {
@@ -30,7 +28,6 @@ export const UserProvider = ({ children }) => {
     }, [user]);
 
     const Login = useCallback(async () => {
-        setLoading(true);
         setIsLoaded(false);
         try {
             const user = await getProfile();
@@ -38,7 +35,6 @@ export const UserProvider = ({ children }) => {
         } catch (error) {
             console.log(error);
         }
-        setLoading(false);
         setIsLoaded(true);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

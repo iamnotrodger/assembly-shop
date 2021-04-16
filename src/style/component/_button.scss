@@ -77,26 +77,26 @@
             background-color: var(--color-error-saturated);
         }
     }
-}
 
-.btn-success {
-    cursor: pointer;
-    border: none;
-    outline: none;
+    &--success {
+        cursor: pointer;
+        border: none;
+        outline: none;
 
-    color: var(--color-white);
-    background-color: var(--color-success);
+        color: var(--color-white);
+        background-color: var(--color-success);
 
-    transition: background-color 200ms ease-in;
+        transition: background-color 200ms ease-in;
 
-    &:disabled,
-    &:disabled:hover {
-        cursor: default;
-        background-color: var(--color-success-unsaturated);
-    }
+        &:disabled,
+        &:disabled:hover {
+            cursor: default;
+            background-color: var(--color-success-unsaturated);
+        }
 
-    &:hover,
-    &active {
-        background-color: var(--color-success-saturated);
+        &:hover,
+        &active {
+            background-color: var(--color-success-saturated);
+        }
     }
 }

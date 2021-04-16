@@ -1,15 +1,81 @@
-.global-spinner-overlay {
+$width: 3rem;
+$height: 3rem;
+$bounce_height: 6rem;
+
+.loading-screen {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 1000;
-    background-color: rgba(0, 0, 0, 0.3);
-    font-size: 30px;
-    color: white;
-    font-weight: bold;
+    z-index: 999999;
+
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: rgba(#19aad1, 0.4);
+
+    &__text {
+        font-size: 3.2rem;
+        color: #ffcc4c;
+        font-family: var(--font-tertiary);
+        line-height: 1;
+        display: inline-block;
+        margin-left: 1.5rem;
+    }
+
+    &__ball {
+        position: relative;
+        display: inline-block;
+        height: 6.7rem;
+        width: $width;
+
+        &:before {
+            position: absolute;
+            content: '';
+            display: block;
+            top: 0;
+            width: $width;
+            height: $height;
+            border-radius: 50%;
+            background-color: #ffcc4c;
+            transform-origin: 50%;
+            animation: bounce 500ms alternate infinite ease;
+        }
+    }
+}
+
+@keyframes bounce {
+    0% {
+        top: $bounce_height;
+        height: 0.5rem;
+        border-radius: 6rem 6rem 2rem 2rem;
+        transform: scaleX(2);
+        background-color: #fdf06f;
+    }
+    35% {
+        height: $height;
+        border-radius: 50%;
+        transform: scaleX(1);
+    }
+    100% {
+        top: 0;
+    }
+}
+
+.load {
+    &-enter {
+        opacity: 0;
+    }
+    &-enter-active {
+        opacity: 1;
+        transition: opacity 1000ms ease-in;
+    }
+    &-exit {
+        opacity: 1;
+    }
+    &-exit-active {
+        opacity: 0;
+        transition: opacity 1000ms ease-in;
+    }
 }
