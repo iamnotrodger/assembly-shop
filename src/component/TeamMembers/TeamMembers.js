@@ -11,6 +11,11 @@ const TeamMembers = () => {
     return (
         <div className='team-members'>
             <AddMember disabled={!userIsAdmin} />
+            {!userIsAdmin ? (
+                <p className='paragraph team-members__paragraph'>
+                    Only the team's admin can invite members.
+                </p>
+            ) : null}
             <MemberSection removable={userIsAdmin} />
         </div>
     );
