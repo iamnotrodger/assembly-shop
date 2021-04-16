@@ -58,6 +58,25 @@
             opacity: 0;
         }
     }
+
+    &--critical {
+        color: var(--color-white);
+        background-color: var(--color-error);
+
+        transition: background-color 200ms ease-in;
+
+        &:disabled,
+        &:disabled:hover {
+            cursor: default;
+            color: var(--color-white);
+            background-color: var(--color-error-unsaturated);
+        }
+
+        &:hover,
+        &active {
+            background-color: var(--color-error-saturated);
+        }
+    }
 }
 
 .btn-success {

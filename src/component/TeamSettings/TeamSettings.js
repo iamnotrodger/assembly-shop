@@ -6,7 +6,9 @@ import useMembers from '../../context/MembersContext';
 import useTeams, { TEAMS_ACTIONS } from '../../context/TeamsContext';
 import useToast, { TOAST_ACTIONS } from '../../context/ToastContext';
 import { createErrorToast } from '../../utils/toast';
-import AlertPanel from '../AlertPanel';
+import AlertPanel, { ALERT_TYPE } from '../AlertPanel';
+
+import './TeamSettings.scss';
 
 const TeamSettings = ({ teamID }) => {
     const [allowedToQuit, setAllowToQuit] = useState(false);
@@ -60,38 +62,45 @@ const TeamSettings = ({ teamID }) => {
     };
 
     return (
-        <div>
-            <button disabled={!allowedToQuit} onClick={handleQuitPanelToggle}>
-                QUIT TEAM
+        <section className='team-settings'>
+            <button
+                className='btn team-settings__button team-settings__button--quit'
+                disabled={!allowedToQuit}
+                onClick={handleQuitPanelToggle}>
+                quit team
             </button>
+
             {userIsAdmin && !allowedToQuit ? (
-                <p>
+                <p className='team-settings__paragraph'>
                     The Team requires at least one administrator. Either delete
                     the Team or promote a Team member to an administrator.
                 </p>
             ) : null}
-            <button disabled={!userIsAdmin} onClick={handleDeletePanelToggle}>
-                DELETE TEAM
+
+            <button
+                disabled={!userIsAdmin}
+                className='btn btn--critical team-settings__button team-settings__button--delete'
+                onClick={handleDeletePanelToggle}>
+                delete team
             </button>
 
             <AlertPanel
+                type={ALERT_TYPE.CRITICAL}
                 isOpen={isQuitPanelOpen}
-                title='Are you sure you want to quit the team?'
+                title='Quit Team?'
                 onSubmit={handleSettingsAction(() => quitTeam(teamID))}
                 onClose={handleQuitPanelToggle}
             />
 
             <AlertPanel
+                type={ALERT_TYPE.CRITICAL}
                 isOpen={isDeletePanelOpen}
-                message={
-                    <>
-                        <b>Warning: </b> deleting the team cannot be undone
-                    </>
-                }
+                title='Permanently delete Team?'
+                submitText='Delete'
                 onSubmit={handleSettingsAction(() => deleteTeam(teamID))}
                 onClose={handleDeletePanelToggle}
             />
-        </div>
+        </section>
     );
 };
 

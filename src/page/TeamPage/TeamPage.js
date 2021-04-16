@@ -6,22 +6,34 @@ import TeamMembers from '../../component/TeamMembers';
 import TeamSettings from '../../component/TeamSettings';
 import { MembersProvider } from '../../context/MembersContext';
 
+import './TeamPage.scss';
+
 const TeamPage = () => {
     const { teamID } = useParams();
     return (
-        <div>
+        <main className='team-page'>
             <MembersProvider teamID={teamID} loadOnMount>
-                <TeamHeader teamID={teamID} />
-                <TabBoard>
-                    <div label='Members'>
-                        <TeamMembers />
-                    </div>
-                    <div label='Settings'>
-                        <TeamSettings teamID={teamID} />
-                    </div>
-                </TabBoard>
+                <div className='team-page__header'>
+                    <TeamHeader teamID={teamID} />
+                </div>
+
+                <div className='team-page__content-container'>
+                    <TabBoard>
+                        <div label='Members'>
+                            <div className='team-page__content team-page__content--members'>
+                                <TeamMembers />
+                            </div>
+                        </div>
+
+                        <div label='Settings'>
+                            <div className='team-page__content team-page__content--settings'>
+                                <TeamSettings teamID={teamID} />
+                            </div>
+                        </div>
+                    </TabBoard>
+                </div>
             </MembersProvider>
-        </div>
+        </main>
     );
 };
 
