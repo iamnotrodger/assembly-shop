@@ -6,23 +6,16 @@ export const getProfile = async () => {
     const accessToken = await getToken();
     if (!accessToken) throw new Error('Unauthorized');
 
-    console.log('access-token: ', accessToken);
-    console.log('getting user profile');
     const response = await fetch(API_URL + '/api/user', {
         headers: {
-            'Content-type': 'application/json',
             Authorization: `Bearer ${accessToken}`,
         },
     });
 
-    console.log('got user profile');
-    console.log('response: ', response);
     if (!response.ok) {
-        console.log('response for user profile not okay');
         throw await RequestError.parseResponse(response);
     }
 
-    console.log('getting user json');
     const profile = await response.json();
     return profile;
 };
