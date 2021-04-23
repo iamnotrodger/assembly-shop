@@ -81,7 +81,7 @@ const CreateTask = ({ projectID, onClose }) => {
 
             <div className='form__group'>
                 <label className='form__label'>
-                    Task Title
+                    Title
                     <input
                         className={`form__input ${
                             titleError ? 'form__input--error' : ''

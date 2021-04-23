@@ -15,7 +15,7 @@ const Description = ({ id, value, onUpdate, editable }) => {
     return (
         <div className='form__group'>
             <label className='form__label'>
-                Task Description
+                Description
                 <InputEditable
                     className='form__textarea'
                     editable={editable}

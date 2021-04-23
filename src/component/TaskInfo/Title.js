@@ -16,7 +16,7 @@ const Title = ({ id, value, onUpdate, editable }) => {
     return (
         <div className='form__group'>
             <label className='form__label'>
-                Task Title
+                Title
                 <InputEditable
                     className='form__input'
                     editable={editable}
