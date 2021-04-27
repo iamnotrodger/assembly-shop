@@ -10,9 +10,16 @@
     box-shadow: var(--shadow-dark);
     height: 14rem;
 
+    transition: all 500ms ease;
+
     &:link,
     &:visited {
         text-decoration: none;
+    }
+
+    &:hover,
+    &:active {
+        filter: brightness(1.15);
     }
 
     &__title {
