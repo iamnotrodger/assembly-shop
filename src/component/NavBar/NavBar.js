@@ -31,7 +31,7 @@ const NavBar = () => {
                 <h1 className='heading-primary'>Assembly-Shop</h1>
             </Link>
 
-            <nav className='nav'>
+            <nav className='nav' style={user ? null : { display: 'none' }}>
                 <Menu
                     className='nav__menu'
                     header={
