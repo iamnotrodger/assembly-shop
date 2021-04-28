@@ -13,7 +13,8 @@ const Task = ({ value, onClick }) => {
 
     const { tasksDispatch } = useTasks();
 
-    const onStart = async () => {
+    const onStart = async (event) => {
+        event.stopPropagation();
         try {
             const { log } = await startTask(taskID);
 
@@ -27,7 +28,8 @@ const Task = ({ value, onClick }) => {
         }
     };
 
-    const onStop = async () => {
+    const onStop = async (event) => {
+        event.stopPropagation();
         try {
             const { totalTime, log } = await stopTask(taskID);
 
@@ -42,25 +44,21 @@ const Task = ({ value, onClick }) => {
     };
 
     return (
-        <div className='task'>
-            <div className='task__title-container' onClick={onClick || null}>
+        <div className='task' onClick={onClick || null}>
+            <div className='task__title-container'>
                 <h3 className='heading-tertiary task__title'>{title}</h3>
             </div>
 
             <Assignee value={assignee}>
-                {!completed ? (
-                    <LogButton
-                        active={activeLog != null}
-                        onStart={onStart}
-                        onStop={onStop}
-                    />
-                ) : (
-                    <i className='material-icons md-36 md-circle'>check</i>
-                )}
+                <LogButton
+                    active={activeLog != null}
+                    onStart={onStart}
+                    onStop={onStop}
+                    completed={completed}
+                />
             </Assignee>
 
             <TaskTime
-                onClick={onClick || null}
                 className='task__time'
                 total={totalTime}
                 log={activeLog}
