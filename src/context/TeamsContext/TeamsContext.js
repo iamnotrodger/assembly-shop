@@ -1,16 +1,20 @@
-import { createContext, useContext, useReducer, useState } from 'react';
-import { reducer } from './utils';
+import { createContext, useContext, useReducer } from 'react';
+import { teamsReducer, userTeamsReducer } from './utils';
 
 const TeamsContext = createContext();
 const UsersTeamsContext = createContext();
 
 export const TeamsProvider = ({ children }) => {
-    const [teams, teamsDispatch] = useReducer(reducer, undefined);
-    const [usersTeams, setUsersTeams] = useState(undefined);
+    const [teams, teamsDispatch] = useReducer(teamsReducer, undefined);
+    const [usersTeams, userTeamsDispatch] = useReducer(
+        userTeamsReducer,
+        undefined,
+    );
 
     return (
         <TeamsContext.Provider value={{ teams, teamsDispatch }}>
-            <UsersTeamsContext.Provider value={{ usersTeams, setUsersTeams }}>
+            <UsersTeamsContext.Provider
+                value={{ usersTeams, userTeamsDispatch }}>
                 {children}
             </UsersTeamsContext.Provider>
         </TeamsContext.Provider>

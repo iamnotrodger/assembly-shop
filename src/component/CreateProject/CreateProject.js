@@ -6,6 +6,7 @@ import { createProject } from '../../api/ProjectAPI';
 import { getTeamsByAdmin } from '../../api/TeamAPI';
 import useTeams, {
     TEAMS_ACTIONS,
+    USER_TEAMS_ACTIONS,
     useUsersTeams,
 } from '../../context/TeamsContext';
 import { validateProjectName } from '../../utils/validate';
@@ -19,7 +20,7 @@ const CreateProject = ({ onClose }) => {
 
     const [loading, setLoading] = useState(false);
 
-    const { usersTeams, setUsersTeams } = useUsersTeams();
+    const { usersTeams, userTeamsDispatch } = useUsersTeams();
     const { teamsDispatch } = useTeams();
     const handleError = useErrorHandler();
     const history = useHistory();
@@ -30,7 +31,10 @@ const CreateProject = ({ onClose }) => {
                 setLoading(true);
                 try {
                     const teams = await getTeamsByAdmin();
-                    setUsersTeams(teams);
+                    userTeamsDispatch({
+                        type: USER_TEAMS_ACTIONS.LOAD,
+                        payload: teams,
+                    });
                 } catch (error) {
                     console.log(error);
                 }

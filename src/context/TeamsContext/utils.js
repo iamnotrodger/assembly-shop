@@ -7,7 +7,14 @@ export const TEAMS_ACTIONS = {
     DELETE_PROJECT: 5,
 };
 
-export const reducer = (state, action) => {
+export const USER_TEAMS_ACTIONS = {
+    ADD: 0,
+    DELETE: 1,
+    LOAD: 2,
+    UPDATE_NAME: 3,
+};
+
+export const teamsReducer = (state, action) => {
     switch (action.type) {
         case TEAMS_ACTIONS.LOAD:
             return action.payload;
@@ -24,6 +31,22 @@ export const reducer = (state, action) => {
             return deleteProject(state, action.payload);
         default:
             throw new Error('Illegal Teams Action');
+    }
+};
+
+export const userTeamsReducer = (state, action) => {
+    switch (action.type) {
+        case USER_TEAMS_ACTIONS.ADD:
+            if (state) state.push(action.payload);
+            return state;
+        case USER_TEAMS_ACTIONS.DELETE:
+            return deleteTeam(state, action.payload);
+        case USER_TEAMS_ACTIONS.LOAD:
+            return action.payload;
+        case USER_TEAMS_ACTIONS.UPDATE_NAME:
+            return updateName(state, action.payload);
+        default:
+            throw new Error('Illegal User Teams Action');
     }
 };
 
