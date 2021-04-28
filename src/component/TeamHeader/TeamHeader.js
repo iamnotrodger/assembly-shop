@@ -3,6 +3,7 @@ import { useErrorHandler } from 'react-error-boundary';
 import { getTeam, updateTeamName } from '../../api/TeamAPI';
 import { useLoadingAction } from '../../context/LoadingContext';
 import useMembers from '../../context/MembersContext';
+import useTeams, { TEAMS_ACTIONS } from '../../context/TeamsContext';
 import useToast, { TOAST_ACTIONS } from '../../context/ToastContext';
 import { createErrorToast } from '../../utils/toast';
 import { validateTeamName } from '../../utils/validate';
@@ -15,6 +16,7 @@ const TeamHeader = ({ teamID }) => {
     const scheme = teamID % 5;
 
     const { userIsAdmin } = useMembers();
+    const { teamsDispatch } = useTeams();
     const setLoading = useLoadingAction();
     const handleError = useErrorHandler();
     const { toastDispatch } = useToast();
@@ -33,13 +35,17 @@ const TeamHeader = ({ teamID }) => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [teamID]);
 
-    const handleSave = async (input) => {
+    const handleSave = async (name) => {
         try {
-            const error = validateTeamName(input);
+            const error = validateTeamName(name);
             if (error) throw new Error(error);
 
-            await updateTeamName(input, teamID);
-            setTeamName(input);
+            await updateTeamName(name, teamID);
+            setTeamName(name);
+            teamsDispatch({
+                type: TEAMS_ACTIONS.UPDATE_NAME,
+                payload: { teamID, name },
+            });
         } catch (error) {
             toastDispatch({
                 type: TOAST_ACTIONS.ADD,

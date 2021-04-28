@@ -2,8 +2,9 @@ export const TEAMS_ACTIONS = {
     ADD: 0,
     DELETE: 1,
     LOAD: 2,
-    ADD_PROJECT: 3,
-    DELETE_PROJECT: 4,
+    UPDATE_NAME: 3,
+    ADD_PROJECT: 4,
+    DELETE_PROJECT: 5,
 };
 
 export const reducer = (state, action) => {
@@ -15,6 +16,8 @@ export const reducer = (state, action) => {
             return state;
         case TEAMS_ACTIONS.DELETE:
             return deleteTeam(state, action.payload);
+        case TEAMS_ACTIONS.UPDATE_NAME:
+            return updateName(state, action.payload);
         case TEAMS_ACTIONS.ADD_PROJECT:
             return addProject(state, action.payload);
         case TEAMS_ACTIONS.DELETE_PROJECT:
@@ -24,13 +27,26 @@ export const reducer = (state, action) => {
     }
 };
 
-const deleteTeam = (state, teamID) => {
-    if (!state) return;
+const deleteTeam = (teams, teamID) => {
+    if (!teams) return;
 
     // eslint-disable-next-line eqeqeq
-    const index = state.findIndex((team) => team.teamID == teamID);
-    if (index > -1) state.splice(index, 1);
-    return state;
+    const index = teams.findIndex((team) => team.teamID == teamID);
+    if (index > -1) teams.splice(index, 1);
+    return teams;
+};
+
+const updateName = (teams, team) => {
+    if (!teams) return;
+    const { teamID, name } = team;
+
+    // eslint-disable-next-line eqeqeq
+    const index = teams.findIndex((team) => team.teamID == teamID);
+    if (index > -1) {
+        teams[index].name = name;
+    }
+
+    return teams;
 };
 
 const addProject = (teams, project) => {
