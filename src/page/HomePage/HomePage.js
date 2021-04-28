@@ -29,9 +29,11 @@ const HomePage = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    if (!teams) return null;
+
     return (
         <main className='home-page'>
-            {teams && teams.length > 0 ? (
+            {teams.length > 0 ? (
                 <div>
                     {teams.map((team) => (
                         <TeamSection value={team} key={team.teamID} />
