@@ -53,8 +53,12 @@ const addProject = (teams, project) => {
     if (!teams) return;
     const teamIndex = teams.findIndex((team) => team.teamID === project.teamID);
 
-    if (teamIndex > -1 && teams[teamIndex].projects) {
-        teams[teamIndex].projects.unshift(project);
+    if (teamIndex > -1) {
+        if (teams[teamIndex].projects) {
+            teams[teamIndex].projects.unshift(project);
+        } else {
+            teams[teamIndex].projects = [project];
+        }
     }
 
     return teams;
