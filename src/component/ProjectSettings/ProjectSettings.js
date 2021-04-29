@@ -68,7 +68,7 @@ const ProjectSettings = () => {
             </div>
 
             <button
-                className='form__submit btn'
+                className='form__submit btn btn--critical'
                 disabled={!userIsAdmin}
                 onClick={handleAlertToggle}>
                 Delete Project

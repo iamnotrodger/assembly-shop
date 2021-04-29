@@ -1,4 +1,6 @@
 .more-menu {
+    position: absolute;
+    z-index: 1000;
     top: 100%;
     right: 0;
 
@@ -8,7 +10,7 @@
     border-radius: 0.5rem;
     padding: 0.5rem;
 
-    .more-menu__item {
+    &__item {
         font-size: 1.4rem;
         color: var(--color-primary);
         padding: 0.5rem;

@@ -8,10 +8,10 @@
     background-color: var(--color-white);
     border-radius: var(--border-radius-small);
     box-shadow: var(--shadow-dark);
+    cursor: pointer;
 
     &__title-container {
         align-self: stretch;
-        cursor: pointer;
         display: flex;
         align-items: center;
         padding-right: 1rem;
@@ -20,6 +20,7 @@
     &__title {
         line-height: 1;
         word-wrap: break-word;
+        word-break: break-all;
         text-overflow: ellipsis;
         overflow: hidden;
         -webkit-box-orient: vertical;
@@ -29,7 +30,6 @@
 
     &__assignee {
         display: flex;
-        cursor: default;
 
         & > *:not(:last-child) {
             margin-right: 0.5rem;
@@ -37,7 +37,6 @@
     }
 
     &__log-button {
-        cursor: pointer;
         position: relative;
     }
 
@@ -52,7 +51,5 @@
         font-family: var(--font-tertiary);
         letter-spacing: 0.3rem;
         border-top: 1px solid var(--color-grey-dark);
-
-        cursor: pointer;
     }
 }

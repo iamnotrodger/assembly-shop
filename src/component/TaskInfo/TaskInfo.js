@@ -44,8 +44,9 @@ const TaskInfo = ({ value, onClose }) => {
     const setLoading = useLoadingAction();
     const { toastDispatch } = useToast();
 
+    const [isTaskOwner, setIsTaskOwner] = useState(false);
     const [hasEditPermission, setHasEditPermission] = useState(
-        assignee && assignee.userID === user.userID,
+        userIsAdmin || (assignee && assignee.userID === user.userID),
     );
 
     useEffect(() => {
@@ -72,10 +73,10 @@ const TaskInfo = ({ value, onClose }) => {
     }, [isLogLoaded, setLoading, tasksDispatch, value]);
 
     useEffect(() => {
-        setHasEditPermission(
-            userIsAdmin || (assignee && assignee.userID === user.userID),
-        );
-    }, [hasEditPermission, assignee, user, userIsAdmin]);
+        const ownsTask = assignee && assignee.userID === user.userID;
+        setIsTaskOwner(ownsTask);
+        setHasEditPermission(ownsTask || userIsAdmin);
+    }, [assignee, user, userIsAdmin]);
 
     const updateTask = (newTask) => {
         const value = { ...task, ...newTask };
@@ -145,6 +146,7 @@ const TaskInfo = ({ value, onClose }) => {
             <div className='task-info__title-container'>
                 <h2 className='form__title heading-secondary'>Task</h2>
                 <Menu
+                    style={{ position: 'relative' }}
                     className='more-menu'
                     header={
                         <i className='material-icons md-36 animate-hover-white'>
@@ -182,15 +184,13 @@ const TaskInfo = ({ value, onClose }) => {
                 editable={hasEditPermission}
             />
             <TotalTime value={totalTime} log={activeLog} />
-            <Logs
-                value={logs}
-                onUpdate={updateTask}
-                editable={hasEditPermission}
-            />
+            <Logs value={logs} onUpdate={updateTask} editable={isTaskOwner} />
 
             {hasEditPermission ? (
                 <button
-                    className='form__submit btn'
+                    className={`form__submit btn ${
+                        !completed ? 'btn--success' : ''
+                    }`}
                     onClick={handleCompleteToggle}>
                     {completed ? 'Incomplete' : 'Complete'}
                 </button>

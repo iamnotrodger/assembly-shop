@@ -3,15 +3,15 @@ import useDetectOutsideClick from '../../hook/useDetectOutsideClick';
 
 import './Menu.scss';
 
-const Menu = ({ children, header, className }) => {
+const Menu = ({ children, header, className, style }) => {
     const dropdownRef = useRef(null);
     const [isActive, setIsActive] = useDetectOutsideClick(dropdownRef, false);
 
     const toggleMenu = () => setIsActive(!isActive);
 
     return (
-        <div className='menu' onClick={toggleMenu}>
-            <div className='menu__header'>{header}</div>
+        <div className='menu' onClick={toggleMenu} style={style}>
+            {header}
 
             {isActive ? (
                 <ol

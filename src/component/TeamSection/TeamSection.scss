@@ -1,3 +1,5 @@
+@import '../../style/base/variable';
+
 .team-section {
     margin-bottom: 2rem;
 
@@ -19,15 +21,28 @@
 
     &__members {
         display: flex;
+        align-items: center;
         white-space: nowrap;
 
         cursor: pointer;
         color: var(--color-primary);
         margin-right: 2rem;
 
-        & > i {
+        &-icon {
             margin-right: 0.5rem;
             align-self: center;
+        }
+
+        @media only screen and (max-width: $media-extra-small) {
+            margin-right: 0;
+
+            &-icon {
+                font-size: 3.6rem !important;
+            }
+
+            &-text {
+                display: none;
+            }
         }
     }
 
@@ -35,6 +50,7 @@
         &,
         &:link,
         &:visited {
+            margin-bottom: -0.5rem;
             text-decoration: none;
             color: var(--color-primary);
         }
@@ -60,8 +76,6 @@
 
 .member-modal {
     display: grid;
-    padding: 0 5rem;
-
     &__title {
         justify-self: center;
         color: var(--color-white);

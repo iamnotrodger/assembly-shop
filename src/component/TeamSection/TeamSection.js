@@ -25,8 +25,12 @@ const TeamSection = ({ value: { teamID, name, numMembers, projects } }) => {
                 <div
                     className='team-section__members animate-hover-primary'
                     onClick={handleShowMembersToggle}>
-                    <i className='material-icons md-24'>person</i>
-                    <p className='paragraph'>Members ({numMembers})</p>
+                    <i className='material-icons md-24 team-section__members-icon'>
+                        person
+                    </i>
+                    <p className='paragraph team-section__members-text'>
+                        Members ({numMembers})
+                    </p>
                 </div>
                 <Link
                     className='team-section__settings'

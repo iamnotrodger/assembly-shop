@@ -3,7 +3,11 @@ import { useHistory } from 'react-router';
 import { quitTeam } from '../../api/MemberAPI';
 import { deleteTeam } from '../../api/TeamAPI';
 import useMembers from '../../context/MembersContext';
-import useTeams, { TEAMS_ACTIONS } from '../../context/TeamsContext';
+import useTeams, {
+    TEAMS_ACTIONS,
+    USER_TEAMS_ACTIONS,
+    useUsersTeams,
+} from '../../context/TeamsContext';
 import useToast, { TOAST_ACTIONS } from '../../context/ToastContext';
 import { createErrorToast } from '../../utils/toast';
 import AlertPanel, { ALERT_TYPE } from '../AlertPanel';
@@ -18,6 +22,7 @@ const TeamSettings = ({ teamID }) => {
     const history = useHistory();
     const { members, userIsAdmin } = useMembers();
     const { teamsDispatch } = useTeams();
+    const { userTeamsDispatch } = useUsersTeams();
     const { toastDispatch } = useToast();
 
     useEffect(() => {
@@ -51,6 +56,10 @@ const TeamSettings = ({ teamID }) => {
 
     const removeTeamFromTeamContext = (teamID) => {
         teamsDispatch({ type: TEAMS_ACTIONS.DELETE, payload: teamID });
+        userTeamsDispatch({
+            type: USER_TEAMS_ACTIONS.DELETE,
+            payload: teamID,
+        });
     };
 
     const handleQuitPanelToggle = () => {

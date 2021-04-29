@@ -16,6 +16,7 @@
 
     &__email {
         font-family: var(--font-secondary);
+        word-break: break-all;
         margin-left: 1rem;
         margin-right: auto;
     }

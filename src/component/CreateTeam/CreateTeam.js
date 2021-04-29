@@ -6,6 +6,7 @@ import { getUsers } from '../../api/UserAPI';
 import { useLoadingAction } from '../../context/LoadingContext';
 import useTeams, {
     TEAMS_ACTIONS,
+    USER_TEAMS_ACTIONS,
     useUsersTeams,
 } from '../../context/TeamsContext';
 import { validateTeamName } from '../../utils/validate';
@@ -18,7 +19,7 @@ const CreateTeam = ({ onClose }) => {
     const [nameError, setNameError] = useState(null);
 
     const { teamsDispatch } = useTeams();
-    const { usersTeams, setUsersTeams } = useUsersTeams();
+    const { userTeamsDispatch } = useUsersTeams();
     const setLoading = useLoadingAction();
     const handleError = useErrorHandler();
     const history = useHistory();
@@ -56,10 +57,10 @@ const CreateTeam = ({ onClose }) => {
 
     const addTeamToTeamsContext = (team) => {
         teamsDispatch({ type: TEAMS_ACTIONS.ADD, payload: team });
-        if (usersTeams) {
-            usersTeams.push(team);
-            setUsersTeams(usersTeams);
-        }
+        userTeamsDispatch({
+            type: USER_TEAMS_ACTIONS.ADD,
+            payload: team,
+        });
     };
 
     const handleRedirect = (team) => {
