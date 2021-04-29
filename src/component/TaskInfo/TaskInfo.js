@@ -188,7 +188,9 @@ const TaskInfo = ({ value, onClose }) => {
 
             {hasEditPermission ? (
                 <button
-                    className='form__submit btn'
+                    className={`form__submit btn ${
+                        !completed ? 'btn--success' : ''
+                    }`}
                     onClick={handleCompleteToggle}>
                     {completed ? 'Incomplete' : 'Complete'}
                 </button>
