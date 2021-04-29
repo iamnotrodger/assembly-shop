@@ -10,7 +10,7 @@ const TaskList = ({ title, value, onClick }) => {
                 {value.map((task) => (
                     <CSSTransition
                         key={task.taskID}
-                        timeout={500}
+                        timeout={300}
                         classNames='task-transition'>
                         <Task
                             key={task.taskID}

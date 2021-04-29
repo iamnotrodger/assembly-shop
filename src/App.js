@@ -38,7 +38,7 @@ const App = () => {
                 <LoadingContextProvider>
                     <ToastProvider autoDelete dismissTime={3000}>
                         <LoadingScreen />
-                        <Toast position='top-right' />
+                        <Toast position='top-left' />
                         <Router>
                             <UserProvider>
                                 <TeamsProvider>

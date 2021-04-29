@@ -63,11 +63,19 @@ const NavBar = () => {
                 </Menu>
             </nav>
 
-            <Modal isOpen={isTeamOpen} onClose={handleTeamToggle}>
+            <Modal
+                isOpen={isTeamOpen}
+                onClose={handleTeamToggle}
+                classNames='modal-transition'
+                timeout={300}>
                 <CreateTeam onClose={handleTeamToggle} />
             </Modal>
 
-            <Modal isOpen={isProjectOpen} onClose={handleProjectToggle}>
+            <Modal
+                isOpen={isProjectOpen}
+                onClose={handleProjectToggle}
+                classNames='modal-transition'
+                timeout={300}>
                 <CreateProject onClose={handleProjectToggle} />
             </Modal>
         </header>
