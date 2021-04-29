@@ -24,6 +24,8 @@
         }
 
         @media only screen and (max-width: $media-small) {
+            min-height: 45vh;
+
             &--members {
                 padding: 1.5rem;
             }
