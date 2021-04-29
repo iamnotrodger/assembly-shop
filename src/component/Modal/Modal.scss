@@ -24,7 +24,7 @@
         z-index: 999;
 
         @media only screen and (max-width: $media-small) {
-            background: linear-gradient(
+            background-color: linear-gradient(
                 0deg,
                 var(--color-primary) 0%,
                 var(--color-primary) 15rem,
@@ -42,9 +42,10 @@
         z-index: 999;
 
         @media only screen and (max-width: $media-small) {
+            overflow: auto;
+            width: 100vw;
             margin: 0;
             margin-top: auto;
-            width: 100vw;
             border-radius: var(--border-radius) var(--border-radius) 0 0;
             box-shadow: 0 -1rem 1.4rem -0.6rem rgba(0, 0, 0, 0.3);
         }
@@ -66,6 +67,7 @@
         padding: 0 5rem;
         @media only screen and (max-width: $media-small) {
             padding: 0 2rem;
+            padding-bottom: 10rem;
         }
     }
 
