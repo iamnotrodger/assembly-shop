@@ -1,11 +1,7 @@
 .menu {
-    position: relative;
     cursor: pointer;
 
     &__list {
-        position: absolute;
-        z-index: 1000;
-
         & > li {
             list-style: none;
         }

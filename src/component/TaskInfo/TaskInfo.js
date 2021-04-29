@@ -146,6 +146,7 @@ const TaskInfo = ({ value, onClose }) => {
             <div className='task-info__title-container'>
                 <h2 className='form__title heading-secondary'>Task</h2>
                 <Menu
+                    style={{ position: 'relative' }}
                     className='more-menu'
                     header={
                         <i className='material-icons md-36 animate-hover-white'>

@@ -27,8 +27,10 @@ const NavBar = () => {
 
     return (
         <header className='nav-bar'>
-            <Link className='nav-bar__title' to='/'>
-                <h1 className='heading-primary'>Assembly-Shop</h1>
+            <Link className='nav-bar__link' to='/'>
+                <h1 className='heading-primary nav-bar__title'>
+                    Assembly-Shop
+                </h1>
             </Link>
 
             <nav className='nav' style={user ? null : { display: 'none' }}>

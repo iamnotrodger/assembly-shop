@@ -1,3 +1,5 @@
+@import '../../style/base/variable';
+
 .nav-bar {
     position: -webkit-sticky;
     position: sticky;
@@ -12,17 +14,23 @@
     background: var(--color-primary);
     box-shadow: var(--shadow-dark);
 
-    &__title {
+    @media only screen and (max-width: $media-small) {
+        grid-template-columns: [title-start] max-content [title-end] 1fr;
+    }
+
+    &__link {
+        grid-column: title-start / title-end;
+
         &,
         &:link,
         &:visited {
-            grid-column: title-start / title-end;
             text-decoration: none;
         }
     }
 }
 
 .nav {
+    position: relative;
     grid-column: title-end / -1;
     justify-self: end;
 
@@ -39,6 +47,8 @@
     }
 
     &__menu {
+        position: absolute;
+        z-index: 1000;
         top: 7rem;
         right: -1rem;
 
@@ -49,6 +59,9 @@
         border-radius: var(--border-radius);
         background-color: var(--color-primary);
         box-shadow: var(--shadow-dark);
+
+        @media only screen and (max-width: $media-extra-small) {
+        }
     }
 
     &__item {
