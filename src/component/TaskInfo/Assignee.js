@@ -31,7 +31,6 @@ const Assignee = ({ id, value, onUpdate, editable }) => {
                     classNamePrefix='form__select'
                     placeholder='Assign To'
                     isClearable={false}
-                    isSearchable={false}
                     value={value ? { user: value } : null}
                     options={members}
                     getOptionLabel={({ user: { email } }) => email}

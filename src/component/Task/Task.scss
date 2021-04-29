@@ -1,3 +1,5 @@
+@import '../../style/base/variable';
+
 .task {
     display: grid;
     grid-template-columns: 1fr min-content;
@@ -39,6 +41,10 @@
 
     &__log-button {
         position: relative;
+
+        @media only screen and (max-width: $media-small) {
+            font-size: 4rem !important;
+        }
     }
 
     &__time {

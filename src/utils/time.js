@@ -1,7 +1,8 @@
 export const formatTime = (time) => {
     const seconds = `0${Math.floor((time / 1000) % 60)}`.slice(-2);
     const minutes = `0${Math.floor((time / (1000 * 60)) % 60)}`.slice(-2);
-    const hours = `0${Math.floor((time / (1000 * 60 * 60)) % 24)}`.slice(-2);
+    let hours = Math.floor(time / (1000 * 60 * 60));
+    if (hours < 10) hours = '0' + hours;
 
     return `${hours}:${minutes}:${seconds}`;
 };
