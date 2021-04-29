@@ -1,3 +1,5 @@
+@import '../../style/base/variable';
+
 .team-page {
     &__header {
         height: 40vh;
@@ -19,6 +21,12 @@
 
         &--members {
             padding: 2rem 10%;
+        }
+
+        @media only screen and (max-width: $media-small) {
+            &--members {
+                padding: 1.5rem;
+            }
         }
     }
 }
