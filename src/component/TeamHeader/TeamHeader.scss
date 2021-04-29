@@ -1,3 +1,5 @@
+@import '../../style/base/variable';
+
 %name {
     padding: 1rem;
     line-height: 1;
@@ -21,6 +23,10 @@
 
     &__title {
         color: var(--color-primary);
+
+        @media only screen and (max-width: $media-xxs-small) {
+            font-size: 1.6rem;
+        }
     }
 
     &__input {
@@ -35,21 +41,20 @@
         line-height: 2;
     }
 
-    &__team-name-container {
-        word-break: break-all;
-        text-overflow: ellipsis;
-        overflow: hidden;
-        -webkit-box-orient: vertical;
-        display: -webkit-box;
-        -webkit-line-clamp: 3;
-    }
-
     &__team-name {
         @extend %name;
         font-size: 6.4rem;
 
         &:hover {
             color: var(--color-white-dark);
+        }
+
+        @media only screen and (max-width: $media-small) {
+            font-size: 5.4rem;
+        }
+
+        @media only screen and (max-width: $media-xxs-small) {
+            font-size: 4rem;
         }
     }
 

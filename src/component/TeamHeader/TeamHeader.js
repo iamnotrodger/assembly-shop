@@ -77,12 +77,9 @@ const TeamHeader = ({ teamID }) => {
                 onSave={handleSave}
                 hasButton={false}
                 dynamic={true}>
-                <div className='team-header__team-name-container'>
-                    <h1
-                        className={`team-header__team-name team-header--${scheme}`}>
-                        {teamName}
-                    </h1>
-                </div>
+                <h1 className={`team-header__team-name team-header--${scheme}`}>
+                    {teamName}
+                </h1>
             </InputEditable>
         </div>
     );
