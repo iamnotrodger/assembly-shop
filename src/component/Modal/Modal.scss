@@ -22,6 +22,15 @@
         bottom: 0;
         background-color: rgba(0, 0, 0, 0.7);
         z-index: 999;
+
+        @media only screen and (max-width: $media-small) {
+            background: linear-gradient(
+                0deg,
+                var(--color-primary) 0%,
+                var(--color-primary) 15rem,
+                transparent 15rem
+            );
+        }
     }
 
     &__content {
@@ -34,8 +43,10 @@
 
         @media only screen and (max-width: $media-small) {
             margin: 0;
+            margin-top: auto;
             width: 100vw;
-            min-height: 100vh;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            box-shadow: 0 -1rem 1.4rem -0.6rem rgba(0, 0, 0, 0.3);
         }
     }
 

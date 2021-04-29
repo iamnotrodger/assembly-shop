@@ -55,7 +55,11 @@ const ProjectHeader = () => {
                 settings
             </i>
 
-            <Modal isOpen={isSettingsOpen} onClose={handleSettingsToggle}>
+            <Modal
+                isOpen={isSettingsOpen}
+                onClose={handleSettingsToggle}
+                classNames='modal-transition'
+                timeout={300}>
                 <ProjectSettings />
             </Modal>
         </header>

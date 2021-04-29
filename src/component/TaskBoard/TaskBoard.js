@@ -36,7 +36,11 @@ const TaskBoard = () => {
             <TaskList title='Doing' value={doing} onClick={showTaskInfo} />
             <TaskList title='Done' value={done} onClick={showTaskInfo} />
 
-            <Modal isOpen={taskInfo != null} onClose={() => setTaskInfo(null)}>
+            <Modal
+                isOpen={taskInfo != null}
+                onClose={() => setTaskInfo(null)}
+                classNames='modal-transition'
+                timeout={300}>
                 <TaskInfo value={taskInfo} onClose={() => setTaskInfo(null)} />
             </Modal>
         </section>

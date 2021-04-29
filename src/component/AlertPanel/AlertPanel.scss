@@ -1,5 +1,3 @@
-@import '../../style/base/variable';
-
 .alert-panel {
     display: flex;
     flex-direction: column;
@@ -29,10 +27,6 @@
 
         & > .modal__children {
             padding: 0;
-        }
-
-        @media only screen and (max-width: $media-small) {
-            top: 9rem;
         }
     }
 

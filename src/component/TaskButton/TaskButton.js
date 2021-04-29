@@ -18,7 +18,11 @@ const TaskButton = ({ teamID, projectID }) => {
                 onClick={openToggle}>
                 add
             </i>
-            <Modal isOpen={isOpen} onClose={openToggle}>
+            <Modal
+                isOpen={isOpen}
+                onClose={openToggle}
+                classNames='modal-transition'
+                timeout={300}>
                 <CreateTask
                     onClose={openToggle}
                     teamID={teamID}

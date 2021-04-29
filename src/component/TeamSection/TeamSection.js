@@ -55,7 +55,11 @@ const TeamSection = ({ value: { teamID, name, numMembers, projects } }) => {
             )}
 
             <MembersProvider teamID={teamID}>
-                <Modal isOpen={showMembers} onClose={handleShowMembersToggle}>
+                <Modal
+                    isOpen={showMembers}
+                    onClose={handleShowMembersToggle}
+                    classNames='modal-transition'
+                    timeout={300}>
                     <div className='member-modal'>
                         <h2 className='heading-secondary member-modal__title'>
                             Members
