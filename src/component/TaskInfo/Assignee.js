@@ -9,10 +9,12 @@ const Assignee = ({ id, value, onUpdate, editable }) => {
     const { members } = useMembers();
     const { toastDispatch } = useToast();
 
-    const handleMemberChange = async ({ user }) => {
+    const handleMemberChange = async (member) => {
         try {
-            await assignTask(id, user.userID);
-            onUpdate({ assignee: user });
+            if (value && value.userID === member.userID) return;
+
+            await assignTask(id, member.memberID);
+            onUpdate({ assignee: member });
         } catch (error) {
             toastDispatch({
                 type: TOAST_ACTIONS.ADD,

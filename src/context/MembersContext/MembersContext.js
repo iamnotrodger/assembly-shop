@@ -35,9 +35,9 @@ export const MembersProvider = ({
                     if (projectID) break;
 
                     const user = action.payload;
-                    await addTeamMember(user.userID, teamID);
+                    const member = await addTeamMember(user.userID, teamID);
 
-                    action.payload = { teamID, userID: user.userID, user };
+                    action.payload = { ...member, user };
                     memberDispatch(action);
                     break;
                 case MEMBER_ACTIONS.LOAD:

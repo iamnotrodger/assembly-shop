@@ -20,6 +20,7 @@ const AlertPanel = ({
             fixed
             isOpen={isOpen}
             onClose={onClose}
+            timeout={0}
             hasButton={false}>
             <div className={`alert-panel alert-panel--${type}`}>
                 <div className='alert-panel__text-container'>

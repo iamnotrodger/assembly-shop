@@ -50,14 +50,17 @@ export const addTeamMember = async (userID, teamID) => {
     );
 
     if (!response.ok) throw await RequestError.parseResponse(response);
+
+    const member = await response.json();
+    return member;
 };
 
-export const deleteTeamMember = async (userID, teamID) => {
+export const deleteTeamMember = async (memberID, teamID) => {
     const accessToken = await getToken();
     if (!accessToken) throw new Error('Unauthorized');
 
     const response = await fetch(
-        API_URL + `/api/member/${userID}/team/${teamID}`,
+        API_URL + `/api/member/${memberID}/team/${teamID}`,
         {
             method: 'DELETE',
             mode: 'cors',

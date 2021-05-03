@@ -49,7 +49,7 @@ const Task = ({ value, onClick }) => {
                 <h3 className='heading-tertiary task__title'>{title}</h3>
             </div>
 
-            <Assignee value={assignee}>
+            <Assignee value={assignee && assignee.user}>
                 <LogButton
                     active={activeLog != null}
                     onStart={onStart}
