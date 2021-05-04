@@ -1,6 +1,6 @@
 # Assembly-Shop
 
-https://assembly-shop.net/login
+https://assembly-shop.net
 
 Assembly-Shop is a project management and collaboration work tool. Users can tackle and complete project as a team. Assembly-Shop provides a simple way to create, assign, and track tasks for a project.
 
