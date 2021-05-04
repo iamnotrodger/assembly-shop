@@ -38,7 +38,7 @@ export const createTask = async (newTask) => {
         throw await RequestError.parseResponse(response);
     }
 
-    const { task } = await response.json();
+    const task = await response.json();
     return task;
 };
 
@@ -84,7 +84,7 @@ export const stopTask = async (taskID) => {
     return await response.json();
 };
 
-export const assignTask = async (taskID, userID) => {
+export const assignTask = async (taskID, memberID) => {
     const accessToken = await getToken();
     if (!accessToken) throw new Error('Unauthorized');
 
@@ -95,7 +95,7 @@ export const assignTask = async (taskID, userID) => {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${accessToken}`,
         },
-        body: JSON.stringify({ assignee: { userID } }),
+        body: JSON.stringify({ memberID }),
     });
 
     if (!response.ok) throw await RequestError.parseResponse(response);

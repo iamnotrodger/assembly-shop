@@ -7,7 +7,7 @@ export const MEMBER_ACTIONS = {
 export const reducer = (state, action) => {
     switch (action.type) {
         case MEMBER_ACTIONS.LOAD:
-            return action.payload;
+            return sortMembers(action.payload);
         case MEMBER_ACTIONS.ADD:
             return addMember(state, action.payload);
         case MEMBER_ACTIONS.DELETE:
@@ -15,6 +15,16 @@ export const reducer = (state, action) => {
         default:
             throw new Error('Illegal Member Action');
     }
+};
+
+const sortMembers = (members) => {
+    members.sort((a, b) => {
+        if (a.admin) return -1;
+        else if (b.admin) return 1;
+        return a.user.email.localeCompare(b.user.email);
+    });
+
+    return members;
 };
 
 const deleteMember = (members, userID) => {

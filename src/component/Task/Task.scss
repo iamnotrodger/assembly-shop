@@ -1,3 +1,5 @@
+@import '../../style/base/variable';
+
 .task {
     display: grid;
     grid-template-columns: 1fr min-content;
@@ -20,7 +22,7 @@
     &__title {
         line-height: 1;
         word-wrap: break-word;
-        word-break: break-all;
+        hyphens: auto;
         text-overflow: ellipsis;
         overflow: hidden;
         -webkit-box-orient: vertical;
@@ -30,6 +32,7 @@
 
     &__assignee {
         display: flex;
+        align-items: center;
 
         & > *:not(:last-child) {
             margin-right: 0.5rem;
@@ -38,6 +41,10 @@
 
     &__log-button {
         position: relative;
+
+        @media only screen and (max-width: $media-small) {
+            font-size: 4rem !important;
+        }
     }
 
     &__time {

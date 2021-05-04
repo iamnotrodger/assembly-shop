@@ -179,7 +179,7 @@ const TaskInfo = ({ value, onClose }) => {
             />
             <Assignee
                 id={taskID}
-                value={assignee}
+                value={assignee && assignee.user}
                 onUpdate={updateTask}
                 editable={hasEditPermission}
             />

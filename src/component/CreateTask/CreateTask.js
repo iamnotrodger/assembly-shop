@@ -46,9 +46,10 @@ const CreateTask = ({ projectID, onClose }) => {
                 projectID,
                 title,
                 description,
-                assignee: assignee ? assignee.user : null,
+                assignee: assignee ? { memberID: assignee.memberID } : null,
             };
             const task = await createTask(newTask);
+            task.assignee = assignee;
 
             tasksDispatch({ type: TASK_ACTIONS.ADD, payload: task });
             toastDispatch({
