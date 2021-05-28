@@ -33,6 +33,22 @@ export const getTeams = async () => {
     return teams;
 };
 
+export const getTeamsProject = async (teamID) => {
+    const accessToken = await getToken();
+    if (!accessToken) throw new Error('Unauthorized');
+
+    const response = await fetch(`${API_URL}/api/team/${teamID}/project`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`,
+        },
+    });
+
+    if (!response.ok) throw await RequestError.parseResponse(response);
+
+    const projects = await response.json();
+    return projects;
+};
+
 export const getTeamsByAdmin = async () => {
     const accessToken = await getToken();
     if (!accessToken) throw new Error('Unauthorized');
