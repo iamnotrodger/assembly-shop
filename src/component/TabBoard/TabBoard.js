@@ -6,21 +6,22 @@ import './TabBoard.scss';
 const TabBoard = ({ children }) => {
     const [activeTab, setActiveTab] = useState(children[0].props.label);
 
-    const handleTabItemClick = (label) => {
+    const handleTabItemClick = (onClick) => (label) => {
         setActiveTab(label);
+        if (onClick) onClick();
     };
 
     return (
         <div className='tab-board'>
             <ol className='tab-board__list'>
                 {children.map((child, index) => {
-                    const { label } = child.props;
+                    const { label, onClick } = child.props;
                     return (
                         <Tab
                             key={index}
                             active={activeTab === label}
                             label={label}
-                            onClick={handleTabItemClick}
+                            onClick={handleTabItemClick(onClick)}
                         />
                     );
                 })}

@@ -1,0 +1,16 @@
+.project-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(28rem, 1fr));
+    grid-gap: 1rem;
+
+    &__empty {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 4rem 0;
+
+        & > i {
+            margin-right: 0.5rem;
+        }
+    }
+}
