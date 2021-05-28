@@ -1,37 +1,42 @@
-export const validateProjectName = (name) => {
-    let error = null;
+import * as yup from 'yup';
 
-    if (!name) {
-        error = 'Project name is required';
-    } else if (name.length > 100) {
-        error = "Project name can't be longer than 100 characters";
-    } else if (name.match(/[@#$%^&*()+={};"\\|,<>/]/)) {
-        error = 'Special characters are not allowed';
-    }
+export const ProjectNameSchema = yup
+    .string()
+    .min(1)
+    .max(100)
+    .matches(
+        /^[a-zA-Z0-9 _.!#&()[\]/-]+$/i,
+        'Project Name must now have special characters',
+    )
+    .required('Project Name is required');
 
-    return error;
-};
+export const TaskTitleSchema = yup.string().required('Task Title is required');
 
-export const validateTaskTitle = (name) => {
-    let error = null;
+export const TeamNameSchema = yup
+    .string()
+    .min(1)
+    .max(100)
+    .matches(
+        /^[a-zA-Z0-9 _.!#&()[\]/-]+$/i,
+        'Team Name must now have special characters',
+    )
+    .required('Team Name is required');
 
-    if (!name) {
-        error = 'Task title is required';
-    }
+export const ProjectSchema = yup.object().shape({
+    name: ProjectNameSchema,
+    team: yup
+        .object()
+        .shape({
+            teamID: yup.number().required(),
+        })
+        .nullable()
+        .required('Team is required'),
+});
 
-    return error;
-};
+export const TeamSchema = yup.object().shape({
+    name: TeamNameSchema,
+});
 
-export const validateTeamName = (name) => {
-    let error = null;
-
-    if (!name) {
-        error = 'Team name is required';
-    } else if (name.length > 100) {
-        error = "Team name can't be longer than 100 characters";
-    } else if (name.match(/[@#$%^&*()+={};"\\|,<>/]/)) {
-        error = 'Special characters are not allowed';
-    }
-
-    return error;
-};
+export const TaskSchema = yup.object().shape({
+    title: TaskTitleSchema,
+});
