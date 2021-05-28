@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import { MembersProvider } from '../../context/MembersContext';
 import MemberSection from '../MemberSection';
 import Modal from '../Modal';
-import Project from '../Project';
-
+import ProjectList from '../ProjectList/ProjectList';
 import './TeamSection.scss';
 
 const TeamSection = ({ value: { teamID, name, numMembers, projects } }) => {
@@ -41,18 +40,7 @@ const TeamSection = ({ value: { teamID, name, numMembers, projects } }) => {
                 </Link>
             </div>
 
-            {projects && projects.length > 0 ? (
-                <div className='team-section__projects'>
-                    {projects.map((project) => (
-                        <Project value={project} key={project.projectID} />
-                    ))}
-                </div>
-            ) : (
-                <h2 className='heading-tertiary team-section__no-project'>
-                    <i className='material-icons md-36'>ballot</i>
-                    No Projects Available
-                </h2>
-            )}
+            <ProjectList projects={projects} />
 
             <MembersProvider teamID={teamID}>
                 <Modal
