@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useErrorHandler } from 'react-error-boundary';
 import { useHistory } from 'react-router-dom';
 import { createTeam } from '../../api/TeamAPI';
@@ -9,32 +9,20 @@ import useTeams, {
     USER_TEAMS_ACTIONS,
     useUsersTeams,
 } from '../../context/TeamsContext';
-import { validateTeamName } from '../../utils/validate';
-import SearchSelect from '../SearchSelect';
+import { TeamSchema } from '../../utils/validate';
+import Form from '../Form/Form';
+import FormField from '../FormField';
+import FormSearchSelect from '../FormSearchSelect';
+import FormSubmit from '../FormSubmit';
 
 const CreateTeam = ({ onClose }) => {
-    const [name, setName] = useState('');
-    const [members, setMembers] = useState([]);
-
-    const [nameError, setNameError] = useState(null);
-
     const { teamsDispatch } = useTeams();
     const { userTeamsDispatch } = useUsersTeams();
     const setLoading = useLoadingAction();
     const handleError = useErrorHandler();
     const history = useHistory();
 
-    const handleNameChange = (event) => {
-        const { value } = event.target;
-        setName(value);
-    };
-
-    const handleSubmit = async (event) => {
-        event.preventDefault();
-
-        const valid = validateForm();
-        if (!valid) return;
-
+    const handleSubmit = async ({ name, members }) => {
         setLoading(true);
         try {
             const team = await createTeam({ name, members });
@@ -47,12 +35,6 @@ const CreateTeam = ({ onClose }) => {
             handleError(error);
         }
         setLoading(false);
-    };
-
-    const validateForm = () => {
-        const error = validateTeamName(name);
-        setNameError(error);
-        return error == null;
     };
 
     const addTeamToTeamsContext = (team) => {
@@ -70,46 +52,25 @@ const CreateTeam = ({ onClose }) => {
     };
 
     return (
-        <form className='form' onSubmit={handleSubmit}>
+        <Form
+            initialValues={{ name: '', members: [] }}
+            onSubmit={handleSubmit}
+            validationSchema={TeamSchema}>
             <h2 className='form__title heading-secondary'>Build Team</h2>
-
-            <div className='form__group'>
-                <label className='form__label'>
-                    Team Name
-                    <input
-                        className={`form__input ${
-                            nameError ? 'form__input--error' : ''
-                        }`}
-                        type='text'
-                        placeholder='Name'
-                        onChange={handleNameChange}
-                    />
-                    <span className='form__error'>{nameError}</span>
-                </label>
-            </div>
-
-            <div className='form__group'>
-                <label className='form__label'>
-                    Invite Members
-                    <SearchSelect
-                        className='form__select'
-                        classNamePrefix='form__select'
-                        id='team-members'
-                        search={getUsers}
-                        isMulti
-                        key={members.length}
-                        placeholder='Email'
-                        value={members}
-                        getOptionLabel={({ email }) => email}
-                        getOptionValue={({ userID }) => userID}
-                        onChange={setMembers}
-                        closeMenuOnSelect={false}
-                    />
-                </label>
-            </div>
-
-            <button className='form__submit btn'>Create Team</button>
-        </form>
+            <FormField name='name' label='Team Name' placeholder='Team Name' />
+            <FormSearchSelect
+                isMulti
+                name='members'
+                label='Invite Members'
+                id='team-members'
+                search={getUsers}
+                placeholder='Search Email'
+                getOptionLabel={({ email }) => email}
+                getOptionValue={({ userID }) => userID}
+                closeMenuOnSelect={false}
+            />
+            <FormSubmit title='Create Team' />
+        </Form>
     );
 };
 
