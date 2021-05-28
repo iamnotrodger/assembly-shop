@@ -10,9 +10,8 @@ import useTeams, {
 } from '../../context/TeamsContext';
 import useToast, { TOAST_ACTIONS } from '../../context/ToastContext';
 import { createErrorToast } from '../../utils/toast';
-import { validateTeamName } from '../../utils/validate';
+import { TeamNameSchema } from '../../utils/validate';
 import InputEditable from '../InputEditable';
-
 import './TeamHeader.scss';
 
 const TeamHeader = ({ teamID }) => {
@@ -42,9 +41,7 @@ const TeamHeader = ({ teamID }) => {
 
     const handleSave = async (name) => {
         try {
-            const error = validateTeamName(name);
-            if (error) throw new Error(error);
-
+            await TeamNameSchema.validate(name);
             await updateTeamName(name, teamID);
             setTeamName(name);
             updateTeamsContext({ teamID, name });
